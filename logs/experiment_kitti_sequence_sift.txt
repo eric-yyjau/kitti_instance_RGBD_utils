@@ -1,0 +1,433 @@
+==================================================
+====================  start  ====================
+==================================================
+2019-04-17 22:36:06.927981
+config path:  ../deepSfm/configs/superpoint_kitti_test.yaml
+feature_type:  sift
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.19, 0.74
+percentage of inliers over 1 frames, thd=(0.10, 1.00): (0.19, 0.74)
+====================    end    ====================
+==================================================
+==================================================
+====================  start  ====================
+==================================================
+2019-04-18 00:06:29.691969
+config path:  ../deepSfm/configs/superpoint_kitti_test.yaml
+feature_type:  sift
+starting frame:  500
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.19, 0.74
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.05, 0.63
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.20, 0.77
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.15, 0.65
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.09, 0.68
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.22, 0.65
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.17, 0.65
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.23, 0.72
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.13, 0.71
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.16, 0.77
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.19, 0.73
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.15, 0.75
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.17, 0.74
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.06, 0.67
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.04, 0.55
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.08, 0.65
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.13, 0.66
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.18, 0.68
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.08, 0.67
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.02, 0.60
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.15, 0.61
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.11, 0.67
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.17, 0.68
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.07, 0.67
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.16, 0.67
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.09, 0.67
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.14, 0.67
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.15, 0.66
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.05, 0.62
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.14, 0.61
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.06, 0.48
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.07, 0.56
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.12, 0.57
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.01, 0.42
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.14, 0.59
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.11, 0.64
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.03, 0.52
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.09, 0.52
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.05, 0.49
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.12, 0.52
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.11, 0.57
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.14, 0.68
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.08, 0.57
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.17, 0.54
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.04, 0.54
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.11, 0.56
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.09, 0.56
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.10, 0.52
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.11, 0.57
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.12, 0.51
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.06, 0.50
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.06, 0.61
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.08, 0.58
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.13, 0.59
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.07, 0.44
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.10, 0.50
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.11, 0.50
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.14, 0.51
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.10, 0.60
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.11, 0.55
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.04, 0.50
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.06, 0.57
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.12, 0.54
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.16, 0.56
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.09, 0.47
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.09, 0.51
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.06, 0.52
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.11, 0.46
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.11, 0.55
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.11, 0.52
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.08, 0.61
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.10, 0.60
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.15, 0.62
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.14, 0.56
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.08, 0.52
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.11, 0.59
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.18, 0.64
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.20, 0.67
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.09, 0.56
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.07, 0.57
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.17, 0.68
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.22, 0.67
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.18, 0.64
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.14, 0.68
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.17, 0.72
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.05, 0.71
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.23, 0.73
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.18, 0.77
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.13, 0.74
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.16, 0.76
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.18, 0.76
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.07, 0.72
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.05, 0.65
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.25, 0.70
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.07, 0.73
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.16, 0.72
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.12, 0.71
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.24, 0.74
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.21, 0.71
+======= OpenCV 5-point, thd=(0.10, 1.00): 0.19, 0.68
+percentage of inliers over 100 frames, thd=(0.10, 1.00): (0.12, 0.62)
+====================    end    ====================
+==================================================
+==================================================
+====================  start  ====================
+==================================================
+2019-04-20 16:08:40.723203
+config path:  ../deepSfm/configs/superpoint_kitti_test.yaml
+feature_type:  sift
+starting frame:  500
+====================   8_point   ====================
+======= 8_point, thd=(0.10, 1.00): 0.19, 0.74
+======= 8_point, thd=(0.10, 1.00): 0.05, 0.63
+======= 8_point, thd=(0.10, 1.00): 0.20, 0.77
+average number of correspondences: 750.33
+percentage of inliers over 3 frames, thd=(0.10, 1.00): (0.15, 0.71)
+====================   opencv_Rt   ====================
+error_R = 1.1162, error_t = 1.5123
+error_R = 0.3839, error_t = 1.4434
+error_R = 3.4491, error_t = 2.6553
+======= opencv_Rt, thd: (0.1, 1.0, 10.0), ([0. 0.], [0.33 0.  ], [1. 1.])
+====================    end    ====================
+==================================================
+==================================================
+====================  start  ====================
+==================================================
+2019-04-20 16:02:00.137060
+config path:  ../deepSfm/configs/superpoint_kitti_test.yaml
+feature_type:  sift
+starting frame:  500
+feature_type:  sift
+starting frame:  500
+==================================================
+====================  start  ====================
+==================================================
+2019-04-20 16:14:37.717721
+config path:  ../deepSfm/configs/superpoint_kitti_test.yaml
+config:  {'data': {'name': 'patches_dataset', 'dataset': 'kitti', 'export_folder': 'train', 'alteration': 'all', 'preprocessing': {'resize': [96, 312]}, 'gaussian_label': {'enable': False, 'sigma': 1.0}, 'homography_adaptation': {'enable': True, 'num': 10, 'aggregation': 'sum', 'filter_counts': 0, 'homographies': {'params': {'translation': True, 'rotation': True, 'scaling': True, 'perspective': True, 'scaling_amplitude': 0.2, 'perspective_amplitude_x': 0.2, 'perspective_amplitude_y': 0.2, 'allow_artifacts': True, 'patch_ratio': 0.85}}}}, 'model': {'name': 'magic_point', 'batch_size': 1, 'detection_threshold': 0.015, 'nms': 4, 'top_k': 600, 'nn_thresh': 0.7}, 'iter_max': 100, 'five_point': False, 'feature_mode': 1, 'save_file': 'logs/experiment_kitti_sequence_sift.txt', 'pretrained': '../deepSfm/logs/superpoint_coco30_1/checkpoints/superPointNet_170000_checkpoint.pth.tar'}
+feature_type:  sift
+starting frame:  500
+====================   8_point   ====================
+======= 8_point, thd=(0.10, 1.00): 0.19, 0.74
+======= 8_point, thd=(0.10, 1.00): 0.05, 0.63
+======= 8_point, thd=(0.10, 1.00): 0.20, 0.77
+======= 8_point, thd=(0.10, 1.00): 0.15, 0.65
+======= 8_point, thd=(0.10, 1.00): 0.09, 0.68
+======= 8_point, thd=(0.10, 1.00): 0.22, 0.65
+======= 8_point, thd=(0.10, 1.00): 0.17, 0.65
+======= 8_point, thd=(0.10, 1.00): 0.23, 0.72
+======= 8_point, thd=(0.10, 1.00): 0.13, 0.71
+======= 8_point, thd=(0.10, 1.00): 0.16, 0.77
+======= 8_point, thd=(0.10, 1.00): 0.19, 0.73
+======= 8_point, thd=(0.10, 1.00): 0.15, 0.75
+======= 8_point, thd=(0.10, 1.00): 0.17, 0.74
+======= 8_point, thd=(0.10, 1.00): 0.06, 0.67
+======= 8_point, thd=(0.10, 1.00): 0.04, 0.55
+======= 8_point, thd=(0.10, 1.00): 0.08, 0.65
+======= 8_point, thd=(0.10, 1.00): 0.13, 0.66
+======= 8_point, thd=(0.10, 1.00): 0.18, 0.68
+======= 8_point, thd=(0.10, 1.00): 0.08, 0.67
+======= 8_point, thd=(0.10, 1.00): 0.02, 0.60
+======= 8_point, thd=(0.10, 1.00): 0.15, 0.61
+======= 8_point, thd=(0.10, 1.00): 0.11, 0.67
+======= 8_point, thd=(0.10, 1.00): 0.17, 0.68
+======= 8_point, thd=(0.10, 1.00): 0.07, 0.67
+======= 8_point, thd=(0.10, 1.00): 0.16, 0.67
+======= 8_point, thd=(0.10, 1.00): 0.09, 0.67
+======= 8_point, thd=(0.10, 1.00): 0.14, 0.67
+======= 8_point, thd=(0.10, 1.00): 0.15, 0.66
+======= 8_point, thd=(0.10, 1.00): 0.05, 0.62
+======= 8_point, thd=(0.10, 1.00): 0.14, 0.61
+======= 8_point, thd=(0.10, 1.00): 0.06, 0.48
+======= 8_point, thd=(0.10, 1.00): 0.07, 0.56
+======= 8_point, thd=(0.10, 1.00): 0.12, 0.57
+======= 8_point, thd=(0.10, 1.00): 0.01, 0.42
+======= 8_point, thd=(0.10, 1.00): 0.14, 0.59
+======= 8_point, thd=(0.10, 1.00): 0.11, 0.64
+======= 8_point, thd=(0.10, 1.00): 0.03, 0.52
+======= 8_point, thd=(0.10, 1.00): 0.09, 0.52
+======= 8_point, thd=(0.10, 1.00): 0.05, 0.49
+======= 8_point, thd=(0.10, 1.00): 0.12, 0.52
+======= 8_point, thd=(0.10, 1.00): 0.11, 0.57
+======= 8_point, thd=(0.10, 1.00): 0.14, 0.68
+======= 8_point, thd=(0.10, 1.00): 0.08, 0.57
+======= 8_point, thd=(0.10, 1.00): 0.17, 0.54
+======= 8_point, thd=(0.10, 1.00): 0.04, 0.54
+======= 8_point, thd=(0.10, 1.00): 0.11, 0.56
+======= 8_point, thd=(0.10, 1.00): 0.09, 0.56
+======= 8_point, thd=(0.10, 1.00): 0.10, 0.52
+======= 8_point, thd=(0.10, 1.00): 0.11, 0.57
+======= 8_point, thd=(0.10, 1.00): 0.12, 0.51
+======= 8_point, thd=(0.10, 1.00): 0.06, 0.50
+======= 8_point, thd=(0.10, 1.00): 0.06, 0.61
+======= 8_point, thd=(0.10, 1.00): 0.08, 0.58
+======= 8_point, thd=(0.10, 1.00): 0.13, 0.59
+======= 8_point, thd=(0.10, 1.00): 0.07, 0.44
+======= 8_point, thd=(0.10, 1.00): 0.10, 0.50
+======= 8_point, thd=(0.10, 1.00): 0.11, 0.50
+======= 8_point, thd=(0.10, 1.00): 0.14, 0.51
+======= 8_point, thd=(0.10, 1.00): 0.10, 0.60
+======= 8_point, thd=(0.10, 1.00): 0.11, 0.55
+======= 8_point, thd=(0.10, 1.00): 0.04, 0.50
+======= 8_point, thd=(0.10, 1.00): 0.06, 0.57
+======= 8_point, thd=(0.10, 1.00): 0.12, 0.54
+======= 8_point, thd=(0.10, 1.00): 0.16, 0.56
+======= 8_point, thd=(0.10, 1.00): 0.09, 0.47
+======= 8_point, thd=(0.10, 1.00): 0.09, 0.51
+======= 8_point, thd=(0.10, 1.00): 0.06, 0.52
+======= 8_point, thd=(0.10, 1.00): 0.11, 0.46
+======= 8_point, thd=(0.10, 1.00): 0.11, 0.55
+======= 8_point, thd=(0.10, 1.00): 0.11, 0.52
+======= 8_point, thd=(0.10, 1.00): 0.08, 0.61
+======= 8_point, thd=(0.10, 1.00): 0.10, 0.60
+======= 8_point, thd=(0.10, 1.00): 0.15, 0.62
+======= 8_point, thd=(0.10, 1.00): 0.14, 0.56
+======= 8_point, thd=(0.10, 1.00): 0.08, 0.52
+======= 8_point, thd=(0.10, 1.00): 0.11, 0.59
+======= 8_point, thd=(0.10, 1.00): 0.18, 0.64
+======= 8_point, thd=(0.10, 1.00): 0.20, 0.67
+======= 8_point, thd=(0.10, 1.00): 0.09, 0.56
+======= 8_point, thd=(0.10, 1.00): 0.07, 0.57
+======= 8_point, thd=(0.10, 1.00): 0.17, 0.68
+======= 8_point, thd=(0.10, 1.00): 0.22, 0.67
+======= 8_point, thd=(0.10, 1.00): 0.18, 0.64
+======= 8_point, thd=(0.10, 1.00): 0.14, 0.68
+======= 8_point, thd=(0.10, 1.00): 0.17, 0.72
+======= 8_point, thd=(0.10, 1.00): 0.05, 0.71
+======= 8_point, thd=(0.10, 1.00): 0.23, 0.73
+======= 8_point, thd=(0.10, 1.00): 0.18, 0.77
+======= 8_point, thd=(0.10, 1.00): 0.13, 0.74
+======= 8_point, thd=(0.10, 1.00): 0.16, 0.76
+======= 8_point, thd=(0.10, 1.00): 0.18, 0.76
+======= 8_point, thd=(0.10, 1.00): 0.07, 0.72
+======= 8_point, thd=(0.10, 1.00): 0.05, 0.65
+======= 8_point, thd=(0.10, 1.00): 0.25, 0.70
+======= 8_point, thd=(0.10, 1.00): 0.07, 0.73
+======= 8_point, thd=(0.10, 1.00): 0.16, 0.72
+======= 8_point, thd=(0.10, 1.00): 0.12, 0.71
+======= 8_point, thd=(0.10, 1.00): 0.24, 0.74
+======= 8_point, thd=(0.10, 1.00): 0.21, 0.71
+======= 8_point, thd=(0.10, 1.00): 0.19, 0.68
+average number of correspondences: 591.08
+percentage of inliers over 100 frames, thd=(0.10, 1.00): (0.12, 0.62)
+====================   opencv_Rt   ====================
+error_R = 1.1162, error_t = 1.5123
+error_R = 0.3839, error_t = 1.4434
+error_R = 3.4491, error_t = 2.6553
+error_R = 0.5567, error_t = 0.6699
+error_R = 0.1209, error_t = 0.9056
+error_R = 1.0592, error_t = 0.9599
+error_R = 0.6575, error_t = 1.5685
+error_R = 2.8925, error_t = 2.3843
+error_R = 2.4692, error_t = 10.2514
+error_R = 3.2966, error_t = 9.2392
+error_R = 0.1380, error_t = 0.9718
+error_R = 0.4024, error_t = 0.3042
+error_R = 0.8791, error_t = 1.4968
+error_R = 0.3566, error_t = 0.8058
+error_R = 2.0606, error_t = 0.6085
+error_R = 0.4718, error_t = 2.6148
+error_R = 5.0524, error_t = 4.0866
+error_R = 6.0606, error_t = 4.8731
+error_R = 0.8467, error_t = 0.6651
+error_R = 2.0125, error_t = 1.5297
+error_R = 0.6373, error_t = 2.8543
+error_R = 1.4849, error_t = 2.4416
+error_R = 1.1802, error_t = 3.3454
+error_R = 0.7961, error_t = 1.0121
+error_R = 0.4002, error_t = 0.8299
+error_R = 0.2850, error_t = 0.8468
+error_R = 0.4310, error_t = 0.6284
+error_R = 0.2217, error_t = 1.7112
+error_R = 1.1895, error_t = 1.3284
+error_R = 0.7045, error_t = 0.7969
+error_R = 0.3360, error_t = 1.4940
+error_R = 0.9407, error_t = 0.6149
+error_R = 0.4365, error_t = 1.0893
+error_R = 0.3397, error_t = 0.8470
+error_R = 0.2098, error_t = 0.3236
+error_R = 0.8034, error_t = 1.3201
+error_R = 3.7338, error_t = 2.4481
+error_R = 0.9667, error_t = 1.8611
+error_R = 0.1393, error_t = 0.4483
+error_R = 0.0790, error_t = 0.7844
+error_R = 0.6644, error_t = 0.4029
+error_R = 1.1344, error_t = 2.4135
+error_R = 1.4082, error_t = 0.7837
+error_R = 0.9819, error_t = 1.3654
+error_R = 3.1134, error_t = 1.6088
+error_R = 0.3042, error_t = 0.6885
+error_R = 0.7302, error_t = 0.6045
+error_R = 0.3470, error_t = 1.4571
+error_R = 0.0960, error_t = 0.9504
+error_R = 0.9649, error_t = 0.6293
+error_R = 0.6712, error_t = 1.5652
+error_R = 2.9283, error_t = 1.5290
+error_R = 0.5685, error_t = 0.2402
+error_R = 0.4689, error_t = 1.0672
+error_R = 0.6172, error_t = 1.3838
+error_R = 0.2369, error_t = 0.3249
+error_R = 1.7716, error_t = 1.4986
+error_R = 0.7365, error_t = 0.5740
+error_R = 0.2309, error_t = 0.8553
+error_R = 0.6784, error_t = 0.7450
+error_R = 0.7542, error_t = 1.2212
+error_R = 2.1199, error_t = 0.2332
+error_R = 2.3242, error_t = 0.2888
+error_R = 1.1482, error_t = 1.3071
+error_R = 0.2652, error_t = 1.5750
+error_R = 1.6906, error_t = 0.9430
+error_R = 1.5775, error_t = 1.6547
+error_R = 1.0220, error_t = 0.6335
+error_R = 0.6000, error_t = 0.8029
+error_R = 1.9255, error_t = 1.9196
+error_R = 0.6776, error_t = 0.3649
+error_R = 0.1044, error_t = 0.1929
+error_R = 0.1477, error_t = 0.9250
+error_R = 0.8894, error_t = 0.8965
+error_R = 1.8580, error_t = 0.9029
+error_R = 1.2638, error_t = 0.5300
+error_R = 7.3077, error_t = 2.5610
+error_R = 3.5857, error_t = 0.2025
+error_R = 1.7231, error_t = 1.3243
+error_R = 3.3163, error_t = 1.5576
+error_R = 0.8868, error_t = 0.7646
+error_R = 2.5408, error_t = 0.6383
+error_R = 0.6437, error_t = 0.1818
+error_R = 9.0023, error_t = 3.8259
+error_R = 0.4063, error_t = 1.3513
+error_R = 0.9032, error_t = 0.4318
+error_R = 1.8457, error_t = 0.8862
+error_R = 1.5081, error_t = 1.3835
+error_R = 1.6682, error_t = 1.7240
+error_R = 1.9213, error_t = 0.9752
+error_R = 1.0958, error_t = 1.3663
+error_R = 0.8514, error_t = 0.2851
+error_R = 1.5477, error_t = 1.6489
+error_R = 1.4709, error_t = 3.4353
+error_R = 0.0594, error_t = 0.9095
+error_R = 6.6176, error_t = 9.1505
+error_R = 8.0595, error_t = 0.7449
+error_R = 4.7659, error_t = 5.5099
+error_R = 4.8209, error_t = 2.7074
+error_R = 2.1924, error_t = 2.2940
+======= opencv_Rt, thd: (0.1, 1.0, 10.0), ([0.03 0.  ], [0.54 0.49], [1.   0.99])
+opencv_Rt, thd: (0.1, 0.5, 1.0, 5.0, 10.0), ([0.03 0.  ], [0.27 0.14], [0.54 0.49], [0.94 0.96], [1.   0.99])
+====================    end    ====================
+==================================================
+==================================================
+====================  start  ====================
+==================================================
+2019-04-22 14:59:39.853479
+config path:  ../deepSfm/configs/superpoint_kitti_test.yaml
+config:  {'data': {'name': 'patches_dataset', 'dataset': 'kitti', 'export_folder': 'train', 'alteration': 'all', 'preprocessing': None, 'gaussian_label': {'enable': False, 'sigma': 1.0}, 'homography_adaptation': {'enable': True, 'num': 10, 'aggregation': 'sum', 'filter_counts': 0, 'homographies': {'params': {'translation': True, 'rotation': True, 'scaling': True, 'perspective': True, 'scaling_amplitude': 0.2, 'perspective_amplitude_x': 0.2, 'perspective_amplitude_y': 0.2, 'allow_artifacts': True, 'patch_ratio': 0.85}}}}, 'model': {'name': 'magic_point', 'batch_size': 1, 'detection_threshold': 0.015, 'nms': 4, 'top_k': 600, 'nn_thresh': 1}, 'evaluations': {'params': {'ransac_thresh': 1}, 'starting_frame': 500, 'frame_diff': 3, 'iter_max': 5, 'five_point': False, 'use_est_E': True, 'other_settings': 'use_est_E instead of gt fundamental matrix'}, 'feature_mode': 1, 'save_file': 'logs/experiment_kitti_sequence_sift.txt', 'save': {'enable': True, 'path': 'logs/experiment_kitti_sequence_sift.txt'}, 'pretrained': '../deepSfm/logs/superpoint_coco30_1/checkpoints/superPointNet_170000_checkpoint.pth.tar'}
+feature_type:  sift
+starting frame:  500
+====================   8_point   ====================
+======= 8_point, thd=(0.10, 1.00): 0.01, 0.08
+======= 8_point, thd=(0.10, 1.00): 0.02, 0.17
+======= 8_point, thd=(0.10, 1.00): 0.01, 0.04
+======= 8_point, thd=(0.10, 1.00): 0.02, 0.16
+======= 8_point, thd=(0.10, 1.00): 0.06, 0.48
+average number of correspondences: 740.60
+percentage of inliers over 5 frames, thd=(0.10, 1.00): (0.02, 0.19)
+====================   opencv_Rt   ====================
+error_R = 1.1162, error_t = 1.5123
+error_R = 0.3839, error_t = 1.4434
+error_R = 3.4491, error_t = 2.6553
+error_R = 0.5567, error_t = 0.6699
+error_R = 0.1209, error_t = 0.9056
+======= opencv_Rt, thd: (0.1, 0.5, 1.0, 5.0, 10.0), ([0. 0.], [0.4 0. ], [0.6 0.4], [1. 1.], [1. 1.])
+====================    end    ====================
+==================================================
+==================================================
+====================  start  ====================
+==================================================
+2019-04-22 15:06:21.639662
+config path:  ../deepSfm/configs/superpoint_kitti_test.yaml
+config:  {'data': {'name': 'patches_dataset', 'dataset': 'kitti', 'export_folder': 'train', 'alteration': 'all', 'preprocessing': None, 'gaussian_label': {'enable': False, 'sigma': 1.0}, 'homography_adaptation': {'enable': True, 'num': 10, 'aggregation': 'sum', 'filter_counts': 0, 'homographies': {'params': {'translation': True, 'rotation': True, 'scaling': True, 'perspective': True, 'scaling_amplitude': 0.2, 'perspective_amplitude_x': 0.2, 'perspective_amplitude_y': 0.2, 'allow_artifacts': True, 'patch_ratio': 0.85}}}}, 'model': {'name': 'magic_point', 'batch_size': 1, 'detection_threshold': 0.015, 'nms': 4, 'top_k': 600, 'nn_thresh': 0.7}, 'evaluations': {'params': {'ransac_thresh': 0.01}, 'starting_frame': 500, 'frame_diff': 3, 'iter_max': 5, 'five_point': False, 'use_est_E': True, 'other_settings': 'use_est_E instead of gt fundamental matrix'}, 'feature_mode': 1, 'save_file': 'logs/experiment_kitti_sequence_sift.txt', 'save': {'enable': True, 'path': 'logs/experiment_kitti_sequence_sift.txt'}, 'pretrained': '../deepSfm/logs/superpoint_coco30_1/checkpoints/superPointNet_170000_checkpoint.pth.tar'}
+feature_type:  sift
+starting frame:  500
+====================   8_point   ====================
+======= 8_point, thd=(0.10, 1.00): 0.01, 0.08
+======= 8_point, thd=(0.10, 1.00): 0.02, 0.17
+======= 8_point, thd=(0.10, 1.00): 0.01, 0.04
+======= 8_point, thd=(0.10, 1.00): 0.02, 0.16
+======= 8_point, thd=(0.10, 1.00): 0.06, 0.48
+average number of correspondences: 740.60
+percentage of inliers over 5 frames, thd=(0.10, 1.00): (0.02, 0.19)
+====================   opencv_Rt   ====================
+error_R = 1.1162, error_t = 1.5123
+error_R = 0.3839, error_t = 1.4434
+error_R = 3.4491, error_t = 2.6553
+error_R = 0.5567, error_t = 0.6699
+error_R = 0.1209, error_t = 0.9056
+======= opencv_Rt, thd: (0.1, 0.5, 1.0, 2.0, 5.0, 10.0), ([0. 0.], [0.4 0. ], [0.6 0.4], [0.8 0.8], [1. 1.], [1. 1.])
+====================    end    ====================
+==================================================
+==================================================
+====================  start  ====================
+==================================================
+2019-04-22 15:12:56.967218
+config path:  ../deepSfm/configs/superpoint_kitti_test.yaml
+feature_type:  sift
+==================================================
+====================  start  ====================
+==================================================
+2019-04-22 14:58:18.606954
+config path:  ../deepSfm/configs/superpoint_kitti_test.yaml
+config:  {'data': {'name': 'patches_dataset', 'dataset': 'kitti', 'export_folder': 'train', 'alteration': 'all', 'preprocessing': None, 'gaussian_label': {'enable': False, 'sigma': 1.0}, 'homography_adaptation': {'enable': True, 'num': 10, 'aggregation': 'sum', 'filter_counts': 0, 'homographies': {'params': {'translation': True, 'rotation': True, 'scaling': True, 'perspective': True, 'scaling_amplitude': 0.2, 'perspective_amplitude_x': 0.2, 'perspective_amplitude_y': 0.2, 'allow_artifacts': True, 'patch_ratio': 0.85}}}}, 'model': {'name': 'magic_point', 'batch_size': 1, 'detection_threshold': 0.015, 'nms': 4, 'top_k': 600, 'nn_thresh': 1}, 'evaluations': {'params': {'ransac_thresh': 1}, 'starting_frame': 500, 'frame_diff': 3, 'iter_max': 5, 'five_point': False, 'use_est_E': True, 'other_settings': 'use_est_E instead of gt fundamental matrix'}, 'feature_mode': 1, 'save_file': 'logs/experiment_kitti_sequence_sp_our_model.txt', 'pretrained': '../deepSfm/logs/superpoint_coco30_1/checkpoints/superPointNet_170000_checkpoint.pth.tar', 'save': {'enable': True, 'path': 'logs/experiment_kitti_sequence_sift.txt'}}
+==================================================
+====================  start  ====================
+==================================================
+2019-04-22 15:14:48.359852
+config path:  ../deepSfm/configs/superpoint_kitti_test.yaml
+feature_type:  sift
