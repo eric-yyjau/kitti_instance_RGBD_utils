@@ -325,22 +325,31 @@ def get_error_from_sequence(data_loader, scene_data, args, config, errors, file=
         else:
             print("use eight_point")
             
-        M, error_Rt_5point, mask2, E_recover  = utils_opencv.recover_camera_opencv(K, x1, x2, delta_Rtij_inv, five_point=five_point,
+        M, error_Rt_5point, mask2, E_return  = utils_opencv.recover_camera_opencv(K, x1, x2, delta_Rtij_inv, five_point=five_point,
             threshold=params['ransac_thresh'])
         K_np = K
         x1_single_np = x1
         x2_single_np = x2
         
+        def get_E_F(five_point, E_return, K):
+            if five_point:
+                E_recover_opencv = E_return
+                F_recover_opencv = utils_F.E_to_F_np(E_recover_opencv, K)
+            else:
+                E_recover_opencv, F_recover_opencv = E_return[0], E_return[1]
+            return E_recover_opencv, F_recover_opencv
+
         if use_est_E:
-            Essential = E_recover
+            E_recover_opencv, F_recover_opencv = get_E_F(five_point, E_return, K_np)
             print("use estimated essential matrix for epipolar distance evaluation")
         else:
-            Essential = E_gt_th.numpy()
-        print("E_recover: ", E_recover)
+            E_recover_opencv = E_gt_th.numpy()
+            F_recover_opencv = utils_F.E_to_F_np(E_recover_opencv, K_np)
+        print("E_return: ", E_return)
         print("E_gt_th: ", E_gt_th.numpy())
         
         # use recovered essential matrix
-        epi_dist_mean_5point, _, _ = utils_F.epi_distance_np(utils_F.E_to_F_np(Essential, K_np), 
+        epi_dist_mean_5point, _, _ = utils_F.epi_distance_np(F_recover_opencv, 
                                             x1_single_np, x2_single_np, if_homo=False)
         
         errors['epi_dist_mean'].append(epi_dist_mean_5point)
@@ -413,7 +422,7 @@ def get_error_from_sequence(data_loader, scene_data, args, config, errors, file=
             ## Check epipolar constraints
             random_idx, _, _, colors = utils_opencv.sample_and_check(x1[mask2, :], x2[mask2, :], img1_rgb, img2_rgb, img1_rgb_np, img2_rgb_np, F_gt,                                                                  visualize=True, if_sample=False)
 
-            F_est = np.linalg.inv(K).T @ E_recover @ np.linalg.inv(K)
+            F_est = np.linalg.inv(K).T @ E_recover_opencv @ np.linalg.inv(K)
             print("epipolor lines from estimated F matrix")
             _, _, _, _ = utils_opencv.sample_and_check(x1[mask2, :], x2[mask2, :], img1_rgb, img2_rgb, img1_rgb_np, img2_rgb_np, F_est, None,                                                 visualize=True, if_sample=False, colors=colors, random_idx=random_idx)
 
