@@ -573,3 +573,1128 @@ error_R = 0.2542, error_t = 1.3698
 ======= opencv_Rt, thd: (0.1, 0.5, 1.0, 2.0, 5.0, 10.0), ([0.18 0.01], [0.69 0.21], [0.86 0.5 ], [0.97 0.85], [1.   0.95], [1.   0.97])
 ====================    end    ====================
 ==================================================
+==================================================
+====================  start  ====================
+==================================================
+2019-04-23 17:45:56.227460
+config path:  ../deepSfm/configs/superpoint_kitti_test.yaml
+feature_type:  sift
+==================================================
+====================  start  ====================
+==================================================
+2019-04-23 18:01:30.314363
+config path:  ../deepSfm/configs/superpoint_kitti_test.yaml
+==========  important config:  ==========
+feature_type:  sift
+==================================================
+====================  start  ====================
+==================================================
+2019-04-23 18:38:11.313882
+config path:  ../deepSfm/configs/superpoint_kitti_test.yaml
+config:  {'data': {'name': 'patches_dataset', 'dataset': 'kitti', 'export_folder': 'train', 'alteration': 'all', 'preprocessing': None, 'gaussian_label': {'enable': False, 'sigma': 1.0}, 'homography_adaptation': {'enable': True, 'num': 10, 'aggregation': 'sum', 'filter_counts': 0, 'homographies': {'params': {'translation': True, 'rotation': True, 'scaling': True, 'perspective': True, 'scaling_amplitude': 0.2, 'perspective_amplitude_x': 0.2, 'perspective_amplitude_y': 0.2, 'allow_artifacts': True, 'patch_ratio': 0.85}}}}, 'model': {'name': 'magic_point', 'batch_size': 1, 'detection_threshold': 0.015, 'nms': 4, 'top_k': 600, 'nn_thresh': 0.8}, 'evaluations': {'params': {'ransac_thresh': 1}, 'random_frame': False, 'starting_frame': 500, 'frame_diff': 1, 'iter_max': 100, 'five_point': False, 'use_est_E': True, 'other_settings': 'use est_E for % of correspondence inliers'}, 'feature_mode': 1, 'save': {'enable': True, 'path': 'logs/experiment_kitti_sequence_sift.txt'}, 'pretrained': '../deepSfm/logs/superpoint_kitti40_1/checkpoints/superPointNet_50000_checkpoint.pth.tar'}
+==========  important config:  ==========
+feature_type:  sift
+====================   8_point   ====================
+======= 8_point, thd=(0.10, 1.00): 0.14, 0.80
+======= 8_point, thd=(0.10, 1.00): 0.15, 0.82
+======= 8_point, thd=(0.10, 1.00): 0.15, 0.82
+======= 8_point, thd=(0.10, 1.00): 0.16, 0.82
+======= 8_point, thd=(0.10, 1.00): 0.14, 0.77
+======= 8_point, thd=(0.10, 1.00): 0.15, 0.80
+======= 8_point, thd=(0.10, 1.00): 0.14, 0.78
+======= 8_point, thd=(0.10, 1.00): 0.13, 0.78
+======= 8_point, thd=(0.10, 1.00): 0.11, 0.76
+======= 8_point, thd=(0.10, 1.00): 0.14, 0.80
+======= 8_point, thd=(0.10, 1.00): 0.13, 0.76
+======= 8_point, thd=(0.10, 1.00): 0.15, 0.79
+======= 8_point, thd=(0.10, 1.00): 0.16, 0.80
+======= 8_point, thd=(0.10, 1.00): 0.13, 0.75
+======= 8_point, thd=(0.10, 1.00): 0.14, 0.77
+======= 8_point, thd=(0.10, 1.00): 0.13, 0.76
+======= 8_point, thd=(0.10, 1.00): 0.13, 0.76
+======= 8_point, thd=(0.10, 1.00): 0.14, 0.75
+======= 8_point, thd=(0.10, 1.00): 0.12, 0.74
+======= 8_point, thd=(0.10, 1.00): 0.13, 0.77
+======= 8_point, thd=(0.10, 1.00): 0.12, 0.76
+======= 8_point, thd=(0.10, 1.00): 0.12, 0.76
+======= 8_point, thd=(0.10, 1.00): 0.15, 0.78
+======= 8_point, thd=(0.10, 1.00): 0.14, 0.78
+======= 8_point, thd=(0.10, 1.00): 0.13, 0.73
+======= 8_point, thd=(0.10, 1.00): 0.13, 0.73
+======= 8_point, thd=(0.10, 1.00): 0.12, 0.78
+======= 8_point, thd=(0.10, 1.00): 0.13, 0.74
+======= 8_point, thd=(0.10, 1.00): 0.11, 0.72
+======= 8_point, thd=(0.10, 1.00): 0.13, 0.79
+======= 8_point, thd=(0.10, 1.00): 0.13, 0.77
+======= 8_point, thd=(0.10, 1.00): 0.12, 0.80
+======= 8_point, thd=(0.10, 1.00): 0.14, 0.78
+======= 8_point, thd=(0.10, 1.00): 0.14, 0.82
+======= 8_point, thd=(0.10, 1.00): 0.14, 0.78
+======= 8_point, thd=(0.10, 1.00): 0.13, 0.80
+======= 8_point, thd=(0.10, 1.00): 0.16, 0.83
+======= 8_point, thd=(0.10, 1.00): 0.16, 0.84
+======= 8_point, thd=(0.10, 1.00): 0.14, 0.82
+======= 8_point, thd=(0.10, 1.00): 0.13, 0.83
+======= 8_point, thd=(0.10, 1.00): 0.16, 0.81
+======= 8_point, thd=(0.10, 1.00): 0.14, 0.79
+======= 8_point, thd=(0.10, 1.00): 0.14, 0.82
+======= 8_point, thd=(0.10, 1.00): 0.13, 0.79
+======= 8_point, thd=(0.10, 1.00): 0.14, 0.79
+======= 8_point, thd=(0.10, 1.00): 0.13, 0.82
+======= 8_point, thd=(0.10, 1.00): 0.17, 0.83
+======= 8_point, thd=(0.10, 1.00): 0.15, 0.83
+======= 8_point, thd=(0.10, 1.00): 0.12, 0.82
+======= 8_point, thd=(0.10, 1.00): 0.13, 0.82
+======= 8_point, thd=(0.10, 1.00): 0.17, 0.81
+======= 8_point, thd=(0.10, 1.00): 0.15, 0.80
+======= 8_point, thd=(0.10, 1.00): 0.14, 0.75
+======= 8_point, thd=(0.10, 1.00): 0.18, 0.81
+======= 8_point, thd=(0.10, 1.00): 0.15, 0.79
+======= 8_point, thd=(0.10, 1.00): 0.14, 0.80
+======= 8_point, thd=(0.10, 1.00): 0.16, 0.82
+======= 8_point, thd=(0.10, 1.00): 0.14, 0.79
+======= 8_point, thd=(0.10, 1.00): 0.13, 0.79
+======= 8_point, thd=(0.10, 1.00): 0.12, 0.74
+======= 8_point, thd=(0.10, 1.00): 0.14, 0.76
+======= 8_point, thd=(0.10, 1.00): 0.15, 0.74
+======= 8_point, thd=(0.10, 1.00): 0.15, 0.79
+======= 8_point, thd=(0.10, 1.00): 0.13, 0.77
+======= 8_point, thd=(0.10, 1.00): 0.14, 0.77
+======= 8_point, thd=(0.10, 1.00): 0.10, 0.76
+======= 8_point, thd=(0.10, 1.00): 0.15, 0.78
+======= 8_point, thd=(0.10, 1.00): 0.14, 0.79
+======= 8_point, thd=(0.10, 1.00): 0.16, 0.78
+======= 8_point, thd=(0.10, 1.00): 0.15, 0.79
+======= 8_point, thd=(0.10, 1.00): 0.12, 0.74
+======= 8_point, thd=(0.10, 1.00): 0.14, 0.76
+======= 8_point, thd=(0.10, 1.00): 0.12, 0.74
+======= 8_point, thd=(0.10, 1.00): 0.15, 0.80
+======= 8_point, thd=(0.10, 1.00): 0.12, 0.75
+======= 8_point, thd=(0.10, 1.00): 0.14, 0.75
+======= 8_point, thd=(0.10, 1.00): 0.13, 0.73
+======= 8_point, thd=(0.10, 1.00): 0.14, 0.75
+======= 8_point, thd=(0.10, 1.00): 0.15, 0.77
+======= 8_point, thd=(0.10, 1.00): 0.13, 0.74
+======= 8_point, thd=(0.10, 1.00): 0.13, 0.72
+======= 8_point, thd=(0.10, 1.00): 0.10, 0.64
+======= 8_point, thd=(0.10, 1.00): 0.13, 0.72
+======= 8_point, thd=(0.10, 1.00): 0.13, 0.73
+======= 8_point, thd=(0.10, 1.00): 0.14, 0.74
+======= 8_point, thd=(0.10, 1.00): 0.10, 0.67
+======= 8_point, thd=(0.10, 1.00): 0.12, 0.69
+======= 8_point, thd=(0.10, 1.00): 0.10, 0.60
+======= 8_point, thd=(0.10, 1.00): 0.13, 0.71
+======= 8_point, thd=(0.10, 1.00): 0.11, 0.63
+======= 8_point, thd=(0.10, 1.00): 0.12, 0.64
+======= 8_point, thd=(0.10, 1.00): 0.09, 0.64
+======= 8_point, thd=(0.10, 1.00): 0.12, 0.65
+======= 8_point, thd=(0.10, 1.00): 0.11, 0.63
+======= 8_point, thd=(0.10, 1.00): 0.13, 0.66
+======= 8_point, thd=(0.10, 1.00): 0.13, 0.68
+======= 8_point, thd=(0.10, 1.00): 0.12, 0.71
+======= 8_point, thd=(0.10, 1.00): 0.12, 0.68
+======= 8_point, thd=(0.10, 1.00): 0.12, 0.69
+======= 8_point, thd=(0.10, 1.00): 0.11, 0.64
+average number of correspondences: 1628.35
+percentage of inliers over 100 frames, thd=(0.10, 1.00): (0.13, 0.76)
+====================   opencv_Rt   ====================
+error_R = 0.1882, error_t = 1.1435
+error_R = 0.1203, error_t = 0.9680
+error_R = 0.2597, error_t = 1.1905
+error_R = 0.2062, error_t = 0.9375
+error_R = 0.1927, error_t = 1.5594
+error_R = 0.0446, error_t = 0.4404
+error_R = 0.1832, error_t = 1.4122
+error_R = 0.0521, error_t = 1.0713
+error_R = 0.1479, error_t = 0.9787
+error_R = 0.0368, error_t = 0.2389
+error_R = 0.0862, error_t = 0.7859
+error_R = 0.1113, error_t = 0.4444
+error_R = 0.0826, error_t = 0.8701
+error_R = 0.0561, error_t = 0.8474
+error_R = 0.1291, error_t = 0.3789
+error_R = 0.0625, error_t = 0.2981
+error_R = 0.0850, error_t = 0.8311
+error_R = 0.0620, error_t = 0.8986
+error_R = 0.1114, error_t = 1.0053
+error_R = 0.0618, error_t = 0.3889
+error_R = 0.2543, error_t = 1.6202
+error_R = 0.1328, error_t = 1.1330
+error_R = 0.1559, error_t = 1.0791
+error_R = 0.0780, error_t = 0.7025
+error_R = 0.0503, error_t = 0.8706
+error_R = 0.1613, error_t = 0.2778
+error_R = 0.1057, error_t = 0.3583
+error_R = 0.1856, error_t = 0.9474
+error_R = 0.3489, error_t = 2.1187
+error_R = 0.0488, error_t = 0.7017
+error_R = 0.0234, error_t = 1.4970
+error_R = 0.0273, error_t = 0.1148
+error_R = 0.0309, error_t = 0.7578
+error_R = 0.1030, error_t = 0.7488
+error_R = 0.1388, error_t = 1.4772
+error_R = 0.0727, error_t = 0.4481
+error_R = 0.0503, error_t = 0.5570
+error_R = 0.0590, error_t = 0.3526
+error_R = 0.0452, error_t = 0.2391
+error_R = 0.0592, error_t = 0.7086
+error_R = 0.0877, error_t = 0.2256
+error_R = 0.0401, error_t = 0.1462
+error_R = 0.1072, error_t = 0.2442
+error_R = 0.0902, error_t = 0.5063
+error_R = 0.0812, error_t = 0.7242
+error_R = 0.0577, error_t = 0.6119
+error_R = 0.0281, error_t = 0.4841
+error_R = 0.0622, error_t = 0.4824
+error_R = 0.0355, error_t = 0.2408
+error_R = 0.0732, error_t = 0.2984
+error_R = 0.0317, error_t = 0.8434
+error_R = 0.0579, error_t = 0.1612
+error_R = 0.0769, error_t = 0.3433
+error_R = 0.0179, error_t = 0.1917
+error_R = 0.0531, error_t = 0.4256
+error_R = 0.0908, error_t = 0.3444
+error_R = 0.0666, error_t = 0.4063
+error_R = 0.0287, error_t = 0.4196
+error_R = 0.0408, error_t = 0.5001
+error_R = 0.1203, error_t = 0.1206
+error_R = 0.0405, error_t = 0.9099
+error_R = 0.0280, error_t = 0.6309
+error_R = 0.0587, error_t = 0.7050
+error_R = 0.0507, error_t = 0.3123
+error_R = 0.1412, error_t = 0.2904
+error_R = 0.0525, error_t = 0.8440
+error_R = 0.1000, error_t = 0.4548
+error_R = 0.0782, error_t = 0.2429
+error_R = 0.0404, error_t = 0.1803
+error_R = 0.0240, error_t = 0.3664
+error_R = 0.1649, error_t = 0.8822
+error_R = 0.0429, error_t = 0.9839
+error_R = 0.1461, error_t = 0.8368
+error_R = 0.0951, error_t = 0.4053
+error_R = 0.1169, error_t = 0.3341
+error_R = 0.0233, error_t = 0.4052
+error_R = 0.0539, error_t = 1.3252
+error_R = 0.0097, error_t = 0.6624
+error_R = 0.0499, error_t = 0.4738
+error_R = 0.0529, error_t = 0.4530
+error_R = 0.0336, error_t = 0.5435
+error_R = 0.2448, error_t = 0.5165
+error_R = 0.1036, error_t = 0.2657
+error_R = 0.0823, error_t = 0.1282
+error_R = 0.0770, error_t = 0.6390
+error_R = 0.0427, error_t = 0.4319
+error_R = 0.0248, error_t = 0.7180
+error_R = 0.2303, error_t = 1.4328
+error_R = 0.0194, error_t = 0.5910
+error_R = 0.1259, error_t = 0.8404
+error_R = 0.2203, error_t = 0.1679
+error_R = 0.2042, error_t = 0.3154
+error_R = 0.2149, error_t = 0.7027
+error_R = 0.2266, error_t = 0.6610
+error_R = 0.3129, error_t = 0.5819
+error_R = 0.2856, error_t = 0.7932
+error_R = 0.1562, error_t = 0.6284
+error_R = 0.1303, error_t = 0.4817
+error_R = 0.1551, error_t = 0.2090
+error_R = 0.6858, error_t = 1.0208
+======= opencv_Rt, thd: (0.1, 0.5, 1.0, 2.0, 5.0, 10.0), ([0.61 0.  ], [0.99 0.45], [1.   0.85], [1.   0.99], [1. 1.], [1. 1.])
+====================    end    ====================
+==================================================
+==================================================
+====================  start  ====================
+==================================================
+2019-04-23 18:01:48.655524
+config path:  ../deepSfm/configs/superpoint_kitti_test.yaml
+==========  important config:  ==========
+feature_type:  sift
+==================================================
+====================  start  ====================
+==================================================
+2019-04-23 18:24:58.417012
+config path:  ../deepSfm/configs/superpoint_kitti_test.yaml
+==========  important config:  ==========
+feature_type:  sift
+==================================================
+====================  start  ====================
+==================================================
+2019-04-23 21:26:59.349063
+config path:  ../deepSfm/configs/superpoint_kitti_test.yaml
+config:  {'data': {'name': 'patches_dataset', 'dataset': 'kitti', 'export_folder': 'train', 'alteration': 'all', 'preprocessing': None, 'gaussian_label': {'enable': False, 'sigma': 1.0}, 'homography_adaptation': {'enable': True, 'num': 10, 'aggregation': 'sum', 'filter_counts': 0, 'homographies': {'params': {'translation': True, 'rotation': True, 'scaling': True, 'perspective': True, 'scaling_amplitude': 0.2, 'perspective_amplitude_x': 0.2, 'perspective_amplitude_y': 0.2, 'allow_artifacts': True, 'patch_ratio': 0.85}}}}, 'model': {'name': 'magic_point', 'batch_size': 1, 'detection_threshold': 0.015, 'nms': 4, 'top_k': 600, 'nn_thresh': 0.8}, 'evaluations': {'params': {'ransac_thresh': 1}, 'random_frame': True, 'starting_frame': 500, 'frame_diff': 1, 'round': True, 'iter_max': 100, 'five_point': False, 'use_est_E': True, 'other_settings': 'exp: round sift, use est_E for % of correspondence inliers'}, 'feature_mode': 1, 'save': {'enable': True, 'path': 'logs/experiment_kitti_sequence_sift.txt'}, 'pretrained': '../deepSfm/logs/superpoint_kitti40_1/checkpoints/superPointNet_50000_checkpoint.pth.tar'}
+==========  important config:  ==========
+feature_type:  sift
+====================   8_point   ====================
+======= 8_point, thd=(0.10, 1.00): 0.10, 0.56
+======= 8_point, thd=(0.10, 1.00): 0.31, 0.31
+======= 8_point, thd=(0.10, 1.00): 0.08, 0.49
+======= 8_point, thd=(0.10, 1.00): 0.19, 0.41
+======= 8_point, thd=(0.10, 1.00): 0.15, 0.30
+======= 8_point, thd=(0.10, 1.00): 0.10, 0.28
+======= 8_point, thd=(0.10, 1.00): 0.24, 0.37
+======= 8_point, thd=(0.10, 1.00): 0.21, 0.33
+======= 8_point, thd=(0.10, 1.00): 0.32, 0.34
+======= 8_point, thd=(0.10, 1.00): 0.20, 0.39
+======= 8_point, thd=(0.10, 1.00): 0.37, 0.37
+======= 8_point, thd=(0.10, 1.00): 0.05, 0.41
+======= 8_point, thd=(0.10, 1.00): 0.23, 0.23
+======= 8_point, thd=(0.10, 1.00): 0.38, 0.38
+======= 8_point, thd=(0.10, 1.00): 0.10, 0.28
+======= 8_point, thd=(0.10, 1.00): 0.38, 0.38
+======= 8_point, thd=(0.10, 1.00): 0.44, 0.44
+======= 8_point, thd=(0.10, 1.00): 0.07, 0.39
+======= 8_point, thd=(0.10, 1.00): 0.30, 0.34
+======= 8_point, thd=(0.10, 1.00): 0.08, 0.54
+======= 8_point, thd=(0.10, 1.00): 0.11, 0.24
+======= 8_point, thd=(0.10, 1.00): 0.10, 0.34
+======= 8_point, thd=(0.10, 1.00): 0.10, 0.47
+======= 8_point, thd=(0.10, 1.00): 0.06, 0.44
+======= 8_point, thd=(0.10, 1.00): 0.41, 0.41
+======= 8_point, thd=(0.10, 1.00): 0.06, 0.39
+======= 8_point, thd=(0.10, 1.00): 0.30, 0.30
+======= 8_point, thd=(0.10, 1.00): 0.28, 0.36
+======= 8_point, thd=(0.10, 1.00): 0.29, 0.29
+======= 8_point, thd=(0.10, 1.00): 0.06, 0.33
+======= 8_point, thd=(0.10, 1.00): 0.39, 0.39
+======= 8_point, thd=(0.10, 1.00): 0.14, 0.30
+======= 8_point, thd=(0.10, 1.00): 0.12, 0.55
+======= 8_point, thd=(0.10, 1.00): 0.14, 0.30
+======= 8_point, thd=(0.10, 1.00): 0.39, 0.39
+======= 8_point, thd=(0.10, 1.00): 0.41, 0.41
+======= 8_point, thd=(0.10, 1.00): 0.27, 0.36
+======= 8_point, thd=(0.10, 1.00): 0.07, 0.42
+======= 8_point, thd=(0.10, 1.00): 0.18, 0.59
+======= 8_point, thd=(0.10, 1.00): 0.13, 0.47
+======= 8_point, thd=(0.10, 1.00): 0.20, 0.27
+======= 8_point, thd=(0.10, 1.00): 0.08, 0.52
+======= 8_point, thd=(0.10, 1.00): 0.13, 0.28
+======= 8_point, thd=(0.10, 1.00): 0.09, 0.44
+======= 8_point, thd=(0.10, 1.00): 0.38, 0.38
+======= 8_point, thd=(0.10, 1.00): 0.36, 0.36
+======= 8_point, thd=(0.10, 1.00): 0.14, 0.42
+======= 8_point, thd=(0.10, 1.00): 0.39, 0.39
+======= 8_point, thd=(0.10, 1.00): 0.20, 0.33
+======= 8_point, thd=(0.10, 1.00): 0.16, 0.38
+======= 8_point, thd=(0.10, 1.00): 0.20, 0.41
+======= 8_point, thd=(0.10, 1.00): 0.36, 0.36
+======= 8_point, thd=(0.10, 1.00): 0.11, 0.33
+======= 8_point, thd=(0.10, 1.00): 0.10, 0.29
+======= 8_point, thd=(0.10, 1.00): 0.14, 0.32
+======= 8_point, thd=(0.10, 1.00): 0.11, 0.42
+======= 8_point, thd=(0.10, 1.00): 0.06, 0.38
+======= 8_point, thd=(0.10, 1.00): 0.27, 0.27
+======= 8_point, thd=(0.10, 1.00): 0.12, 0.44
+======= 8_point, thd=(0.10, 1.00): 0.10, 0.52
+======= 8_point, thd=(0.10, 1.00): 0.38, 0.38
+======= 8_point, thd=(0.10, 1.00): 0.18, 0.34
+======= 8_point, thd=(0.10, 1.00): 0.24, 0.51
+======= 8_point, thd=(0.10, 1.00): 0.11, 0.31
+======= 8_point, thd=(0.10, 1.00): 0.39, 0.39
+======= 8_point, thd=(0.10, 1.00): 0.32, 0.32
+======= 8_point, thd=(0.10, 1.00): 0.08, 0.48
+======= 8_point, thd=(0.10, 1.00): 0.06, 0.46
+======= 8_point, thd=(0.10, 1.00): 0.15, 0.47
+======= 8_point, thd=(0.10, 1.00): 0.11, 0.28
+======= 8_point, thd=(0.10, 1.00): 0.08, 0.50
+======= 8_point, thd=(0.10, 1.00): 0.14, 0.24
+======= 8_point, thd=(0.10, 1.00): 0.07, 0.51
+======= 8_point, thd=(0.10, 1.00): 0.42, 0.42
+======= 8_point, thd=(0.10, 1.00): 0.14, 0.26
+======= 8_point, thd=(0.10, 1.00): 0.35, 0.35
+======= 8_point, thd=(0.10, 1.00): 0.41, 0.41
+======= 8_point, thd=(0.10, 1.00): 0.07, 0.45
+======= 8_point, thd=(0.10, 1.00): 0.11, 0.43
+======= 8_point, thd=(0.10, 1.00): 0.18, 0.50
+======= 8_point, thd=(0.10, 1.00): 0.27, 0.27
+======= 8_point, thd=(0.10, 1.00): 0.36, 0.36
+======= 8_point, thd=(0.10, 1.00): 0.07, 0.34
+======= 8_point, thd=(0.10, 1.00): 0.07, 0.51
+======= 8_point, thd=(0.10, 1.00): 0.24, 0.36
+======= 8_point, thd=(0.10, 1.00): 0.07, 0.43
+======= 8_point, thd=(0.10, 1.00): 0.06, 0.45
+======= 8_point, thd=(0.10, 1.00): 0.06, 0.47
+======= 8_point, thd=(0.10, 1.00): 0.42, 0.42
+======= 8_point, thd=(0.10, 1.00): 0.16, 0.31
+======= 8_point, thd=(0.10, 1.00): 0.34, 0.34
+======= 8_point, thd=(0.10, 1.00): 0.06, 0.46
+======= 8_point, thd=(0.10, 1.00): 0.07, 0.56
+======= 8_point, thd=(0.10, 1.00): 0.27, 0.28
+======= 8_point, thd=(0.10, 1.00): 0.08, 0.32
+======= 8_point, thd=(0.10, 1.00): 0.27, 0.27
+======= 8_point, thd=(0.10, 1.00): 0.22, 0.25
+======= 8_point, thd=(0.10, 1.00): 0.40, 0.40
+======= 8_point, thd=(0.10, 1.00): 0.08, 0.38
+======= 8_point, thd=(0.10, 1.00): 0.06, 0.38
+average number of correspondences: 1135.67
+percentage of inliers over 100 frames, thd=(0.10, 1.00): (0.20, 0.38)
+====================   opencv_Rt   ====================
+error_R = 0.1227, error_t = 1.1130
+error_R = 0.1004, error_t = 89.7819
+error_R = 0.1135, error_t = 0.9138
+error_R = 3.0623, error_t = 64.9785
+error_R = 1.1484, error_t = 135.7966
+error_R = 0.5288, error_t = 24.6367
+error_R = 0.3918, error_t = 41.0727
+error_R = 0.4510, error_t = 26.6620
+error_R = 0.2679, error_t = 96.6015
+error_R = 1.4462, error_t = 89.4115
+error_R = 0.0750, error_t = 89.6951
+error_R = 0.5497, error_t = 0.3212
+error_R = 0.0759, error_t = 90.2876
+error_R = 0.0466, error_t = 90.2561
+error_R = 1.0591, error_t = 39.2932
+error_R = 0.0620, error_t = 89.6579
+error_R = 0.0323, error_t = 90.1368
+error_R = 0.3854, error_t = 0.3434
+error_R = 0.8380, error_t = 92.4316
+error_R = 0.1929, error_t = 1.1126
+error_R = 4.4448, error_t = 143.8198
+error_R = 2.5541, error_t = 73.5301
+error_R = 0.2789, error_t = 0.6900
+error_R = 0.1055, error_t = 0.9559
+error_R = 0.1740, error_t = 89.7648
+error_R = 0.0421, error_t = 0.5864
+error_R = 2.0284, error_t = 87.6375
+error_R = 0.6232, error_t = 109.9675
+error_R = 0.0804, error_t = 87.5650
+error_R = 0.3797, error_t = 4.4157
+error_R = 1.6131, error_t = 90.0936
+error_R = 1.5993, error_t = 29.6608
+error_R = 1.0264, error_t = 0.5026
+error_R = 0.3579, error_t = 16.6078
+error_R = 0.1124, error_t = 89.9335
+error_R = 0.1513, error_t = 89.8818
+error_R = 0.2380, error_t = 118.9980
+error_R = 0.3281, error_t = 0.9286
+error_R = 1.0278, error_t = 1.8696
+error_R = 0.5605, error_t = 6.1219
+error_R = 2.6429, error_t = 97.3718
+error_R = 0.0666, error_t = 0.2138
+error_R = 1.2754, error_t = 10.0732
+error_R = 0.5582, error_t = 2.2957
+error_R = 0.0964, error_t = 89.6057
+error_R = 1.6461, error_t = 90.2101
+error_R = 0.9431, error_t = 1.9071
+error_R = 0.0263, error_t = 90.0328
+error_R = 0.7672, error_t = 40.7959
+error_R = 0.5843, error_t = 10.4897
+error_R = 0.3276, error_t = 2.2724
+error_R = 0.0792, error_t = 90.4906
+error_R = 1.8555, error_t = 15.3573
+error_R = 6.9846, error_t = 23.9154
+error_R = 0.3811, error_t = 49.0675
+error_R = 0.7237, error_t = 4.3971
+error_R = 0.0622, error_t = 0.4805
+error_R = 0.1128, error_t = 89.7073
+error_R = 1.1936, error_t = 2.2195
+error_R = 0.4107, error_t = 1.2547
+error_R = 0.0870, error_t = 90.3764
+error_R = 0.1978, error_t = 17.6457
+error_R = 0.3053, error_t = 1.0492
+error_R = 0.1302, error_t = 2.0146
+error_R = 1.6271, error_t = 87.0843
+error_R = 1.4610, error_t = 87.6133
+error_R = 0.5336, error_t = 4.7489
+error_R = 0.5077, error_t = 2.9592
+error_R = 1.4675, error_t = 2.3742
+error_R = 0.5110, error_t = 8.8974
+error_R = 0.5001, error_t = 2.8028
+error_R = 0.7029, error_t = 16.9786
+error_R = 0.3432, error_t = 0.7150
+error_R = 0.0270, error_t = 89.6257
+error_R = 0.8892, error_t = 21.6507
+error_R = 0.1022, error_t = 90.2812
+error_R = 0.0721, error_t = 89.6415
+error_R = 0.1104, error_t = 1.0741
+error_R = 1.6839, error_t = 1.1840
+error_R = 0.8974, error_t = 0.5405
+error_R = 0.0770, error_t = 89.8531
+error_R = 0.1176, error_t = 90.3396
+error_R = 1.8918, error_t = 4.9169
+error_R = 0.3993, error_t = 1.7681
+error_R = 2.1424, error_t = 114.9445
+error_R = 0.1273, error_t = 0.7150
+error_R = 0.2642, error_t = 0.1940
+error_R = 0.1126, error_t = 2.5777
+error_R = 0.0827, error_t = 90.4470
+error_R = 0.1283, error_t = 31.8627
+error_R = 0.0624, error_t = 89.2272
+error_R = 0.1480, error_t = 1.2967
+error_R = 0.3690, error_t = 2.6650
+error_R = 1.2316, error_t = 90.2021
+error_R = 4.4427, error_t = 9.4651
+error_R = 2.0884, error_t = 88.1022
+error_R = 1.7734, error_t = 69.1440
+error_R = 0.0590, error_t = 90.3997
+error_R = 3.9436, error_t = 6.8151
+error_R = 0.1566, error_t = 0.5090
+======= opencv_Rt, thd: (0.1, 0.5, 1.0, 2.0, 5.0, 10.0), ([0.19 0.  ], [0.55 0.05], [0.72 0.15], [0.9  0.25], [0.99 0.38], [1.   0.42])
+====================    end    ====================
+==================================================
+==================================================
+====================  start  ====================
+==================================================
+2019-04-24 14:10:20.573339
+config path:  ../deepSfm/configs/superpoint_kitti_test.yaml
+config:  {'data': {'name': 'patches_dataset', 'dataset': 'kitti', 'export_folder': 'train', 'alteration': 'all', 'preprocessing': None, 'gaussian_label': {'enable': False, 'sigma': 1.0}, 'homography_adaptation': {'enable': True, 'num': 10, 'aggregation': 'sum', 'filter_counts': 0, 'homographies': {'params': {'translation': True, 'rotation': True, 'scaling': True, 'perspective': True, 'scaling_amplitude': 0.2, 'perspective_amplitude_x': 0.2, 'perspective_amplitude_y': 0.2, 'allow_artifacts': True, 'patch_ratio': 0.85}}}}, 'model': {'name': 'magic_point', 'batch_size': 1, 'detection_threshold': 0.015, 'nms': 4, 'top_k': 600, 'nn_thresh': 0.8}, 'evaluations': {'params': {'ransac_thresh': 1}, 'random_frame': True, 'starting_frame': 500, 'frame_diff': 1, 'round': False, 'iter_max': 100, 'five_point': False, 'use_est_E': False, 'other_settings': 'use gt E for % of correspondence inliers'}, 'feature_mode': 1, 'save': {'enable': True, 'path': 'logs/experiment_kitti_sequence_sift.txt'}, 'pretrained': '../deepSfm/logs/superpoint_kitti40_1/checkpoints/superPointNet_50000_checkpoint.pth.tar'}
+==========  important config:  ==========
+feature_type:  sift
+====================   8_point   ====================
+======= 8_point, thd=(0.10, 1.00): 0.13, 0.70
+======= 8_point, thd=(0.10, 1.00): 0.03, 0.33
+======= 8_point, thd=(0.10, 1.00): 0.08, 0.54
+======= 8_point, thd=(0.10, 1.00): 0.08, 0.67
+======= 8_point, thd=(0.10, 1.00): 0.07, 0.63
+======= 8_point, thd=(0.10, 1.00): 0.13, 0.68
+======= 8_point, thd=(0.10, 1.00): 0.15, 0.75
+======= 8_point, thd=(0.10, 1.00): 0.10, 0.69
+======= 8_point, thd=(0.10, 1.00): 0.10, 0.61
+======= 8_point, thd=(0.10, 1.00): 0.05, 0.62
+======= 8_point, thd=(0.10, 1.00): 0.06, 0.61
+======= 8_point, thd=(0.10, 1.00): 0.04, 0.29
+======= 8_point, thd=(0.10, 1.00): 0.09, 0.65
+======= 8_point, thd=(0.10, 1.00): 0.04, 0.56
+======= 8_point, thd=(0.10, 1.00): 0.11, 0.73
+======= 8_point, thd=(0.10, 1.00): 0.10, 0.68
+======= 8_point, thd=(0.10, 1.00): 0.09, 0.64
+======= 8_point, thd=(0.10, 1.00): 0.06, 0.60
+======= 8_point, thd=(0.10, 1.00): 0.12, 0.70
+======= 8_point, thd=(0.10, 1.00): 0.11, 0.73
+======= 8_point, thd=(0.10, 1.00): 0.11, 0.66
+======= 8_point, thd=(0.10, 1.00): 0.05, 0.59
+======= 8_point, thd=(0.10, 1.00): 0.09, 0.51
+======= 8_point, thd=(0.10, 1.00): 0.01, 0.15
+======= 8_point, thd=(0.10, 1.00): 0.13, 0.73
+======= 8_point, thd=(0.10, 1.00): 0.08, 0.54
+======= 8_point, thd=(0.10, 1.00): 0.02, 0.39
+======= 8_point, thd=(0.10, 1.00): 0.06, 0.65
+======= 8_point, thd=(0.10, 1.00): 0.08, 0.66
+======= 8_point, thd=(0.10, 1.00): 0.09, 0.57
+======= 8_point, thd=(0.10, 1.00): 0.09, 0.68
+======= 8_point, thd=(0.10, 1.00): 0.14, 0.80
+======= 8_point, thd=(0.10, 1.00): 0.09, 0.65
+======= 8_point, thd=(0.10, 1.00): 0.02, 0.43
+======= 8_point, thd=(0.10, 1.00): 0.02, 0.43
+======= 8_point, thd=(0.10, 1.00): 0.01, 0.14
+======= 8_point, thd=(0.10, 1.00): 0.05, 0.57
+======= 8_point, thd=(0.10, 1.00): 0.11, 0.63
+======= 8_point, thd=(0.10, 1.00): 0.06, 0.61
+======= 8_point, thd=(0.10, 1.00): 0.11, 0.72
+======= 8_point, thd=(0.10, 1.00): 0.02, 0.35
+======= 8_point, thd=(0.10, 1.00): 0.08, 0.65
+======= 8_point, thd=(0.10, 1.00): 0.06, 0.56
+======= 8_point, thd=(0.10, 1.00): 0.09, 0.69
+======= 8_point, thd=(0.10, 1.00): 0.08, 0.63
+======= 8_point, thd=(0.10, 1.00): 0.09, 0.71
+======= 8_point, thd=(0.10, 1.00): 0.02, 0.43
+======= 8_point, thd=(0.10, 1.00): 0.05, 0.64
+======= 8_point, thd=(0.10, 1.00): 0.10, 0.69
+======= 8_point, thd=(0.10, 1.00): 0.07, 0.59
+======= 8_point, thd=(0.10, 1.00): 0.11, 0.59
+======= 8_point, thd=(0.10, 1.00): 0.08, 0.66
+======= 8_point, thd=(0.10, 1.00): 0.11, 0.68
+======= 8_point, thd=(0.10, 1.00): 0.03, 0.38
+======= 8_point, thd=(0.10, 1.00): 0.12, 0.76
+======= 8_point, thd=(0.10, 1.00): 0.12, 0.69
+======= 8_point, thd=(0.10, 1.00): 0.11, 0.70
+======= 8_point, thd=(0.10, 1.00): 0.08, 0.49
+======= 8_point, thd=(0.10, 1.00): 0.05, 0.55
+======= 8_point, thd=(0.10, 1.00): 0.12, 0.71
+======= 8_point, thd=(0.10, 1.00): 0.17, 0.71
+======= 8_point, thd=(0.10, 1.00): 0.13, 0.69
+======= 8_point, thd=(0.10, 1.00): 0.10, 0.62
+======= 8_point, thd=(0.10, 1.00): 0.03, 0.47
+======= 8_point, thd=(0.10, 1.00): 0.11, 0.66
+======= 8_point, thd=(0.10, 1.00): 0.08, 0.63
+======= 8_point, thd=(0.10, 1.00): 0.05, 0.53
+======= 8_point, thd=(0.10, 1.00): 0.09, 0.70
+======= 8_point, thd=(0.10, 1.00): 0.14, 0.70
+======= 8_point, thd=(0.10, 1.00): 0.08, 0.54
+======= 8_point, thd=(0.10, 1.00): 0.02, 0.33
+======= 8_point, thd=(0.10, 1.00): 0.08, 0.71
+======= 8_point, thd=(0.10, 1.00): 0.12, 0.75
+======= 8_point, thd=(0.10, 1.00): 0.15, 0.73
+======= 8_point, thd=(0.10, 1.00): 0.07, 0.53
+======= 8_point, thd=(0.10, 1.00): 0.07, 0.64
+======= 8_point, thd=(0.10, 1.00): 0.09, 0.69
+======= 8_point, thd=(0.10, 1.00): 0.09, 0.63
+======= 8_point, thd=(0.10, 1.00): 0.04, 0.60
+======= 8_point, thd=(0.10, 1.00): 0.05, 0.63
+======= 8_point, thd=(0.10, 1.00): 0.11, 0.70
+======= 8_point, thd=(0.10, 1.00): 0.12, 0.74
+======= 8_point, thd=(0.10, 1.00): 0.07, 0.53
+======= 8_point, thd=(0.10, 1.00): 0.05, 0.67
+======= 8_point, thd=(0.10, 1.00): 0.05, 0.49
+======= 8_point, thd=(0.10, 1.00): 0.05, 0.47
+======= 8_point, thd=(0.10, 1.00): 0.03, 0.33
+======= 8_point, thd=(0.10, 1.00): 0.02, 0.32
+======= 8_point, thd=(0.10, 1.00): 0.05, 0.58
+======= 8_point, thd=(0.10, 1.00): 0.03, 0.46
+======= 8_point, thd=(0.10, 1.00): 0.10, 0.66
+======= 8_point, thd=(0.10, 1.00): 0.04, 0.45
+======= 8_point, thd=(0.10, 1.00): 0.10, 0.75
+======= 8_point, thd=(0.10, 1.00): 0.03, 0.45
+======= 8_point, thd=(0.10, 1.00): 0.06, 0.42
+======= 8_point, thd=(0.10, 1.00): 0.07, 0.51
+======= 8_point, thd=(0.10, 1.00): 0.05, 0.50
+======= 8_point, thd=(0.10, 1.00): 0.15, 0.68
+======= 8_point, thd=(0.10, 1.00): 0.05, 0.32
+======= 8_point, thd=(0.10, 1.00): 0.07, 0.57
+average number of correspondences: 1135.67
+percentage of inliers over 100 frames, thd=(0.10, 1.00): (0.08, 0.59)
+====================   opencv_Rt   ====================
+error_R = 0.0398, error_t = 0.4900
+error_R = 0.1617, error_t = 179.2727
+error_R = 0.1545, error_t = 0.3614
+error_R = 0.2444, error_t = 0.6366
+error_R = 0.7543, error_t = 0.3450
+error_R = 0.4842, error_t = 0.5987
+error_R = 0.1584, error_t = 2.7147
+error_R = 0.0723, error_t = 1.2217
+error_R = 0.3269, error_t = 0.2629
+error_R = 0.0699, error_t = 0.4407
+error_R = 0.1696, error_t = 1.2169
+error_R = 0.2676, error_t = 2.8828
+error_R = 0.0238, error_t = 0.8306
+error_R = 0.4968, error_t = 1.2015
+error_R = 0.0655, error_t = 0.3936
+error_R = 0.2059, error_t = 2.8217
+error_R = 0.3597, error_t = 0.2417
+error_R = 0.4833, error_t = 0.1017
+error_R = 0.0354, error_t = 1.4009
+error_R = 0.0561, error_t = 0.8474
+error_R = 0.1287, error_t = 1.1459
+error_R = 0.1886, error_t = 0.7261
+error_R = 0.1774, error_t = 1.4275
+error_R = 0.1015, error_t = 0.4718
+error_R = 0.0690, error_t = 0.5783
+error_R = 0.0998, error_t = 1.1563
+error_R = 0.1057, error_t = 0.3583
+error_R = 0.0475, error_t = 0.7612
+error_R = 0.0692, error_t = 0.4935
+error_R = 0.1360, error_t = 0.2967
+error_R = 0.4174, error_t = 0.4678
+error_R = 0.1054, error_t = 0.3703
+error_R = 0.4726, error_t = 0.3029
+error_R = 0.6118, error_t = 4.9761
+error_R = 0.0569, error_t = 0.7055
+error_R = 0.3891, error_t = 1.1815
+error_R = 0.3715, error_t = 0.5182
+error_R = 0.1823, error_t = 0.4803
+error_R = 0.5002, error_t = 0.6403
+error_R = 0.3675, error_t = 1.5541
+error_R = 0.5575, error_t = 1.2823
+error_R = 0.1638, error_t = 1.7203
+error_R = 0.3886, error_t = 0.2945
+error_R = 0.1112, error_t = 1.4152
+error_R = 0.1822, error_t = 0.6841
+error_R = 0.1063, error_t = 1.5992
+error_R = 0.0697, error_t = 0.6314
+error_R = 0.1781, error_t = 1.0410
+error_R = 0.0818, error_t = 0.7308
+error_R = 0.6962, error_t = 1.7271
+error_R = 0.0851, error_t = 0.5528
+error_R = 0.3802, error_t = 0.0571
+error_R = 0.2588, error_t = 0.5980
+error_R = 0.1018, error_t = 1.2166
+error_R = 0.0234, error_t = 1.4970
+error_R = 0.0641, error_t = 0.6981
+error_R = 0.2152, error_t = 0.6362
+error_R = 0.3190, error_t = 1.0649
+error_R = 0.1903, error_t = 0.7203
+error_R = 0.1573, error_t = 0.6246
+error_R = 0.1345, error_t = 0.6351
+error_R = 0.0776, error_t = 0.2406
+error_R = 0.0478, error_t = 0.7447
+error_R = 0.6250, error_t = 1.0525
+error_R = 0.0708, error_t = 2.2045
+error_R = 0.0435, error_t = 1.4866
+error_R = 0.1076, error_t = 1.6623
+error_R = 0.0240, error_t = 0.3664
+error_R = 0.1094, error_t = 0.5283
+error_R = 0.1212, error_t = 0.9605
+error_R = 0.0919, error_t = 1.5059
+error_R = 0.1030, error_t = 0.7488
+error_R = 0.1169, error_t = 0.3341
+error_R = 0.5032, error_t = 0.4097
+error_R = 0.0241, error_t = 0.7094
+error_R = 0.0444, error_t = 0.8425
+error_R = 0.1137, error_t = 0.7306
+error_R = 0.1113, error_t = 0.9800
+error_R = 0.2250, error_t = 1.8052
+error_R = 0.1366, error_t = 1.3739
+error_R = 1.2525, error_t = 1.0951
+error_R = 0.3632, error_t = 0.7635
+error_R = 0.2199, error_t = 0.1824
+error_R = 0.2296, error_t = 0.2084
+error_R = 0.0784, error_t = 0.8495
+error_R = 0.0632, error_t = 0.6313
+error_R = 0.8325, error_t = 1.8871
+error_R = 0.0770, error_t = 0.6390
+error_R = 0.2376, error_t = 1.3152
+error_R = 0.0628, error_t = 0.9465
+error_R = 0.0923, error_t = 0.4262
+error_R = 0.0620, error_t = 0.8986
+error_R = 0.1882, error_t = 1.1435
+error_R = 1.2665, error_t = 1.7938
+error_R = 0.2623, error_t = 1.0974
+error_R = 0.2684, error_t = 1.5335
+error_R = 0.1695, error_t = 0.6422
+error_R = 0.0158, error_t = 1.4011
+error_R = 0.6875, error_t = 0.3307
+error_R = 0.0943, error_t = 0.3850
+======= opencv_Rt, thd: (0.1, 0.5, 1.0, 2.0, 5.0, 10.0), ([0.33 0.01], [0.89 0.27], [0.98 0.62], [1.   0.94], [1.   0.99], [1.   0.99])
+====================    end    ====================
+==================================================
+==================================================
+====================  start  ====================
+==================================================
+2019-04-23 21:25:01.097110
+config path:  ../deepSfm/configs/superpoint_kitti_test.yaml
+==========  important config:  ==========
+feature_type:  sift
+==================================================
+====================  start  ====================
+==================================================
+2019-04-23 21:24:40.850693
+config path:  ../deepSfm/configs/superpoint_kitti_test.yaml
+==========  important config:  ==========
+feature_type:  sift
+==================================================
+====================  start  ====================
+==================================================
+2019-04-24 14:47:52.647785
+config path:  ../deepSfm/configs/superpoint_kitti_test.yaml
+config:  {'data': {'name': 'patches_dataset', 'dataset': 'kitti', 'export_folder': 'train', 'alteration': 'all', 'preprocessing': None, 'gaussian_label': {'enable': False, 'sigma': 1.0}, 'homography_adaptation': {'enable': True, 'num': 10, 'aggregation': 'sum', 'filter_counts': 0, 'homographies': {'params': {'translation': True, 'rotation': True, 'scaling': True, 'perspective': True, 'scaling_amplitude': 0.2, 'perspective_amplitude_x': 0.2, 'perspective_amplitude_y': 0.2, 'allow_artifacts': True, 'patch_ratio': 0.85}}}}, 'model': {'name': 'magic_point', 'batch_size': 1, 'detection_threshold': 0.015, 'nms': 4, 'top_k': 600, 'nn_thresh': 0.8}, 'evaluations': {'params': {'ransac_thresh': 1}, 'random_frame': True, 'starting_frame': 500, 'frame_diff': 1, 'round': False, 'iter_max': 100, 'five_point': False, 'use_est_E': False, 'other_settings': 'use gt E for % of correspondence inliers'}, 'feature_mode': 1, 'save': {'enable': True, 'path': 'logs/experiment_kitti_sequence_sift.txt'}, 'pretrained': '../deepSfm/logs/superpoint_kitti40_1/checkpoints/superPointNet_50000_checkpoint.pth.tar'}
+==========  important config:  ==========
+feature_type:  sift
+====================   8_point   ====================
+======= 8_point, thd=(0.10, 1.00): 0.13, 0.70
+======= 8_point, thd=(0.10, 1.00): 0.03, 0.33
+======= 8_point, thd=(0.10, 1.00): 0.08, 0.54
+======= 8_point, thd=(0.10, 1.00): 0.08, 0.67
+======= 8_point, thd=(0.10, 1.00): 0.07, 0.63
+======= 8_point, thd=(0.10, 1.00): 0.13, 0.68
+======= 8_point, thd=(0.10, 1.00): 0.15, 0.75
+======= 8_point, thd=(0.10, 1.00): 0.10, 0.69
+======= 8_point, thd=(0.10, 1.00): 0.10, 0.61
+======= 8_point, thd=(0.10, 1.00): 0.05, 0.62
+======= 8_point, thd=(0.10, 1.00): 0.06, 0.61
+======= 8_point, thd=(0.10, 1.00): 0.04, 0.29
+======= 8_point, thd=(0.10, 1.00): 0.09, 0.65
+======= 8_point, thd=(0.10, 1.00): 0.04, 0.56
+======= 8_point, thd=(0.10, 1.00): 0.11, 0.73
+======= 8_point, thd=(0.10, 1.00): 0.10, 0.68
+======= 8_point, thd=(0.10, 1.00): 0.09, 0.64
+======= 8_point, thd=(0.10, 1.00): 0.06, 0.60
+======= 8_point, thd=(0.10, 1.00): 0.12, 0.70
+======= 8_point, thd=(0.10, 1.00): 0.11, 0.73
+======= 8_point, thd=(0.10, 1.00): 0.11, 0.66
+======= 8_point, thd=(0.10, 1.00): 0.05, 0.59
+======= 8_point, thd=(0.10, 1.00): 0.09, 0.51
+======= 8_point, thd=(0.10, 1.00): 0.01, 0.15
+======= 8_point, thd=(0.10, 1.00): 0.13, 0.73
+======= 8_point, thd=(0.10, 1.00): 0.08, 0.54
+======= 8_point, thd=(0.10, 1.00): 0.02, 0.39
+======= 8_point, thd=(0.10, 1.00): 0.06, 0.65
+======= 8_point, thd=(0.10, 1.00): 0.08, 0.66
+======= 8_point, thd=(0.10, 1.00): 0.09, 0.57
+======= 8_point, thd=(0.10, 1.00): 0.09, 0.68
+======= 8_point, thd=(0.10, 1.00): 0.14, 0.80
+======= 8_point, thd=(0.10, 1.00): 0.09, 0.65
+======= 8_point, thd=(0.10, 1.00): 0.02, 0.43
+======= 8_point, thd=(0.10, 1.00): 0.02, 0.43
+======= 8_point, thd=(0.10, 1.00): 0.01, 0.14
+======= 8_point, thd=(0.10, 1.00): 0.05, 0.57
+======= 8_point, thd=(0.10, 1.00): 0.11, 0.63
+======= 8_point, thd=(0.10, 1.00): 0.06, 0.61
+======= 8_point, thd=(0.10, 1.00): 0.11, 0.72
+======= 8_point, thd=(0.10, 1.00): 0.02, 0.35
+======= 8_point, thd=(0.10, 1.00): 0.08, 0.65
+======= 8_point, thd=(0.10, 1.00): 0.06, 0.56
+======= 8_point, thd=(0.10, 1.00): 0.09, 0.69
+======= 8_point, thd=(0.10, 1.00): 0.08, 0.63
+======= 8_point, thd=(0.10, 1.00): 0.09, 0.71
+======= 8_point, thd=(0.10, 1.00): 0.02, 0.43
+======= 8_point, thd=(0.10, 1.00): 0.05, 0.64
+======= 8_point, thd=(0.10, 1.00): 0.10, 0.69
+======= 8_point, thd=(0.10, 1.00): 0.07, 0.59
+======= 8_point, thd=(0.10, 1.00): 0.11, 0.59
+======= 8_point, thd=(0.10, 1.00): 0.08, 0.66
+======= 8_point, thd=(0.10, 1.00): 0.11, 0.68
+======= 8_point, thd=(0.10, 1.00): 0.03, 0.38
+======= 8_point, thd=(0.10, 1.00): 0.12, 0.76
+======= 8_point, thd=(0.10, 1.00): 0.12, 0.69
+======= 8_point, thd=(0.10, 1.00): 0.11, 0.70
+======= 8_point, thd=(0.10, 1.00): 0.08, 0.49
+======= 8_point, thd=(0.10, 1.00): 0.05, 0.55
+======= 8_point, thd=(0.10, 1.00): 0.12, 0.71
+======= 8_point, thd=(0.10, 1.00): 0.17, 0.71
+======= 8_point, thd=(0.10, 1.00): 0.13, 0.69
+======= 8_point, thd=(0.10, 1.00): 0.10, 0.62
+======= 8_point, thd=(0.10, 1.00): 0.03, 0.47
+======= 8_point, thd=(0.10, 1.00): 0.11, 0.66
+======= 8_point, thd=(0.10, 1.00): 0.08, 0.63
+======= 8_point, thd=(0.10, 1.00): 0.05, 0.53
+======= 8_point, thd=(0.10, 1.00): 0.09, 0.70
+======= 8_point, thd=(0.10, 1.00): 0.14, 0.70
+======= 8_point, thd=(0.10, 1.00): 0.08, 0.54
+======= 8_point, thd=(0.10, 1.00): 0.02, 0.33
+======= 8_point, thd=(0.10, 1.00): 0.08, 0.71
+======= 8_point, thd=(0.10, 1.00): 0.12, 0.75
+======= 8_point, thd=(0.10, 1.00): 0.15, 0.73
+======= 8_point, thd=(0.10, 1.00): 0.07, 0.53
+======= 8_point, thd=(0.10, 1.00): 0.07, 0.64
+======= 8_point, thd=(0.10, 1.00): 0.09, 0.69
+======= 8_point, thd=(0.10, 1.00): 0.09, 0.63
+======= 8_point, thd=(0.10, 1.00): 0.04, 0.60
+======= 8_point, thd=(0.10, 1.00): 0.05, 0.63
+======= 8_point, thd=(0.10, 1.00): 0.11, 0.70
+======= 8_point, thd=(0.10, 1.00): 0.12, 0.74
+======= 8_point, thd=(0.10, 1.00): 0.07, 0.53
+======= 8_point, thd=(0.10, 1.00): 0.05, 0.67
+======= 8_point, thd=(0.10, 1.00): 0.05, 0.49
+======= 8_point, thd=(0.10, 1.00): 0.05, 0.47
+======= 8_point, thd=(0.10, 1.00): 0.03, 0.33
+======= 8_point, thd=(0.10, 1.00): 0.02, 0.32
+======= 8_point, thd=(0.10, 1.00): 0.05, 0.58
+======= 8_point, thd=(0.10, 1.00): 0.03, 0.46
+======= 8_point, thd=(0.10, 1.00): 0.10, 0.66
+======= 8_point, thd=(0.10, 1.00): 0.04, 0.45
+======= 8_point, thd=(0.10, 1.00): 0.10, 0.75
+======= 8_point, thd=(0.10, 1.00): 0.03, 0.45
+======= 8_point, thd=(0.10, 1.00): 0.06, 0.42
+======= 8_point, thd=(0.10, 1.00): 0.07, 0.51
+======= 8_point, thd=(0.10, 1.00): 0.05, 0.50
+======= 8_point, thd=(0.10, 1.00): 0.15, 0.68
+======= 8_point, thd=(0.10, 1.00): 0.05, 0.32
+======= 8_point, thd=(0.10, 1.00): 0.07, 0.57
+average number of correspondences: 1135.67
+percentage of inliers over 100 frames, thd=(0.10, 1.00): (0.08, 0.59)
+====================   opencv_Rt   ====================
+error_R = 0.0398, error_t = 0.4900
+error_R = 0.1617, error_t = 179.2727
+error_R = 0.1545, error_t = 0.3614
+error_R = 0.2444, error_t = 0.6366
+error_R = 0.7543, error_t = 0.3450
+error_R = 0.4842, error_t = 0.5987
+error_R = 0.1584, error_t = 2.7147
+error_R = 0.0723, error_t = 1.2217
+error_R = 0.3269, error_t = 0.2629
+error_R = 0.0699, error_t = 0.4407
+error_R = 0.1696, error_t = 1.2169
+error_R = 0.2676, error_t = 2.8828
+error_R = 0.0238, error_t = 0.8306
+error_R = 0.4968, error_t = 1.2015
+error_R = 0.0655, error_t = 0.3936
+error_R = 0.2059, error_t = 2.8217
+error_R = 0.3597, error_t = 0.2417
+error_R = 0.4833, error_t = 0.1017
+error_R = 0.0354, error_t = 1.4009
+error_R = 0.0561, error_t = 0.8474
+error_R = 0.1287, error_t = 1.1459
+error_R = 0.1886, error_t = 0.7261
+error_R = 0.1774, error_t = 1.4275
+error_R = 0.1015, error_t = 0.4718
+error_R = 0.0690, error_t = 0.5783
+error_R = 0.0998, error_t = 1.1563
+error_R = 0.1057, error_t = 0.3583
+error_R = 0.0475, error_t = 0.7612
+error_R = 0.0692, error_t = 0.4935
+error_R = 0.1360, error_t = 0.2967
+error_R = 0.4174, error_t = 0.4678
+error_R = 0.1054, error_t = 0.3703
+error_R = 0.4726, error_t = 0.3029
+error_R = 0.6118, error_t = 4.9761
+error_R = 0.0569, error_t = 0.7055
+error_R = 0.3891, error_t = 1.1815
+error_R = 0.3715, error_t = 0.5182
+error_R = 0.1823, error_t = 0.4803
+error_R = 0.5002, error_t = 0.6403
+error_R = 0.3675, error_t = 1.5541
+error_R = 0.5575, error_t = 1.2823
+error_R = 0.1638, error_t = 1.7203
+error_R = 0.3886, error_t = 0.2945
+error_R = 0.1112, error_t = 1.4152
+error_R = 0.1822, error_t = 0.6841
+error_R = 0.1063, error_t = 1.5992
+error_R = 0.0697, error_t = 0.6314
+error_R = 0.1781, error_t = 1.0410
+error_R = 0.0818, error_t = 0.7308
+error_R = 0.6962, error_t = 1.7271
+error_R = 0.0851, error_t = 0.5528
+error_R = 0.3802, error_t = 0.0571
+error_R = 0.2588, error_t = 0.5980
+error_R = 0.1018, error_t = 1.2166
+error_R = 0.0234, error_t = 1.4970
+error_R = 0.0641, error_t = 0.6981
+error_R = 0.2152, error_t = 0.6362
+error_R = 0.3190, error_t = 1.0649
+error_R = 0.1903, error_t = 0.7203
+error_R = 0.1573, error_t = 0.6246
+error_R = 0.1345, error_t = 0.6351
+error_R = 0.0776, error_t = 0.2406
+error_R = 0.0478, error_t = 0.7447
+error_R = 0.6250, error_t = 1.0525
+error_R = 0.0708, error_t = 2.2045
+error_R = 0.0435, error_t = 1.4866
+error_R = 0.1076, error_t = 1.6623
+error_R = 0.0240, error_t = 0.3664
+error_R = 0.1094, error_t = 0.5283
+error_R = 0.1212, error_t = 0.9605
+error_R = 0.0919, error_t = 1.5059
+error_R = 0.1030, error_t = 0.7488
+error_R = 0.1169, error_t = 0.3341
+error_R = 0.5032, error_t = 0.4097
+error_R = 0.0241, error_t = 0.7094
+error_R = 0.0444, error_t = 0.8425
+error_R = 0.1137, error_t = 0.7306
+error_R = 0.1113, error_t = 0.9800
+error_R = 0.2250, error_t = 1.8052
+error_R = 0.1366, error_t = 1.3739
+error_R = 1.2525, error_t = 1.0951
+error_R = 0.3632, error_t = 0.7635
+error_R = 0.2199, error_t = 0.1824
+error_R = 0.2296, error_t = 0.2084
+error_R = 0.0784, error_t = 0.8495
+error_R = 0.0632, error_t = 0.6313
+error_R = 0.8325, error_t = 1.8871
+error_R = 0.0770, error_t = 0.6390
+error_R = 0.2376, error_t = 1.3152
+error_R = 0.0628, error_t = 0.9465
+error_R = 0.0923, error_t = 0.4262
+error_R = 0.0620, error_t = 0.8986
+error_R = 0.1882, error_t = 1.1435
+error_R = 1.2665, error_t = 1.7938
+error_R = 0.2623, error_t = 1.0974
+error_R = 0.2684, error_t = 1.5335
+error_R = 0.1695, error_t = 0.6422
+error_R = 0.0158, error_t = 1.4011
+error_R = 0.6875, error_t = 0.3307
+error_R = 0.0943, error_t = 0.3850
+======= opencv_Rt, thd: (0.1, 0.5, 1.0, 2.0, 5.0, 10.0), ([0.33 0.01], [0.89 0.27], [0.98 0.62], [1.   0.94], [1.   0.99], [1.   0.99])
+====================    end    ====================
+==================================================
+==================================================
+====================  start  ====================
+==================================================
+2019-04-24 15:35:30.893345
+config path:  ../deepSfm/configs/superpoint_kitti_test.yaml
+config:  {'data': {'name': 'patches_dataset', 'dataset': 'kitti', 'export_folder': 'train', 'alteration': 'all', 'preprocessing': None, 'gaussian_label': {'enable': False, 'sigma': 1.0}, 'homography_adaptation': {'enable': True, 'num': 10, 'aggregation': 'sum', 'filter_counts': 0, 'homographies': {'params': {'translation': True, 'rotation': True, 'scaling': True, 'perspective': True, 'scaling_amplitude': 0.2, 'perspective_amplitude_x': 0.2, 'perspective_amplitude_y': 0.2, 'allow_artifacts': True, 'patch_ratio': 0.85}}}}, 'model': {'name': 'magic_point', 'batch_size': 1, 'detection_threshold': 0.015, 'nms': 4, 'nn_thresh': 0.7}, 'evaluations': {'params': {'ransac_thresh': 3}, 'random_frame': True, 'starting_frame': 500, 'frame_diff': 1, 'round': False, 'iter_max': 100, 'five_point': False, 'use_est_E': True, 'other_settings': 'use est E for % of correspondence inliers'}, 'feature_mode': 1, 'save': {'enable': True, 'path': 'logs/experiment_kitti_sequence_sift.txt'}, 'pretrained': '../deepSfm/logs/superpoint_coco40_2/checkpoints/superPointNet_170000_checkpoint.pth.tar'}
+==========  important config:  ==========
+params :  {'ransac_thresh': 3}
+random_frame :  True
+starting_frame :  500
+frame_diff :  1
+round :  False
+iter_max :  100
+five_point :  False
+use_est_E :  True
+other_settings :  use est E for % of correspondence inliers
+feature_type:  sift
+====================   8_point   ====================
+======= 8_point, thd=(0.10, 1.00): 0.12, 0.77
+======= 8_point, thd=(0.10, 1.00): 0.05, 0.30
+======= 8_point, thd=(0.10, 1.00): 0.06, 0.51
+======= 8_point, thd=(0.10, 1.00): 0.13, 0.76
+======= 8_point, thd=(0.10, 1.00): 0.08, 0.54
+======= 8_point, thd=(0.10, 1.00): 0.06, 0.50
+======= 8_point, thd=(0.10, 1.00): 0.03, 0.23
+======= 8_point, thd=(0.10, 1.00): 0.08, 0.58
+======= 8_point, thd=(0.10, 1.00): 0.10, 0.60
+======= 8_point, thd=(0.10, 1.00): 0.09, 0.64
+======= 8_point, thd=(0.10, 1.00): 0.10, 0.67
+======= 8_point, thd=(0.10, 1.00): 0.07, 0.44
+======= 8_point, thd=(0.10, 1.00): 0.06, 0.43
+======= 8_point, thd=(0.10, 1.00): 0.10, 0.68
+======= 8_point, thd=(0.10, 1.00): 0.07, 0.60
+======= 8_point, thd=(0.10, 1.00): 0.14, 0.69
+======= 8_point, thd=(0.10, 1.00): 0.06, 0.48
+======= 8_point, thd=(0.10, 1.00): 0.08, 0.55
+======= 8_point, thd=(0.10, 1.00): 0.09, 0.67
+======= 8_point, thd=(0.10, 1.00): 0.11, 0.61
+======= 8_point, thd=(0.10, 1.00): 0.08, 0.44
+======= 8_point, thd=(0.10, 1.00): 0.05, 0.49
+======= 8_point, thd=(0.10, 1.00): 0.09, 0.55
+======= 8_point, thd=(0.10, 1.00): 0.06, 0.51
+======= 8_point, thd=(0.10, 1.00): 0.03, 0.26
+======= 8_point, thd=(0.10, 1.00): 0.03, 0.23
+======= 8_point, thd=(0.10, 1.00): 0.09, 0.70
+======= 8_point, thd=(0.10, 1.00): 0.05, 0.36
+======= 8_point, thd=(0.10, 1.00): 0.13, 0.73
+======= 8_point, thd=(0.10, 1.00): 0.04, 0.34
+======= 8_point, thd=(0.10, 1.00): 0.08, 0.47
+======= 8_point, thd=(0.10, 1.00): 0.11, 0.66
+======= 8_point, thd=(0.10, 1.00): 0.14, 0.63
+======= 8_point, thd=(0.10, 1.00): 0.08, 0.59
+======= 8_point, thd=(0.10, 1.00): 0.05, 0.40
+======= 8_point, thd=(0.10, 1.00): 0.09, 0.60
+======= 8_point, thd=(0.10, 1.00): 0.03, 0.27
+======= 8_point, thd=(0.10, 1.00): 0.05, 0.26
+======= 8_point, thd=(0.10, 1.00): 0.12, 0.65
+======= 8_point, thd=(0.10, 1.00): 0.09, 0.65
+======= 8_point, thd=(0.10, 1.00): 0.07, 0.54
+======= 8_point, thd=(0.10, 1.00): 0.10, 0.62
+======= 8_point, thd=(0.10, 1.00): 0.07, 0.44
+======= 8_point, thd=(0.10, 1.00): 0.07, 0.47
+======= 8_point, thd=(0.10, 1.00): 0.08, 0.56
+======= 8_point, thd=(0.10, 1.00): 0.07, 0.57
+======= 8_point, thd=(0.10, 1.00): 0.07, 0.44
+======= 8_point, thd=(0.10, 1.00): 0.13, 0.72
+======= 8_point, thd=(0.10, 1.00): 0.07, 0.56
+======= 8_point, thd=(0.10, 1.00): 0.07, 0.53
+======= 8_point, thd=(0.10, 1.00): 0.04, 0.37
+======= 8_point, thd=(0.10, 1.00): 0.07, 0.51
+======= 8_point, thd=(0.10, 1.00): 0.13, 0.70
+======= 8_point, thd=(0.10, 1.00): 0.07, 0.58
+======= 8_point, thd=(0.10, 1.00): 0.06, 0.58
+======= 8_point, thd=(0.10, 1.00): 0.12, 0.72
+======= 8_point, thd=(0.10, 1.00): 0.06, 0.43
+======= 8_point, thd=(0.10, 1.00): 0.05, 0.43
+======= 8_point, thd=(0.10, 1.00): 0.06, 0.49
+======= 8_point, thd=(0.10, 1.00): 0.06, 0.53
+======= 8_point, thd=(0.10, 1.00): 0.07, 0.51
+======= 8_point, thd=(0.10, 1.00): 0.08, 0.43
+======= 8_point, thd=(0.10, 1.00): 0.10, 0.67
+======= 8_point, thd=(0.10, 1.00): 0.04, 0.29
+======= 8_point, thd=(0.10, 1.00): 0.05, 0.51
+======= 8_point, thd=(0.10, 1.00): 0.06, 0.45
+======= 8_point, thd=(0.10, 1.00): 0.04, 0.43
+======= 8_point, thd=(0.10, 1.00): 0.07, 0.57
+======= 8_point, thd=(0.10, 1.00): 0.10, 0.64
+======= 8_point, thd=(0.10, 1.00): 0.09, 0.49
+======= 8_point, thd=(0.10, 1.00): 0.05, 0.42
+======= 8_point, thd=(0.10, 1.00): 0.10, 0.75
+======= 8_point, thd=(0.10, 1.00): 0.04, 0.36
+======= 8_point, thd=(0.10, 1.00): 0.14, 0.70
+======= 8_point, thd=(0.10, 1.00): 0.10, 0.51
+======= 8_point, thd=(0.10, 1.00): 0.07, 0.57
+======= 8_point, thd=(0.10, 1.00): 0.04, 0.40
+======= 8_point, thd=(0.10, 1.00): 0.06, 0.47
+======= 8_point, thd=(0.10, 1.00): 0.12, 0.70
+======= 8_point, thd=(0.10, 1.00): 0.07, 0.53
+======= 8_point, thd=(0.10, 1.00): 0.08, 0.48
+======= 8_point, thd=(0.10, 1.00): 0.08, 0.56
+======= 8_point, thd=(0.10, 1.00): 0.05, 0.41
+======= 8_point, thd=(0.10, 1.00): 0.11, 0.74
+======= 8_point, thd=(0.10, 1.00): 0.09, 0.53
+======= 8_point, thd=(0.10, 1.00): 0.03, 0.31
+======= 8_point, thd=(0.10, 1.00): 0.08, 0.58
+======= 8_point, thd=(0.10, 1.00): 0.04, 0.34
+======= 8_point, thd=(0.10, 1.00): 0.06, 0.38
+======= 8_point, thd=(0.10, 1.00): 0.06, 0.37
+======= 8_point, thd=(0.10, 1.00): 0.05, 0.44
+======= 8_point, thd=(0.10, 1.00): 0.12, 0.75
+======= 8_point, thd=(0.10, 1.00): 0.04, 0.29
+======= 8_point, thd=(0.10, 1.00): 0.08, 0.53
+======= 8_point, thd=(0.10, 1.00): 0.04, 0.19
+======= 8_point, thd=(0.10, 1.00): 0.11, 0.67
+======= 8_point, thd=(0.10, 1.00): 0.08, 0.44
+======= 8_point, thd=(0.10, 1.00): 0.05, 0.45
+======= 8_point, thd=(0.10, 1.00): 0.09, 0.47
+======= 8_point, thd=(0.10, 1.00): 0.05, 0.31
+average number of correspondences: 1135.67
+percentage of inliers over 100 frames, thd=(0.10, 1.00): (0.08, 0.51)
+====================   opencv_Rt   ====================
+error_R = 0.0348, error_t = 0.2904
+error_R = 2.4110, error_t = 179.2844
+error_R = 0.2101, error_t = 2.3931
+error_R = 0.1874, error_t = 0.5061
+error_R = 0.8226, error_t = 2.6209
+error_R = 2.1649, error_t = 5.2264
+error_R = 0.7821, error_t = 1.1737
+error_R = 0.8613, error_t = 0.7819
+error_R = 0.9339, error_t = 2.6566
+error_R = 0.2439, error_t = 2.6006
+error_R = 0.7448, error_t = 0.3001
+error_R = 0.0854, error_t = 2.6180
+error_R = 1.0604, error_t = 2.1315
+error_R = 0.0940, error_t = 1.0881
+error_R = 0.7177, error_t = 1.4106
+error_R = 0.8716, error_t = 0.4912
+error_R = 3.4576, error_t = 4.6672
+error_R = 2.0684, error_t = 3.0729
+error_R = 0.9320, error_t = 0.3097
+error_R = 0.0817, error_t = 1.7416
+error_R = 0.4697, error_t = 1.3492
+error_R = 0.1505, error_t = 1.0448
+error_R = 0.7866, error_t = 2.6028
+error_R = 0.4258, error_t = 0.6677
+error_R = 0.4504, error_t = 0.3015
+error_R = 0.4252, error_t = 1.8342
+error_R = 0.0840, error_t = 0.4309
+error_R = 1.5586, error_t = 0.9259
+error_R = 0.5375, error_t = 1.4739
+error_R = 0.3528, error_t = 3.8291
+error_R = 2.6306, error_t = 16.1431
+error_R = 0.1770, error_t = 0.4610
+error_R = 0.6145, error_t = 2.4736
+error_R = 2.0405, error_t = 4.3829
+error_R = 0.9330, error_t = 4.1459
+error_R = 0.5951, error_t = 3.2646
+error_R = 5.0350, error_t = 8.3706
+error_R = 1.3317, error_t = 1.5413
+error_R = 0.4253, error_t = 2.7360
+error_R = 0.3388, error_t = 0.3493
+error_R = 3.0391, error_t = 3.5161
+error_R = 0.5112, error_t = 0.4316
+error_R = 0.7688, error_t = 3.3137
+error_R = 0.9038, error_t = 2.4123
+error_R = 1.4669, error_t = 0.8460
+error_R = 1.5680, error_t = 4.9075
+error_R = 2.4188, error_t = 4.3207
+error_R = 0.9612, error_t = 1.8780
+error_R = 1.1318, error_t = 0.7698
+error_R = 1.1693, error_t = 1.9782
+error_R = 0.8737, error_t = 2.3164
+error_R = 1.7089, error_t = 2.0964
+error_R = 0.3821, error_t = 0.2804
+error_R = 1.2160, error_t = 2.4275
+error_R = 0.1173, error_t = 1.0610
+error_R = 0.2554, error_t = 0.8708
+error_R = 2.8462, error_t = 8.7505
+error_R = 0.6213, error_t = 3.0589
+error_R = 0.4872, error_t = 0.9165
+error_R = 0.2940, error_t = 3.4885
+error_R = 1.5973, error_t = 4.6944
+error_R = 2.2103, error_t = 0.7961
+error_R = 0.0912, error_t = 0.6773
+error_R = 0.7421, error_t = 2.6980
+error_R = 2.6117, error_t = 9.4763
+error_R = 0.6251, error_t = 2.7909
+error_R = 0.7425, error_t = 4.1521
+error_R = 0.1027, error_t = 0.8638
+error_R = 0.2406, error_t = 0.7808
+error_R = 1.1456, error_t = 0.9026
+error_R = 0.9903, error_t = 2.8703
+error_R = 0.1155, error_t = 0.5236
+error_R = 0.7487, error_t = 1.8516
+error_R = 1.3037, error_t = 1.3997
+error_R = 2.0122, error_t = 3.9174
+error_R = 1.2648, error_t = 3.4791
+error_R = 1.3224, error_t = 1.8062
+error_R = 0.3984, error_t = 0.6856
+error_R = 0.5843, error_t = 0.8291
+error_R = 2.0838, error_t = 1.4078
+error_R = 1.5823, error_t = 1.1643
+error_R = 0.9397, error_t = 2.7856
+error_R = 0.3601, error_t = 1.3897
+error_R = 0.2140, error_t = 0.6011
+error_R = 0.7324, error_t = 1.6664
+error_R = 0.5473, error_t = 2.6290
+error_R = 0.1644, error_t = 1.0878
+error_R = 0.1958, error_t = 0.9843
+error_R = 1.4551, error_t = 24.3426
+error_R = 0.1045, error_t = 2.0052
+error_R = 4.8663, error_t = 7.2682
+error_R = 0.0333, error_t = 0.2354
+error_R = 0.4228, error_t = 1.7905
+error_R = 1.1148, error_t = 1.9905
+error_R = 16.1201, error_t = 108.5028
+error_R = 0.1619, error_t = 1.2274
+error_R = 0.9299, error_t = 1.3002
+error_R = 2.5238, error_t = 1.9032
+error_R = 0.2063, error_t = 2.2582
+error_R = 0.8513, error_t = 1.2932
+======= opencv_Rt, thd: (0.1, 0.5, 1.0, 2.0, 5.0, 10.0), ([0.07 0.  ], [0.36 0.11], [0.66 0.29], [0.83 0.55], [0.98 0.91], [0.99 0.96])
+====================    end    ====================
+==================================================

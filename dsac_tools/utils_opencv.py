@@ -154,7 +154,8 @@ def recover_camera_opencv(K, x1, x2, delta_Rtij_inv, five_point=False, threshold
             # E_5point, mask = cv2.findEssentialMat(x1_norm, x2_norm, focal=1.0, pp=(0., 0.), method=cv2.RANSAC, prob=0.999, threshold=threshold) # based on the five-point algorithm solver in [Nister03]((1, 2) Nistér, D. An efficient solution to the five-point relative pose problem, CVPR 2003.). [SteweniusCFS](Stewénius, H., Calibrated Fivepoint solver. http://www.vis.uky.edu/~stewe/FIVEPOINT/) is also a related. 
         else:
             # F_8point, mask1 = cv2.findFundamentalMat(x1, x2, method=cv2.RANSAC) # based on the five-point algorithm solver in [Nister03]((1, 2) Nistér, D. An efficient solution to the five-point relative pose problem, CVPR 2003.). [SteweniusCFS](Stewénius, H., Calibrated Fivepoint solver. http://www.vis.uky.edu/~stewe/FIVEPOINT/) is also a related. 
-            F_8point, mask1 = cv2.findFundamentalMat(x1, x2, cv2.RANSAC, 0.1) # based on the five-point algorithm solver in [Nister03]((1, 2) Nistér, D. An efficient solution to the five-point relative pose problem, CVPR 2003.). [SteweniusCFS](Stewénius, H., Calibrated Fivepoint solver. http://www.vis.uky.edu/~stewe/FIVEPOINT/) is also a related. 
+            F_8point, mask1 = cv2.findFundamentalMat(x1, x2, cv2.RANSAC, threshold) # based on the five-point algorithm solver in [Nister03]((1, 2) Nistér, D. An efficient solution to the five-point relative pose problem, CVPR 2003.). [SteweniusCFS](Stewénius, H., Calibrated Fivepoint solver. http://www.vis.uky.edu/~stewe/FIVEPOINT/) is also a related. 
+            # print("threshold: ", threshold)
             E_8point = K.T @ F_8point @ K
             U,S,V = np.linalg.svd(E_8point)
             E_8point = U @ np.diag([1., 1., 0.]) @ V

@@ -266,11 +266,12 @@ def save_to_file(save_file, content, next_line=True):
 def print_config(config, file=None):
     print('='*10, ' important config: ', '='*10, file=file)
     for item in list(config):
-        print(item, ": ", config[item])
+        print(item, ": ", config[item], file=file)
     
     print('='*32)
 
-def get_error_from_sequence(data_loader, scene_data, args, config, errors, seed=0, file=None, checkGeoDist=False, check_epipolar_contraints=False): 
+def get_error_from_sequence(data_loader, scene_data, args, config, 
+    errors, seed=0, file=None, checkGeoDist=False, check_epipolar_contraints=False): 
     # global feature_type
     # feature mode
     from train3 import SPInferLoader
@@ -356,6 +357,10 @@ def get_error_from_sequence(data_loader, scene_data, args, config, errors, seed=
         img1_rgb_np, img2_rgb_np = np.array(img1_rgb), np.array(img2_rgb)
         img1, img2 = utils_opencv.PIL_to_gray(img1_rgb), utils_opencv.PIL_to_gray(img2_rgb)
 
+        def arr_to_list(arr):
+            return arr
+            pass
+
         def getFeatures(img1, img1_rgb, img2, img2_rgb, visualize=False, feature_type='sift'):
             # Keypoint detection and matching with SIFT
             if feature_type == 'sift':
@@ -370,9 +375,11 @@ def get_error_from_sequence(data_loader, scene_data, args, config, errors, seed=
                 x2 = matches[0][:, 2:4]
             return x1, x2
         
-
         x1, x2 = getFeatures(img1, img1_rgb, img2, img2_rgb, visualize=False, feature_type=feature_type)
-        
+        if config_eva['round']:
+            x1, x2 = x1.round(), x2.round()
+        print("x1: some points: ", x1[:5])
+
         # visualize matches
         utils_vis.draw_corr(img1_rgb_np, img2_rgb_np, x1, x2, 1)
 
@@ -481,6 +488,7 @@ def get_error_from_sequence(data_loader, scene_data, args, config, errors, seed=
         
         def check_epipolar_contraints():
             ## Check epipolar constraints
+
             random_idx, _, _, colors = utils_opencv.sample_and_check(x1[mask2, :], x2[mask2, :], img1_rgb, img2_rgb, img1_rgb_np, img2_rgb_np, F_gt,                                                                  visualize=True, if_sample=False)
 
             F_est = np.linalg.inv(K).T @ E_recover_opencv @ np.linalg.inv(K)
@@ -545,7 +553,7 @@ def output_Rt_est(errors_Rt, thds, tag='', file=None, verbose=False):
     thds = thds.reshape(1,-1, 1)
     inliers = errors_Rt < thds  # [n, k, 2]
     inliers = inliers.sum(axis=0)
-    print("inliers: ", inliers.shape)
+    print("inliers dim: ", inliers.shape)
     # .squeeze(0) # [1, k, 2] --> [k, 2]
     inliers = inliers/num_frame
 
@@ -561,7 +569,10 @@ def output_Rt_est(errors_Rt, thds, tag='', file=None, verbose=False):
 # get_ipython().run_line_magic('autoreload', '2')
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Foo')
+    # parser = argparse.ArgumentParser(description='Foo')
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--config', type=str, default='')
+
     # parser.add_argument('config', type=str)
     parser.add_argument("--dataset_dir", type=str, default="/data/kitti/odometry", help="path to dataset")   
     parser.add_argument("--num_threads", type=int, default=1, help="number of thread to load data")
@@ -578,19 +589,24 @@ if __name__ == '__main__':
                         help="If available (e.g. with KITTI), will store SIFT points ground truth along with images, for validation")
     parser.add_argument("--dump_root", type=str, default='dump', help="Where to dump the data")
 
-    args = parser.parse_args('--dump --with_pose --with_X     --dataset_dir /data/kitti/odometry     --dump_root /data/kitti/odometry/dump_tmp'.split())
-    print(args)
-
+    cmd = '--dump --with_pose --with_X     --dataset_dir /data/kitti/odometry     --dump_root /data/kitti/odometry/dump_tmp'.split()
+    args = parser.parse_args()
+    print("args: ", args)
+    print()
 
 
     #### load config ####
 
     from utils.utils import loadConfig
     # filename = '../deepSfm/configs/superpoint_coco_test.yaml'
-    filename = '../deepSfm/configs/superpoint_kitti_test.yaml'
+    config_base = '../deepSfm/configs/'
+    if args.config is not '':
+        filename = config_base + args.config
+    else:
+        filename = config_base + 'superpoint_kitti_test.yaml'
     # filename = args.config
-    config = loadConfig(filename)
     print("config path: ", filename)
+    config = loadConfig(filename)
     print("config: ", config)
 
     # load kitti data
