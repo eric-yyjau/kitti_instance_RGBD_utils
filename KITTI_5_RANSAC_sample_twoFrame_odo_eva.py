@@ -197,30 +197,65 @@ def get_ij(i, j, data_loader, scene_data, visualize=True, verbose=False):
 import dsac_tools.utils_F as utils_F
 import dsac_tools.utils_opencv as utils_opencv
 
-def val_rt(idx, K_np, x1_single_np, x2_single_np, E_est_np, F_est_np, delta_Rtijs_4_4_cpu_np, if_opencv=True):
+def val_rt(idx, K_np, x1_single_np, x2_single_np, E_est_np, E_gt_np, F_est_np, F_gt_np, delta_Rtijs_4_4_cpu_np, five_point, if_opencv=True):
     delta_Rtij_inv = np.linalg.inv(delta_Rtijs_4_4_cpu_np)[:3]
 
     error_Rt_estW = None
     epi_dist_mean_estW = None
-    error_Rt_5point = None
-    epi_dist_mean_5point = None
+    error_Rt_opencv = None
+    epi_dist_mean_opencv = None
 
     # Evaluating with our weights
     # _, error_Rt_estW = utils_F._E_to_M(E_est.detach(), K, x1_single_np, x2_single_np, w>0.5, \
     #     delta_Rtij_inv, depth_thres=500., show_debug=False, show_result=False, method_name='Est ws')
     M_estW, error_Rt_estW = utils_F.goodCorr_eval_nondecompose(x1_single_np, x2_single_np, E_est_np.astype(np.float64), delta_Rtij_inv, K_np, None)
+    M_gt, error_Rt_gt = utils_F.goodCorr_eval_nondecompose(x1_single_np, x2_single_np, E_gt_np.astype(np.float64), delta_Rtij_inv, K_np, None)
     epi_dist_mean_estW, _, _ = utils_F.epi_distance_np(F_est_np, x1_single_np, x2_single_np, if_homo=False)
+    epi_dist_mean_gt, _, _ = utils_F.epi_distance_np(F_gt_np, x1_single_np, x2_single_np, if_homo=False)
+
     # print('-0', F_est_np, epi_dist_mean_estW)
 
     # Evaluating with OpenCV 5-point
     if if_opencv:
-        M, error_Rt_5point, _, E_recover_5point = utils_opencv.recover_camera_opencv(K_np, x1_single_np, x2_single_np,             delta_Rtij_inv, five_point=False, threshold=0.01, show_result=False)
+        M, error_Rt_opencv, _, E_return = utils_opencv.recover_camera_opencv(K_np, x1_single_np, x2_single_np, \
+            delta_Rtij_inv, five_point=five_point, threshold=0.01, show_result=False)
+        if five_point:
+            E_recover_opencv = E_return
+            F_recover_opencv = utils_F.E_to_F_np(E_recover_opencv, K_np)
+        else:
+            E_recover_opencv, F_recover_opencv = E_return[0], E_return[1]
         # print('+++', K_np)
-        epi_dist_mean_5point, _, _ = utils_F.epi_distance_np(utils_F.E_to_F_np(E_recover_5point, K_np), x1_single_np, x2_single_np, if_homo=False)
+        epi_dist_mean_opencv, _, _ = utils_F.epi_distance_np(F_recover_opencv, x1_single_np, x2_single_np, if_homo=False)
         # print('-0-', utils_F.E_to_F_np(E_recover_5point, K_np))
         # print('-1', utils_F.E_to_F_np(E_recover_5point, K_np), epi_dist_mean_5point)
 
-    return error_Rt_estW, epi_dist_mean_estW, error_Rt_5point, epi_dist_mean_5point, idx, M_estW
+    return error_Rt_estW, epi_dist_mean_estW, error_Rt_opencv, epi_dist_mean_opencv, idx, M_estW, epi_dist_mean_gt, epi_dist_mean_gt
+
+
+# def val_rt(idx, K_np, x1_single_np, x2_single_np, E_est_np, F_est_np, delta_Rtijs_4_4_cpu_np, if_opencv=True):
+#     delta_Rtij_inv = np.linalg.inv(delta_Rtijs_4_4_cpu_np)[:3]
+
+#     error_Rt_estW = None
+#     epi_dist_mean_estW = None
+#     error_Rt_5point = None
+#     epi_dist_mean_5point = None
+
+#     # Evaluating with our weights
+#     # _, error_Rt_estW = utils_F._E_to_M(E_est.detach(), K, x1_single_np, x2_single_np, w>0.5, \
+#     #     delta_Rtij_inv, depth_thres=500., show_debug=False, show_result=False, method_name='Est ws')
+#     M_estW, error_Rt_estW = utils_F.goodCorr_eval_nondecompose(x1_single_np, x2_single_np, E_est_np.astype(np.float64), delta_Rtij_inv, K_np, None)
+#     epi_dist_mean_estW, _, _ = utils_F.epi_distance_np(F_est_np, x1_single_np, x2_single_np, if_homo=False)
+#     # print('-0', F_est_np, epi_dist_mean_estW)
+
+#     # Evaluating with OpenCV 5-point
+#     if if_opencv:
+#         M, error_Rt_5point, _, E_recover_5point = utils_opencv.recover_camera_opencv(K_np, x1_single_np, x2_single_np,             delta_Rtij_inv, five_point=False, threshold=0.01, show_result=False)
+#         # print('+++', K_np)
+#         epi_dist_mean_5point, _, _ = utils_F.epi_distance_np(utils_F.E_to_F_np(E_recover_5point, K_np), x1_single_np, x2_single_np, if_homo=False)
+#         # print('-0-', utils_F.E_to_F_np(E_recover_5point, K_np))
+#         # print('-1', utils_F.E_to_F_np(E_recover_5point, K_np), epi_dist_mean_5point)
+
+#     return error_Rt_estW, epi_dist_mean_estW, error_Rt_5point, epi_dist_mean_5point, idx, M_estW
 
 def save_to_file(save_file, content, next_line=True):
     with open(save_file, "a") as myfile:
@@ -228,19 +263,33 @@ def save_to_file(save_file, content, next_line=True):
         if next_line:
             myfile.write('\n')
 
-def get_error_from_sequence(data_loader, scene_data, args, config, errors, file=None, checkGeoDist=False, check_epipolar_contraints=False): 
+def print_config(config, file=None):
+    print('='*10, ' important config: ', '='*10, file=file)
+    for item in list(config):
+        print(item, ": ", config[item])
+    
+    print('='*32)
+
+def get_error_from_sequence(data_loader, scene_data, args, config, errors, seed=0, file=None, checkGeoDist=False, check_epipolar_contraints=False): 
     # global feature_type
     # feature mode
     from train3 import SPInferLoader
+    np.random.seed(seed)
 
     config_eva = config['evaluations']
 
     params = config['evaluations']['params']
-
     feature_mode = config['feature_mode']
 
     use_est_E = config_eva['use_est_E']
+    five_point = config_eva['five_point']
+    iter_max = config_eva['iter_max']
+    delta_i = config_eva['frame_diff']
+    st_frame = config_eva['starting_frame']
 
+    print_config(config_eva, file)
+    # print("iter_max: ", iter_max)
+    # print("starting frame: ", i, file=file)
 
     # load feature type
     if feature_mode == 1:
@@ -258,26 +307,37 @@ def get_error_from_sequence(data_loader, scene_data, args, config, errors, file=
 
     from IPython.display import clear_output
 
-    delta_i = config_eva['frame_diff']
-    # i = np.random.randint(N_frames-delta_i)
-    i = config_eva['starting_frame']
+
     # five_point = False
     
-    print("starting frame: ", i, file=file)
-    five_point = config_eva['five_point']
-    iter_max = config_eva['iter_max']
-    print("iter_max: ", iter_max)
+    # get frame list
+    def get_shuffle_arr(num, st_frame=0, shuffle=False):
+        arr = np.arange(num)
+        if shuffle:
+            np.random.shuffle(arr)
+        else:
+            if st_frame < num:
+                np.concatenate((arr[st_frame:], 
+                    arr[:st_frame]), axis=0)
+        return arr
+    # arr = get_shuffle_arr(10)
+    frame_arr = get_shuffle_arr(scene_data['N_frames']-delta_i, 
+            st_frame=st_frame, shuffle=config_eva['random_frame'])
+
+    errors['frame_arr'] = frame_arr[:iter_max]
 
     np.set_printoptions(precision=8, suppress=True)
     count = 1
 
-
     K= scene_data['calibs']['K'].astype(np.float)
-    while i + delta_i < scene_data['N_frames']:
+    # while i + delta_i < scene_data['N_frames']:
+
+    while count < frame_arr.shape[0]:
         print('=' * 50)
         print('=' * 20, " start a pair ", '=' * 20)
         print("iter: ", count)
         
+        i = frame_arr[count]
         #   clear_output()
         j = i + delta_i
 
@@ -382,6 +442,7 @@ def get_error_from_sequence(data_loader, scene_data, args, config, errors, file=
             plt.show()
 
         ## Check geo dists
+        ##### need modification
         def checkGeoDist(visualize=False):
             x1_normalizedK = utils_misc.de_homo_np((np.linalg.inv(K) @ utils_misc.homo_np(x1).T).T)
             x2_normalizedK = utils_misc.de_homo_np((np.linalg.inv(K) @ utils_misc.homo_np(x2).T).T)
