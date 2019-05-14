@@ -263,6 +263,7 @@ def save_to_file(save_file, content, next_line=True):
         if next_line:
             myfile.write('\n')
 
+
 def print_config(config, file=None):
     print('='*10, ' important config: ', '='*10, file=file)
     for item in list(config):
@@ -270,11 +271,22 @@ def print_config(config, file=None):
     
     print('='*32)
 
+def get_feature_type(feature_mode=1):
+    if feature_mode == 1:
+        feature_type = 'sift'
+        print("use model: sift")
+    elif feature_mode == 2:
+        feature_type = 'superpoint'
+    return feature_type
+
 def get_error_from_sequence(data_loader, scene_data, args, config, 
-    errors, seed=0, file=None, checkGeoDist=False, check_epipolar_contraints=False): 
+    errors, seed=0, file=None, checkGeoDist=False, check_epipolar_contraints=False, visualize=False): 
     # global feature_type
     # feature mode
-    from train3 import SPInferLoader
+    # from train3 import SPInferLoader
+    from train3 import SPInferLoader_heatmap as SPInferLoader
+    from kitti_tools.kitti_draw import vis_geoDist
+
     np.random.seed(seed)
 
     config_eva = config['evaluations']
@@ -293,11 +305,9 @@ def get_error_from_sequence(data_loader, scene_data, args, config,
     # print("starting frame: ", i, file=file)
 
     # load feature type
-    if feature_mode == 1:
-        feature_type = 'sift'
-        print("use model: sift")
-    elif feature_mode == 2:
-        feature_type = 'superpoint'
+    feature_type = get_feature_type(feature_mode)
+
+    if feature_mode == 2:
         output_dir = './'
         sp_inferrer = SPInferLoader(config, output_dir, args)
         print("config: ", config, file=file)
@@ -366,7 +376,7 @@ def get_error_from_sequence(data_loader, scene_data, args, config,
             if feature_type == 'sift':
                 x1_all, kp1, des1 = utils_opencv.SIFT_det(img1, img1_rgb, visualize=visualize)
                 x2_all, kp2, des2 = utils_opencv.SIFT_det(img2, img2_rgb, visualize=visualize)
-                x1, x2, _, _ = utils_opencv.KNN_match(des1, des2, x1_all, x2_all, kp1, kp2, img1_rgb, img2_rgb, visualize=False)
+                x1, x2, _, _ = utils_opencv.KNN_match(des1, des2, x1_all, x2_all, kp1, kp2, img1_rgb, img2_rgb, visualize=visualize)
             elif feature_type == 'superpoint':
             # Keypoint detection and matching with SuperPoint inference model
                 sp_pred = sp_inferrer.run_two_imgs(sp_inferrer.img_array_to_input(img1_rgb_np), sp_inferrer.img_array_to_input(img2_rgb_np))
@@ -375,13 +385,60 @@ def get_error_from_sequence(data_loader, scene_data, args, config,
                 x2 = matches[0][:, 2:4]
             return x1, x2
         
-        x1, x2 = getFeatures(img1, img1_rgb, img2, img2_rgb, visualize=False, feature_type=feature_type)
+        x1, x2 = getFeatures(img1, img1_rgb, img2, img2_rgb, visualize=visualize, feature_type=feature_type)
         if config_eva['round']:
             x1, x2 = x1.round(), x2.round()
         print("x1: some points: ", x1[:5])
+        print("img1_rgb_np: ", img1_rgb_np.shape)
 
+        def filter_center_np(points, shape, center=[0,0], return_mask=False):
+            """
+            param:
+                points: [n, 2] (x, y)
+                center: [2,]   (y, x)
+                shape:  [2,]   (y, x)
+            """
+            ### check!
+            # points = points.float()
+            # shape = shape.float()
+
+            # mask = (points >= 0) * (points <= shape-1)
+            res = lambda x: np.flip(np.array(x), axis=0).reshape(1, 2)
+            center = res(center)
+            shape = res(shape)/2
+            points = abs(points - center)
+            print("points: ", points[:5])
+            print("shape: ", shape)
+            print("center: ", center)
+            mask = points < shape # inside area is marked as true
+            mask = (np.prod(mask, axis=-1) == 0) # filter out the inside area
+            if return_mask:
+                return points[mask], mask
+            return points [mask]
+
+        if config_eva['block_center']['enable']:
+            shape = config_eva['block_center']['size']
+            div = lambda x: [ x/2.0 for x in img1_rgb_np.shape[:2]]
+            _, m1 = filter_center_np(x1, shape, center=div(img1_rgb_np.shape[:2]), return_mask=True)
+            # _, m2 = filter_center_np(x2, shape, center=div(img1_rgb_np.shape[:2]), return_mask=True)
+            # m = m1*m2
+            m = m1
+            print("x1 before: ", x1.shape)
+            x1_m, x2_m = x1[m], x2[m]
+            x1_f, x2_f = x1[m==False], x2[m==False]
+            print("x1_m after: ", x1_m.shape)
+            print("x1_f after: ", x1_f.shape)
+            if visualize:
+                print("points not used")
+                utils_vis.draw_corr(img1_rgb_np, img2_rgb_np, x1_f, x2_f, 1)
+        else:
+            x1_m = x1
+            x2_m = x2
         # visualize matches
-        utils_vis.draw_corr(img1_rgb_np, img2_rgb_np, x1, x2, 1)
+        if visualize:
+            print("points used for RANSAC")
+            utils_vis.draw_corr(img1_rgb_np, img2_rgb_np, x1_m, x2_m, 1)
+
 
         #     print(des1.shape, des2.shape)
         
@@ -392,11 +449,11 @@ def get_error_from_sequence(data_loader, scene_data, args, config,
         else:
             print("use eight_point")
             
-        M, error_Rt_5point, mask2, E_return  = utils_opencv.recover_camera_opencv(K, x1, x2, delta_Rtij_inv, five_point=five_point,
+        M, error_Rt_5point, mask2, E_return  = utils_opencv.recover_camera_opencv(K, x1_m, x2_m, delta_Rtij_inv, five_point=five_point,
             threshold=params['ransac_thresh'])
         K_np = K
-        x1_single_np = x1
-        x2_single_np = x2
+        # x1_single_np = x1_m
+        # x2_single_np = x2
         
         def get_E_F(five_point, E_return, K):
             if five_point:
@@ -417,7 +474,7 @@ def get_error_from_sequence(data_loader, scene_data, args, config,
         
         # use recovered essential matrix
         epi_dist_mean_5point, _, _ = utils_F.epi_distance_np(F_recover_opencv, 
-                                            x1_single_np, x2_single_np, if_homo=False)
+                                            x1_m, x2_m, if_homo=False)
         
         errors['epi_dist_mean'].append(epi_dist_mean_5point)
         
@@ -426,55 +483,45 @@ def get_error_from_sequence(data_loader, scene_data, args, config,
         
         #     print("count: ", count, ", error: ", error_Rt_5point, ", epi_dist_mean_5point: ",  epi_dist_mean_5point)
         
-        
-        def vis_geoDist(img1_rgb, geo_dists, x1, mask=None):
-            # geo_dists = np.sqrt(utils_F._sym_epi_dist(F_gt_th, torch.from_numpy(x1[unique_rows_all_idxes]), torch.from_numpy(x2[unique_rows_all_idxes])).numpy())
-            plt.hist(geo_dists, 100)
-            plt.show()
-            geo_dists = np.clip(geo_dists, 0, 10.)
-            factor = 1/(geo_dists.max() + 1e-8)
-            dot_size = 500
-            print("factor: ", factor)
-            print("geo_dists: ", geo_dists.shape)
-            # print("geo_dists norm: ", geo_dists*factor*dot_size)
-            print("x1: ", x1.shape)
-            # print("x1: ", x1)
-            plt.figure(figsize=(30, 8))
-            plt.imshow(img1_rgb)
-            if mask == None:
-                plt.scatter(x1[:, 0], x1[:, 1], s=geo_dists*factor*dot_size, c='r', edgecolors='w', linewidths=2.)  
-                # plt.scatter(x1[:, 0], x1[:, 1], s=1, c='r', edgecolors='w', linewidths=2.)  
-            else:
-                plt.scatter(x1[mask, 0], x1[mask, 1], s=geo_dists*50, c='r', edgecolors='w', linewidths=2.)
-            plt.show()
 
         ## Check geo dists
         ##### need modification
-        def checkGeoDist(visualize=False):
-            x1_normalizedK = utils_misc.de_homo_np((np.linalg.inv(K) @ utils_misc.homo_np(x1).T).T)
-            x2_normalizedK = utils_misc.de_homo_np((np.linalg.inv(K) @ utils_misc.homo_np(x2).T).T)
-            K_th = torch.from_numpy(K)
-            F_gt_normalized = K_th.t()@F_gt_th@K_th
+        def checkGeoDist(x1, x2, geo_dists, geo_thres=1, visualize=False):
+            # x1_normalizedK = utils_misc.de_homo_np((np.linalg.inv(K) @ utils_misc.homo_np(x1).T).T)
+            # x2_normalizedK = utils_misc.de_homo_np((np.linalg.inv(K) @ utils_misc.homo_np(x2).T).T)
+            # K_th = torch.from_numpy(K)
+            # F_gt_normalized = K_th.t()@F_gt_th@K_th
 
-            geo_dists = utils_F._sym_epi_dist(F_gt_normalized, 
-                torch.from_numpy(x1_normalizedK), torch.from_numpy(x2_normalizedK)).numpy()
-            geo_thres = 1e-4
+            # geo_dists = utils_F._sym_epi_dist(F_gt_normalized, 
+            #     torch.from_numpy(x1_normalizedK), torch.from_numpy(x2_normalizedK)).numpy()
+            # geo_thres = 1e-4
             mask_in = geo_dists<geo_thres
             mask_out = geo_dists>=geo_thres
 
 
             if visualize:
                 print("visualize: correspondences in mask 2")
+                print("mask2: ", mask2.shape)
+                print("x1: ", x1.shape)
                 utils_vis.draw_corr(img1_rgb_np, img2_rgb_np, x1[mask2, :], x2[mask2, :], linewidth=2.)
 
-                print("visualize: scattered geometry distance")
-                # print("geo_dists max before: ", geo_dists.max())
-                vis_geoDist(img1_rgb_np, geo_dists.copy(), x1, mask=None)
+                if config_eva['block_center']['enable']:
+                    epi_dist, _, _ = utils_F.epi_distance_np(F_recover_opencv, 
+                                                        x1_f, x2_f, if_homo=False)
+                    print("visualize: scattered geometry distance (filtered points)")
+                    vis_geoDist(img1_rgb_np, epi_dist, x1_f, mask=None)
+
+                print("visualize: scattered geometry distance (w/i threshold)")
+                vis_geoDist(img1_rgb_np, geo_dists.copy(), x1, mask=mask_in)
                 # print("geo_dists max after: ", geo_dists.max())
+
+                print("visualize: scattered geometry distance (out of threshold)")
+                vis_geoDist(img1_rgb_np, geo_dists.copy(), x1, mask=mask_out)
 
                 print("visualize: correspondences within geometry threshold")
                 utils_vis.draw_corr(img1_rgb_np, img2_rgb_np, x1[mask_in, :], x2[mask_in, :], linewidth=2.)
         #     print(np.sort(geo_dists[mask2 & mask_in] / geo_thres))
+                print("visualize: correspondences out of geometry threshold")
 
                 line_widths = geo_dists[mask_out] / geo_thres
                 line_widths[line_widths>10] = 10.
@@ -484,9 +531,10 @@ def get_error_from_sequence(data_loader, scene_data, args, config,
         
         if checkGeoDist:
             print("check Geometry Dist!")
-            checkGeoDist()
+            print("x1_m after: ", x1_m.shape)
+            checkGeoDist(x1_m, x2_m, epi_dist_mean_5point, geo_thres=1, visualize=visualize)
         
-        def check_epipolar_contraints():
+        def check_epipolar_contraints(x1, x2):
             ## Check epipolar constraints
 
             random_idx, _, _, colors = utils_opencv.sample_and_check(x1[mask2, :], x2[mask2, :], img1_rgb, img2_rgb, img1_rgb_np, img2_rgb_np, F_gt,                                                                  visualize=True, if_sample=False)
@@ -505,7 +553,7 @@ def get_error_from_sequence(data_loader, scene_data, args, config,
         #     print('GT camera matrix: (camera)\n', delta_Rtij_inv)   
 
         if check_epipolar_contraints:
-            check_epipolar_contraints()
+            check_epipolar_contraints(x1_m, x2_m)
 
         print(F_gt)
         print('=' * 20, " end a pair ", '=' * 20)
@@ -589,7 +637,7 @@ if __name__ == '__main__':
                         help="If available (e.g. with KITTI), will store SIFT points ground truth along with images, for validation")
     parser.add_argument("--dump_root", type=str, default='dump', help="Where to dump the data")
 
-    cmd = '--dump --with_pose --with_X     --dataset_dir /data/kitti/odometry     --dump_root /data/kitti/odometry/dump_tmp'.split()
+    # cmd = '--dump --with_pose --with_X     --dataset_dir /data/kitti/odometry     --dump_root /data/kitti/odometry/dump_tmp'.split()
     args = parser.parse_args()
     print("args: ", args)
     print()
@@ -663,7 +711,7 @@ if __name__ == '__main__':
     accs_mean = accs.mean(axis=0)
     num_corrs_mean = np.array(num_corrs).mean()
     print("average number of correspondences: %.2f"%num_corrs_mean, file=f)
-    print("percentage of inliers over %d frames, thd=(%.2f, %.2f): (%.2f, %.2f)"%      (accs.shape[0], thd_1, thd_2, accs_mean[0], accs_mean[1]), file=f)
+    print("percentage of inliers over %d frames, thd=(%.2f, %.2f): (%.2f, %.2f)"%      (accs.shape[0], thd_1, thd_2, accs_mean[0], accs_mean[1]), file=f)    
 
     ## opencv error
     tag = 'opencv_Rt'
@@ -680,13 +728,24 @@ if __name__ == '__main__':
     ###### end ######
     print("="*20, "   end   ", "="*20, file=f)
     print("="*50, file=f)
-    f.close()
-    f=None
+    if f is not None: f.close()
+    # f=None
 
+    ##### write to cvs #####
+    from utils.utils import append_csv
+    mode = config['feature_mode']
+    feature_type = get_feature_type(mode)
+    desc = feature_type if mode == 1 else feature_type + ': ' +  config['pretrained']
+    append_csv(file=config['csv_file'], arr=[desc])
+    # inliers percentage
+    append_csv(file=config['csv_file'], arr=[thd_1, thd_2])
+    append_csv(file=config['csv_file'], arr=accs_mean)
+    # R t error
+    zero_insert = lambda x: np.dstack((x,np.zeros_like(x))).flatten()
 
-
-
-
+    append_csv(file=config['csv_file'], arr=thds)
+    append_csv(file=config['csv_file'], arr=rt_inliers.transpose().flatten())
+    # append_csv(file=config['csv_file'], arr=rt_inliers.transpose())
 
 
 # In[ ]:
