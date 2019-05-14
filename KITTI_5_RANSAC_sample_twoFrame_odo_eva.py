@@ -311,7 +311,8 @@ def get_error_from_sequence(data_loader, scene_data, args, config,
         output_dir = './'
         sp_inferrer = SPInferLoader(config, output_dir, args)
         print("config: ", config, file=file)
-        print("use model: ", config['pretrained'], file=file)
+        pretrained_model = config['model']['pretrained']
+        print("use model: ", pretrained_model, file=file)
 
     print("feature_type: ", feature_type, file=file)
 
@@ -735,7 +736,7 @@ if __name__ == '__main__':
     from utils.utils import append_csv
     mode = config['feature_mode']
     feature_type = get_feature_type(mode)
-    desc = feature_type if mode == 1 else feature_type + ': ' +  config['pretrained']
+    desc = feature_type if mode == 1 else feature_type + ': ' +  pretrained_model
     append_csv(file=config['csv_file'], arr=[desc])
     # inliers percentage
     append_csv(file=config['csv_file'], arr=[thd_1, thd_2])
