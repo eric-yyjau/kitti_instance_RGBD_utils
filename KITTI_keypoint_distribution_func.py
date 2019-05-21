@@ -323,6 +323,7 @@ class Val_model_kitti(object):
 
     def getFeatures(self, img1, img1_rgb, img2, img2_rgb, visualize=False, feature_type='sift'):
         # Keypoint detection and matching with SIFT
+        results = {}
         if feature_type == 'sift':
             x1_all, kp1, des1 = utils_opencv.SIFT_det(img1, img1_rgb, visualize=visualize)
             x2_all, kp2, des2 = utils_opencv.SIFT_det(img2, img2_rgb, visualize=visualize)
@@ -332,10 +333,15 @@ class Val_model_kitti(object):
             img1_rgb_np, img2_rgb_np = np.array(img1_rgb), np.array(img2_rgb)
             # Keypoint detection and matching with SuperPoint inference model
             sp_pred = sp_inferrer.run_two_imgs(sp_inferrer.img_array_to_input(img1_rgb_np), sp_inferrer.img_array_to_input(img2_rgb_np))
+            x1_all, x2_all = sp_pred['prob'][0][:2,:].transpose(), sp_pred['warped_prob'][0][:2,:].transpose()
+            des1, des2 = sp_pred['desc'][0], sp_pred['warped_desc'][0]
             matches = sp_inferrer.get_matches(sp_pred)
             x1 = matches[0][:, :2]
             x2 = matches[0][:, 2:4]
-        return x1, x2
+        results.update({'x1_match':x1, 'x2_match':x2, 'x1_all':x1_all, 'x2_all':x2_all, 
+                        'desc1':des1, 'desc2':des2})
+        return results
+        # return x1, x2
 
     @staticmethod
     def filter_center_np(points, shape, center=[0,0], return_mask=False):
@@ -398,10 +404,11 @@ class Val_model_kitti(object):
         return results
         pass
 
-    def plot_points_distri(self, img1_rgb_np, x1, block_size=3, visualize=False):
+    def plot_points_distri(self, img1_rgb_np, pts_type, block_size=3, visualize=False):
         # round and scatter x1
         img_h, img_w = img1_rgb_np.shape[0], img1_rgb_np.shape[1]
         # x1_int = x1.round().astype(int)
+        x1 = self.pts_results[pts_type]
         # print("x1: ", x1.shape)
         # img_pts = np.zeros((img_h, img_w))
         # img_pts[x1_int[:,1], x1_int[:,0]] = 1
@@ -428,7 +435,7 @@ class Val_model_kitti(object):
         if visualize:
             from kitti_tools.kitti_draw import vis_geoDist
             if self.sift_result['enable']:
-                sifts = get_centers_from_points(self.sift_result['x1'])
+                sifts = get_centers_from_points(self.sift_result[pts_type])
                 self.sift_result.update(sifts)
                 vis_geoDist(img1_rgb_np, geo_dists=results['num_points'], x1=results['centers'], 
                     geo_dists_2=self.sift_result['num_points'], x2=self.sift_result['centers'],
@@ -477,26 +484,30 @@ class Val_model_kitti(object):
             img1_rgb_np, img2_rgb_np = np.array(img1_rgb), np.array(img2_rgb)
             img1, img2 = utils_opencv.PIL_to_gray(img1_rgb), utils_opencv.PIL_to_gray(img2_rgb)
             
-            x1, x2 = self.getFeatures(img1, img1_rgb, img2, img2_rgb, visualize=visualize, 
+            self.pts_results = self.getFeatures(img1, img1_rgb, img2, img2_rgb, visualize=visualize, 
                         feature_type=self.feature_type)
             if self.sift_result['enable']:
                 print ("get sift results")
-                self.sift_result['x1'], self.sift_result['x2'] = self.getFeatures(img1, img1_rgb, 
+                sifts = self.getFeatures(img1, img1_rgb, 
                         img2, img2_rgb, visualize=visualize, feature_type='sift')
+                self.sift_result.update(sifts)
                 
             # if config_eva['round']:
                 # x1, x2 = x1.round(), x2.round()
-            print("x1: some points: ", x1[:5])
+            print("x1: some points: ", self.pts_results['x1_match'][:5])
             print("img1_rgb_np: ", img1_rgb_np.shape)
 
-            x1_m = x1
-            x2_m = x2
+            # x1_m = x1
+            # x2_m = x2
             # visualize matches
             if visualize:
                 print("points used for RANSAC")
-                utils_vis.draw_corr(img1_rgb_np, img2_rgb_np, x1_m, x2_m, 1)
+                utils_vis.draw_corr(img1_rgb_np, img2_rgb_np, 
+                                    self.pts_results['x1_match'], 
+                                    self.pts_results['x2_match'], 1)
 
-            self.results = self.plot_points_distri(img1_rgb_np, x1_m, visualize=visualize)
+            pts_type = 'x1_all'
+            self.results = self.plot_points_distri(img1_rgb_np, pts_type, visualize=visualize)
 
             count += 1
             if count > self.iter_max:
