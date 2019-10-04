@@ -321,7 +321,10 @@ class KittiOdoLoader(object):
 
         # create dump folders
         dump_dir = Path(args.dump_root) / scene_data["rel_path"]
-        dump_dir.mkdir_p()
+        if dump_dir.is_dir():
+            logging.warning(f'dump_root exists: {dump_dir}')
+        else:
+            dump_dir.mkdir(parents=True, exist_ok=True)
         intrinsics = scene_data["calibs"]["K"]
         dump_cam_file = dump_dir / "cam"
         np.save(dump_cam_file + ".npy", intrinsics.astype(np.float32))
