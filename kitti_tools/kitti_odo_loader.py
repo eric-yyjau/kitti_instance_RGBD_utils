@@ -398,7 +398,7 @@ class KittiOdoLoader(object):
                     np.save(str(poses_file) + ".npy", np.stack(poses).reshape(-1, 3, 4))
                 else:
                     saveh5(
-                        {"poses": np.array(poses).reshape(-1, 3, 4)}, poses_file + ".h5"
+                        {"poses": np.array(poses).reshape(-1, 3, 4)}, str(poses_file) + ".h5"
                     )
 
         # Get SIFT matches
