@@ -581,13 +581,13 @@ def dump_sift_match_idx(delta_ij, N_frames, dump_dir, save_npy, if_BF_matcher):
             match_quality_all = np.hstack(
                 (sift_kps_ii[all_ij[:, 0]], sift_kps_jj[all_ij[:, 1]], quality_all)
             )  # [[x1, y1, x2, y2, dist_good, ratio_good]]
-            np.save(dump_ij_match_quality_file + "_good.npy", match_quality_good)
-            np.save(dump_ij_match_quality_file + "_all.npy", match_quality_all)
+            np.save(str(dump_ij_match_quality_file) + "_good.npy", match_quality_good)
+            np.save(str(dump_ij_match_quality_file) + "_all.npy", match_quality_all)
 
             # print(good_ij.dtype, quality_good.dtype, good_ij.shape, quality_good.shape)
         else:
             dump_ij_idx_dict = {"all_ij": all_ij, "good_ij": good_ij}
-            saveh5(dump_ij_idx_dict, dump_ij_idx_file + ".h5")
+            saveh5(dump_ij_idx_dict, str(dump_ij_idx_file) + ".h5")
 
 
 def get_sift_match_idx_pair(sift_matcher, des1, des2):
