@@ -71,7 +71,7 @@ class KittiOdoLoader(object):
         save_npy=True,
     ):
         # depth_size_ratio=1):
-        dir_path = Path(__file__).realpath().dirname()
+        # dir_path = Path(__file__).realpath().dirname()
 
         self.dataset_dir = Path(dataset_dir)
         self.img_height = img_height
@@ -462,7 +462,7 @@ class KittiOdoLoader(object):
             # for delta_ij in delta_ijs:
             #     dump_match_idx(delta_ij, scene_data['N_frames'], sift_des_list, dump_dir, self.save_npy, self.if_BF_matcher)
 
-        if len(dump_dir.rglob("*.jpg")) < 2:
+        if len(list(dump_dir.rglob("*.jpg"))) < 2:
             # dump_dir.rmtree()
             import shutil
             shutil.rmtree(dump_dir)
