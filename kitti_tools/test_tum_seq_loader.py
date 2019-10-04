@@ -12,7 +12,7 @@ import cv2
 from glob import glob
 import time
 
-from path import Path
+from pathlib import Path
 from tqdm import tqdm
 import logging
 logger = logging.getLogger()
@@ -58,7 +58,8 @@ parser.add_argument("--dump_root", type=str, default='dump', help="Where to dump
 #     --test_scene_file /home/ruizhu/Documents/Projects/SfmLearner-Pytorch/data/test_scenes.txt \
 #     --dataset_dir /home/ruizhu/Documents/Datasets/kitti/raw \
 
-args = parser.parse_args("--dump --dataset_dir /data/tum --with_pose --with_X \
+# no_X
+args = parser.parse_args("--dump --dataset_dir /data/tum --with_pose  \
                         --with_sift --dump_root /data/tum_test/ \
                         --num_threads=1  --cam_id 00".split())
 print(args)

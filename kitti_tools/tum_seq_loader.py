@@ -7,7 +7,7 @@ Rui Zhu, rzhu@eng.ucsd.edu, 2019
 
 from __future__ import division
 import numpy as np
-from path import Path
+from pathlib import Path
 from tqdm import tqdm
 import scipy.misc
 from collections import Counter
@@ -75,7 +75,7 @@ class tum_seq_loader(KittiOdoLoader):
         save_npy=True,
     ):
         # depth_size_ratio=1):
-        dir_path = Path(__file__).realpath().dirname()
+        # dir_path = Path(__file__).realpath().dirname()
 
         self.dataset_dir = Path(dataset_dir)
         self.img_height = img_height
@@ -152,7 +152,7 @@ class tum_seq_loader(KittiOdoLoader):
     def load_image(self, scene_data, tgt_idx, show_zoom_info=True):
         # use different image filename
         img_file = Path(scene_data["img_files"][tgt_idx])
-        if not img_file.isfile():
+        if not img_file.is_file():
             logging.warning("Image %s not found!" % img_file)
             return None, None, None
         img_ori = scipy.misc.imread(img_file)

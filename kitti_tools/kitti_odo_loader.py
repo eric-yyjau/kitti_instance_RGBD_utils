@@ -6,7 +6,7 @@ Rui Zhu, rzhu@eng.ucsd.edu, 2019
 
 from __future__ import division
 import numpy as np
-from path import Path
+from pathlib import Path
 from tqdm import tqdm
 import scipy.misc
 from collections import Counter
@@ -326,9 +326,11 @@ class KittiOdoLoader(object):
         else:
             dump_dir.mkdir(parents=True, exist_ok=True)
         intrinsics = scene_data["calibs"]["K"]
-        dump_cam_file = dump_dir / "cam"
-        np.save(dump_cam_file + ".npy", intrinsics.astype(np.float32))
+        # dump_cam_file = dump_dir / "cam"
+        # save: intrinsics
+        np.save(dump_dir /"cam.npy", intrinsics.astype(np.float32))
         dump_Rt_cam2_gt_file = dump_dir / "Rt_cam2_gt"
+        # save: camera intrinsics * extrinsics
         np.save(dump_Rt_cam2_gt_file, scene_data["Rt_cam2_gt"].astype(np.float32))
         poses_file = dump_dir / "poses"
         poses = []
@@ -366,34 +368,34 @@ class KittiOdoLoader(object):
                 dump_sift_file = dump_dir / "sift_{}".format(frame_nb)
                 if self.save_npy:
                     np.save(
-                        dump_sift_file + ".npy",
+                        f"{str(dump_sift_file)}.npy",
                         np.hstack((sample["sift_kp"], sample["sift_des"])),
                     )
                 else:
                     saveh5(
                         {"sift_kp": sample["sift_kp"], "sift_des": sample["sift_des"]},
-                        dump_sift_file + ".h5",
+                        f"{str(dump_sift_file)}.h5",
                     )
                 # sift_des_list.append(sample['sift_des'])
             if "SP_kp" in sample.keys():
                 dump_sift_file = dump_dir / "SP_{}".format(frame_nb)
                 if self.save_npy:
                     np.save(
-                        dump_sift_file + ".npy",
+                        f"{str(dump_sift_file)}.npy",
                         np.hstack((sample["SP_kp"], sample["SP_des"])),
                     )
                     # print(sample['SP_kp'].shape, sample['SP_des'].shape)
                 else:
                     pass
 
-            sample_name_list.append("%s %s" % (dump_dir[-5:], frame_nb))
+            sample_name_list.append("%s %s" % (str(dump_dir)[-5:], frame_nb))
 
         # Get all poses
         if "pose" in sample.keys():
             if len(poses) != 0:
                 # np.savetxt(poses_file, np.array(poses).reshape(-1, 16), fmt='%.20e')a
                 if self.save_npy:
-                    np.save(poses_file + ".npy", np.stack(poses).reshape(-1, 3, 4))
+                    np.save(str(poses_file) + ".npy", np.stack(poses).reshape(-1, 3, 4))
                 else:
                     saveh5(
                         {"poses": np.array(poses).reshape(-1, 3, 4)}, poses_file + ".h5"
