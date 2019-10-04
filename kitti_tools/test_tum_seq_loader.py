@@ -57,19 +57,18 @@ parser.add_argument("--dump_root", type=str, default='dump', help="Where to dump
 #     --static_frames_file /home/ruizhu/Documents/Projects/SfmLearner-Pytorch/data/static_frames.txt \
 #     --test_scene_file /home/ruizhu/Documents/Projects/SfmLearner-Pytorch/data/test_scenes.txt \
 #     --dataset_dir /home/ruizhu/Documents/Datasets/kitti/raw \
-#     --dump_root /home/ruizhu/Documents/Datasets/kitti/corr_dump'.split())
 
-args = parser.parse_args("--dump --dataset_dir /data/kitti/odometry --with_pose --with_X \
-                        --with_sift --dump_root /home/ruizhu/Documents/Datasets/kitti/kitti_dump/odo_corr_dump_siftIdx_npy_delta1235810_full \
-                        --num_threads=1".split())
+args = parser.parse_args("--dump --dataset_dir /data/tum --with_pose --with_X \
+                        --with_sift --dump_root /data/tum_test/ \
+                        --num_threads=1  --cam_id 00".split())
 print(args)
 
 # %reload_ext autoreload
 # %autoreload 2
 
-from kitti_odo_loader import KittiOdoLoader
+from tum_seq_loader import tum_seq_loader as seq_loader
 assert args.cam_id in ['00', '02'], 'Only supported left greyscale/color cameras (cam 00 or 02)!'
-data_loader = KittiOdoLoader(args.dataset_dir,
+data_loader = seq_loader(args.dataset_dir,
                              img_height=args.img_height,
                              img_width=args.img_width,
                              cam_ids=[args.cam_id],
@@ -83,10 +82,6 @@ n_scenes = {'train': len(data_loader.scenes['train']), 'test': len(data_loader.s
 print('Found %d potential train scenes, and %d test scenes.'%(n_scenes['train'], n_scenes['test']))
 
 print(f"one scene: {data_loader.scenes['train'][0]}")
-
-# for j, sample in enumerate(data_loader):
-#     if j>0: break
-#     print(f"sample: {sample}")
 
 # dump scenes
 drive_path = data_loader.scenes['train'][0]
