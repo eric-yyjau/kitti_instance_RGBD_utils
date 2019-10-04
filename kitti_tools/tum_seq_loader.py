@@ -83,8 +83,8 @@ class tum_seq_loader(KittiOdoLoader):
         self.cam_ids = cam_ids  # ['cam0/data']
         # assert self.cam_ids == ['02'], 'Support left camera only!'
         self.cid_to_num = {"00": 0, "01": 1, "02": 2, "03": 3}
-        self.train_seqs = ["rgbd_dataset_freiburg1_xyz"]
-        self.test_seqs = ["rgbd_dataset_freiburg1_xyz"]
+        self.train_seqs = ["rgbd_dataset_freiburg1_xyz_small"]
+        self.test_seqs = ["rgbd_dataset_freiburg1_xyz_small"]
         # self.train_seqs = [4]
         # self.test_seqs = []
         # self.train_seqs = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]

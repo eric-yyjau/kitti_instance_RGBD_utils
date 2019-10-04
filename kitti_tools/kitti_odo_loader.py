@@ -338,6 +338,7 @@ class KittiOdoLoader(object):
         logging.info("Dumping %d samples to %s..." % (scene_data["N_frames"], dump_dir))
         sample_name_list = []
         # sift_des_list = []
+        # dump features, images frame by frame
         for idx in tqdm(range(scene_data["N_frames"])):
             frame_id = scene_data["frame_ids"][idx]
             assert int(frame_id) == idx
@@ -461,8 +462,10 @@ class KittiOdoLoader(object):
             # for delta_ij in delta_ijs:
             #     dump_match_idx(delta_ij, scene_data['N_frames'], sift_des_list, dump_dir, self.save_npy, self.if_BF_matcher)
 
-        if len(dump_dir.files("*.jpg")) < 2:
-            dump_dir.rmtree()
+        if len(dump_dir.rglob("*.jpg")) < 2:
+            # dump_dir.rmtree()
+            import shutil
+            shutil.rmtree(dump_dir)
 
         return sample_name_list
 
@@ -533,6 +536,7 @@ class KittiOdoLoader(object):
 
 
 def dump_sift_match_idx(delta_ij, N_frames, dump_dir, save_npy, if_BF_matcher):
+    # select which kind of matcher
     if (
         if_BF_matcher
     ):  # OpenCV sift matcher must be created inside each thread (because it does not support sharing across threads!)
@@ -545,9 +549,11 @@ def dump_sift_match_idx(delta_ij, N_frames, dump_dir, save_npy, if_BF_matcher):
         flann = cv2.FlannBasedMatcher(index_params, search_params)
         sift_matcher = flann
 
+    # do matching for different deltas
     for ii in tqdm(range(N_frames - delta_ij)):
         jj = ii + delta_ij
 
+        ## read sift features and descriptors for 2 frames
         sift_kps_ii, sift_des_ii = load_sift(
             dump_dir, "%06d" % ii, ext=".npy" if save_npy else ".h5"
         )
@@ -569,10 +575,10 @@ def dump_sift_match_idx(delta_ij, N_frames, dump_dir, save_npy, if_BF_matcher):
         dump_ij_match_quality_file = dump_dir / "ij_match_quality_{}-{}".format(ii, jj)
 
         if save_npy:
-            np.save(dump_ij_idx_file + "_all.npy", all_ij)
-            np.save(dump_ij_idx_file + "_good.npy", good_ij)
-            np.save(dump_ij_quality_file + "_good.npy", quality_good)
-            np.save(dump_ij_quality_file + "_all.npy", quality_all)
+            np.save(str(dump_ij_idx_file) + "_all.npy", all_ij)
+            np.save(str(dump_ij_idx_file) + "_good.npy", good_ij)
+            np.save(str(dump_ij_quality_file) + "_good.npy", quality_good)
+            np.save(str(dump_ij_quality_file) + "_all.npy", quality_all)
 
             # print(good_ij, good_ij.shape)
             match_quality_good = np.hstack(
@@ -591,6 +597,9 @@ def dump_sift_match_idx(delta_ij, N_frames, dump_dir, save_npy, if_BF_matcher):
 
 
 def get_sift_match_idx_pair(sift_matcher, des1, des2):
+    """
+    do matchings, test the quality of matchings
+    """
     try:
         matches = sift_matcher.knnMatch(
             des1, des2, k=2
@@ -647,7 +656,7 @@ def dump_SP_match_idx(delta_ij, N_frames, dump_dir, save_npy, nn_threshes):
                 match_quality = np.hstack(
                     (matches, scores)
                 )  # [[x1, y1, x2, y2, dist_good, ratio_good]]
-                np.save(dump_ij_match_quality_file + "_%s.npy" % name, match_quality)
+                np.save(str(dump_ij_match_quality_file) + "_%s.npy" % name, match_quality)
             else:
                 pass
 
