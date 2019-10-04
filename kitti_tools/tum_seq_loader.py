@@ -56,7 +56,14 @@ from models.model_wrap import PointTracker
 from models.model_wrap import SuperPointFrontend_torch
 
 from kitti_odo_loader import KittiOdoLoader
-from kitti_odo_loader import *
+from kitti_odo_loader import (
+    dump_sift_match_idx,
+    get_sift_match_idx_pair,
+    dump_SP_match_idx,
+    get_SP_match_idx_pair,
+    load_velo,
+    read_odo_calib_file,
+)
 
 
 class tum_seq_loader(KittiOdoLoader):
@@ -225,9 +232,8 @@ class tum_seq_loader(KittiOdoLoader):
             }
 
             # Get geo params from the RAW dataset calibs
-            calib_file = os.path.join(
-                "tum/TUM1.yaml"
-            )
+            # calib_file = os.path.join("tum/TUM1.yaml")
+            calib_file = os.path.join("/data/tum/calib/TUM1.yaml")
             # calib_file = f"{scene_data['img_files'][0].str()}/../../sensor.yaml"
             P_rect_ori = self.get_P_rect(calib_file, scene_data["calibs"])
             P_rect_ori_dict = {c: P_rect_ori}
@@ -262,10 +268,7 @@ class tum_seq_loader(KittiOdoLoader):
 
             # Get pose
             poses = (
-                np.genfromtxt(
-                    Path(drive_path)
-                    / "groundtruth_filter.kitti"
-                )
+                np.genfromtxt(Path(drive_path) / "groundtruth_filter.kitti")
                 .astype(np.float32)
                 .reshape(-1, 3, 4)
             )
@@ -287,11 +290,13 @@ class tum_seq_loader(KittiOdoLoader):
         # D = np.array(calib_data['distortion_coefficients'])
         # cam_info.R = [1, 0, 0, 0, 1, 0, 0, 0, 1]
         calib_data = loadConfig(calib_file)
-        fu, fv, cu, cv = calib_data['Camera.fx'], calib_data['Camera.fy'], \
-                        calib_data['Camera.cx'], calib_data['Camera.cy']
-        K = np.array([[fu, 0, cu],
-                    [0, fv, cv],
-                    [0, 0, 1]])
+        fu, fv, cu, cv = (
+            calib_data["Camera.fx"],
+            calib_data["Camera.fy"],
+            calib_data["Camera.cx"],
+            calib_data["Camera.cy"],
+        )
+        K = np.array([[fu, 0, cu], [0, fv, cv], [0, 0, 1]])
 
         P_rect = np.concatenate((K, [[0], [0], [0]]), axis=1)
 
