@@ -126,6 +126,7 @@ class KittiOdoLoader(object):
             self.prapare_SP()
         self.collect_train_folders()
         self.collect_test_folders()
+        self.train_scenes = {}
 
     def prapare_SP(self):
         logging.info("Preparing SP inference.")
@@ -255,6 +256,7 @@ class KittiOdoLoader(object):
             scene_data["Rt_cam2_gt"] = scene_data["calibs"]["Rtl_gt"]
 
             train_scenes.append(scene_data)
+        self.train_scenes = train_scenes
         return train_scenes
 
     def construct_sample(self, scene_data, idx, frame_id, show_zoom_info):
@@ -264,7 +266,7 @@ class KittiOdoLoader(object):
 
         # get 3d points
         if self.get_X:
-            velo = load_velo(scene_data, idx)
+            velo = self.load_velo(scene_data, idx)
             if velo is None:
                 logging.error("0 velo in %s. Skipped." % scene_data["dir"])
             velo_homo = utils_misc.homo_np(velo)
@@ -355,15 +357,15 @@ class KittiOdoLoader(object):
                 dump_X_cam0_file = dump_dir / "X_cam0_{}".format(frame_nb)
                 dump_X_cam2_file = dump_dir / "X_cam2_{}".format(frame_nb)
                 if self.save_npy:
-                    np.save(dump_X_cam0_file + ".npy", sample["X_cam0_vis"])
-                    np.save(dump_X_cam2_file + ".npy", sample["X_cam2_vis"])
+                    np.save(str(dump_X_cam0_file) + ".npy", sample["X_cam0_vis"])
+                    np.save(str(dump_X_cam2_file) + ".npy", sample["X_cam2_vis"])
                 else:
                     saveh5(
                         {
                             "X_cam0_vis": sample["X_cam0_vis"],
                             "X_cam2_vis": sample["X_cam2_vis"],
                         },
-                        dump_X_file + ".h5",
+                        f'{dump_X_file}/.h5',
                     )
             if "sift_kp" in sample.keys():
                 dump_sift_file = dump_dir / "sift_{}".format(frame_nb)
@@ -473,10 +475,9 @@ class KittiOdoLoader(object):
         img_file = (
             scene_data["dir"]
             / "image_{}".format(scene_data["cid_num"])
-            / scene_data["frame_ids"][tgt_idx]
-            + ".png"
+            / f'{str(scene_data["frame_ids"][tgt_idx])}.png'
         )
-        if not img_file.isfile():
+        if not img_file.is_file():
             logging.warning("Image %s not found!" % img_file)
             return None, None, None
         img_ori = scipy.misc.imread(img_file)
@@ -533,6 +534,17 @@ class KittiOdoLoader(object):
         )
         calibs_rects = {"Rtl_gt": Rtl_gt}
         return calibs_rects
+
+    @staticmethod
+    def load_velo(scene_data, tgt_idx):
+        velo_file = (
+            scene_data["dir"] / "velodyne" / f'{scene_data["frame_ids"][tgt_idx]}.bin'
+        )
+        if not velo_file.is_file():
+            logging.warning("Velo file %s not found!" % velo_file)
+            return None
+        velo = load_velo_scan(str(velo_file))[:, :3]
+        return velo
 
 
 def dump_sift_match_idx(delta_ij, N_frames, dump_dir, save_npy, if_BF_matcher):
@@ -671,15 +683,7 @@ def get_SP_match_idx_pair(matcher, kps1, kps2, des1, des2):
     return matches.astype(np.float32).copy(), scores.astype(np.float32).copy()
 
 
-def load_velo(scene_data, tgt_idx):
-    velo_file = (
-        scene_data["dir"] / "velodyne" / scene_data["frame_ids"][tgt_idx] + ".bin"
-    )
-    if not velo_file.isfile():
-        logging.warning("Velo file %s not found!" % velo_file)
-        return None
-    velo = load_velo_scan(velo_file)[:, :3]
-    return velo
+
 
 
 def read_odo_calib_file(filepath, cid=2):

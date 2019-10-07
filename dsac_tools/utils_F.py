@@ -10,7 +10,7 @@ import operator
 import dsac_tools.utils_misc as utils_misc
 import dsac_tools.utils_geo as utils_geo
 import dsac_tools.utils_vis as utils_vis
-from batch_svd import batch_svd # https://github.com/KinglittleQ/torch-batch-svd.git
+# from batch_svd import batch_svd # https://github.com/KinglittleQ/torch-batch-svd.git
 
 def _normalize_XY(X, Y):
     """ The Hartley normalization. Following https://github.com/marktao99/python/blob/da2682f8832483650b85b0be295ae7eaf179fcc5/CVP/samples/sfm.py#L157 

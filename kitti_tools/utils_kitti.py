@@ -331,6 +331,12 @@ def read_calib_file(path):
     return data
 
 def rectify(velo_homo, calibs):
+        """
+        project 3d points from cam2 to cam0
+        why plotting homography projection?
+        return:
+            val_idxes, X_rect.T, X_cam0
+        """
         val_inds_list = []
 
         X_homo = np.dot(np.dot(calibs['cam_2rect'], calibs['velo2cam']), velo_homo.T) # 4*N

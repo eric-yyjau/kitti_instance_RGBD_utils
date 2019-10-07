@@ -61,7 +61,6 @@ from kitti_odo_loader import (
     get_sift_match_idx_pair,
     dump_SP_match_idx,
     get_SP_match_idx_pair,
-    load_velo,
     read_odo_calib_file,
 )
 
@@ -139,10 +138,10 @@ class tum_seq_loader(KittiOdoLoader):
         self.collect_train_folders()
         self.collect_test_folders()
 
-    def read_images_files_from_folder(self, drive_path, scene_data):
+    def read_images_files_from_folder(self, drive_path, scene_data, folder='rgb'):
         print(f"cid_num: {scene_data['cid_num']}")
         img_dir = os.path.join(drive_path, "")
-        img_files = sorted(glob(img_dir + "/rgb/*.png"))
+        img_files = sorted(glob(img_dir + f"/{folder}/*.png"))
         print(f"img_files: {img_files[0]}")
         return img_files
 
@@ -198,7 +197,10 @@ class tum_seq_loader(KittiOdoLoader):
             # img_dir = os.path.join(drive_path, 'image_%d'%scene_data['cid_num'])
             # scene_data['img_files'] = sorted(glob(img_dir + '/*.png'))
             scene_data["img_files"] = self.read_images_files_from_folder(
-                drive_path, scene_data
+                drive_path, scene_data, folder='rgb'
+            )
+            scene_data["depth_files"] = self.read_images_files_from_folder(
+                drive_path, scene_data, folder='depth'
             )
             scene_data["N_frames"] = len(scene_data["img_files"])
             assert scene_data["N_frames"] != 0, "No file found for %s!" % drive_path
@@ -239,8 +241,8 @@ class tum_seq_loader(KittiOdoLoader):
             P_rect_ori_dict = {c: P_rect_ori}
             intrinsics = P_rect_ori_dict[c][:, :3]
             # calibs_rects = self.get_rect_cams(intrinsics, P_rect_ori_dict[c])
-            calibs_rects = {"Rtl_gt": intrinsics}
-            cam_2rect_mat = intrinsics
+            calibs_rects = {"Rtl_gt": np.eye(4)} # only one camera, no extrinsics
+            cam_2rect_mat = np.eye(4)  # extrinsics for cam2
 
             # drive_in_raw = self.map_to_raw[drive_path[-2:]]
             # date = drive_in_raw[:10]
@@ -252,7 +254,7 @@ class tum_seq_loader(KittiOdoLoader):
             # velo2cam_mat = transform_from_rot_trans(velo2cam_dict['R'], velo2cam_dict['T'])
             # imu2velo_mat = transform_from_rot_trans(imu2velo_dict['R'], imu2velo_dict['T'])
             # cam_2rect_mat = transform_from_rot_trans(cam2cam_dict['R_rect_00'], np.zeros(3))
-            velo2cam_mat = None
+            velo2cam_mat = np.eye(4)
             cam2body_mat = np.eye(3)
 
             scene_data["calibs"].update(
@@ -302,6 +304,42 @@ class tum_seq_loader(KittiOdoLoader):
 
         return P_rect
 
+    @staticmethod
+    def load_velo(scene_data, tgt_idx):
+        """
+        create point clouds from depth image, return array of points 
+        return:
+            np [N, 3] (3d points)
+        """
+        depth_file = scene_data["depth_files"][tgt_idx]
+        color_file = scene_data["img_files"][tgt_idx]
+
+        def get_point_cloud_from_images(color_file, depth_file):
+            """
+            """
+            import open3d as o3d
+            depth_raw = o3d.io.read_image(depth_file)
+            color_raw = o3d.io.read_image(color_file)
+            rgbd_image = o3d.geometry.RGBDImage.create_from_tum_format(
+                color_raw, depth_raw)
+            pcd = o3d.geometry.PointCloud.create_from_rgbd_image(
+                rgbd_image,
+                o3d.camera.PinholeCameraIntrinsic(
+                    o3d.camera.PinholeCameraIntrinsicParameters.PrimeSenseDefault))
+            # Flip it, otherwise the pointcloud will be upside down
+            pcd.transform([[1, 0, 0, 0], [0, -1, 0, 0], [0, 0, -1, 0], [0, 0, 0, 1]])            
+            xyz_points = np.asarray(pcd.points)
+            return xyz_points
+
+        ### 
+        if Path(color_file).is_file() is False or Path(depth_file).is_file() is False:
+            logging.warning(f"color file {color_file} or depth file {depth_file} not found!")
+            return None
+        
+        xyz_points = get_point_cloud_from_images(color_file, depth_file)
+        # print(f"xyz: {xyz_points[0]}")
+        
+        return xyz_points
 
 def loadConfig(filename):
     import yaml
