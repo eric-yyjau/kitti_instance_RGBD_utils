@@ -2426,3 +2426,39 @@ error_R = 0.3789, error_t = 0.4631
 ======= opencv_Rt, thd: (0.1, 0.5, 1.0, 2.0, 5.0, 10.0), ([0.03 0.01], [0.35 0.07], [0.58 0.22], [0.8  0.56], [1.  0.8], [1.   0.95])
 ====================    end    ====================
 ==================================================
+==================================================
+====================  start  ====================
+==================================================
+2019-10-07 15:42:48.206230
+config path:  ./configs/superpoint_kitti_test_heatmap.yaml
+==========  important config:  ==========
+params :  {'ransac_thresh': 0.1}
+random_frame :  True
+starting_frame :  500
+frame_diff :  1
+round :  False
+block_center :  {'enable': False, 'size': [100, 200]}
+iter_max :  3
+five_point :  False
+use_est_E :  False
+other_settings :  use gt E for % of correspondence inliers
+feature_type:  sift
+====================   8_point   ====================
+======= 8_point, thd=(0.10, 1.00): 0.13, 0.70
+======= 8_point, thd=(0.10, 1.00): 0.03, 0.33
+======= 8_point, thd=(0.10, 1.00): 0.08, 0.54
+average number of correspondences: 1040.67
+percentage of inliers over 3 frames, thd=(0.10, 1.00): (0.08, 0.52)
+====================   8_point   ====================
+======= 8_point, thd=(0.10, 1.00): 0.13, 0.70
+======= 8_point, thd=(0.10, 1.00): 0.03, 0.33
+======= 8_point, thd=(0.10, 1.00): 0.08, 0.54
+average number of correspondences: 1040.67
+percentage of inliers over 3 frames, thd=(0.10, 1.00): (0.08, 0.52)
+====================   opencv_Rt   ====================
+error_R = 0.0398, error_t = 0.4900
+error_R = 0.1617, error_t = 179.2727
+error_R = 0.1545, error_t = 0.3614
+======= opencv_Rt, thd: (0.1, 0.5, 1.0, 2.0, 5.0, 10.0), ([0.33 0.  ], [1.   0.67], [1.   0.67], [1.   0.67], [1.   0.67], [1.   0.67])
+====================    end    ====================
+==================================================

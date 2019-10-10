@@ -53,7 +53,7 @@ print("module path: ", module_path)
 
 #### load kitti data ####
 def loadKitti(args):
-    from kitti_odo_loader_memoryHungry import KittiOdoLoader
+    from kitti_tools.kitti_odo_loader_memoryHungry import KittiOdoLoader
 
     data_loader = KittiOdoLoader(args.dataset_dir,
                                  img_height=args.img_height,
@@ -283,8 +283,8 @@ def get_error_from_sequence(data_loader, scene_data, args, config,
     errors, seed=0, file=None, checkGeoDist=False, check_epipolar_contraints=False, visualize=False): 
     # global feature_type
     # feature mode
-    # from train3 import SPInferLoader
-    from train3 import SPInferLoader_heatmap as SPInferLoader
+    from train3 import SPInferLoader
+    # from train3 import SPInferLoader_heatmap as SPInferLoader
     from kitti_tools.kitti_draw import vis_geoDist
 
     np.random.seed(seed)
