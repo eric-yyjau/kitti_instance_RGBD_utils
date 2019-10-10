@@ -240,6 +240,7 @@ class tum_seq_loader(KittiOdoLoader):
             P_rect_ori = self.get_P_rect(calib_file, scene_data["calibs"])
             P_rect_ori_dict = {c: P_rect_ori}
             intrinsics = P_rect_ori_dict[c][:, :3]
+            print(f"intrinsics: {intrinsics}")
             # calibs_rects = self.get_rect_cams(intrinsics, P_rect_ori_dict[c])
             calibs_rects = {"Rtl_gt": np.eye(4)} # only one camera, no extrinsics
             cam_2rect_mat = np.eye(4)  # extrinsics for cam2
@@ -274,14 +275,20 @@ class tum_seq_loader(KittiOdoLoader):
                 .astype(np.float32)
                 .reshape(-1, 3, 4)
             )
+            # print(f"poses before: {poses[:10]}")
+            # ## invert camera poses of world coord to poses of camera coord
+            # poses = np.array([np.linalg.inv(utils_misc.Rt_pad(pose))[:3] for pose in poses])
+            # print(f"poses after: {poses[:10]}")
+
             assert scene_data["N_frames"] == poses.shape[0], (
                 "scene_data[N_frames]!=poses.shape[0], %d!=%d"
                 % (scene_data["N_frames"], poses.shape[0])
             )
             scene_data["poses"] = poses
 
-            # ground truth rt for camera
+            # extrinsic matrix for cameraN to this camera
             scene_data["Rt_cam2_gt"] = scene_data["calibs"]["Rtl_gt"]
+            print(f'scene_data["Rt_cam2_gt"]: {scene_data["Rt_cam2_gt"]}')
 
             train_scenes.append(scene_data)
         return train_scenes
@@ -301,7 +308,11 @@ class tum_seq_loader(KittiOdoLoader):
         K = np.array([[fu, 0, cu], [0, fv, cv], [0, 0, 1]])
 
         P_rect = np.concatenate((K, [[0], [0], [0]]), axis=1)
-
+        # rescale the camera matrix
+        if calibs["rescale"]:
+            P_rect = scale_P(
+                P_rect, calibs["zoom_xy"][0], calibs["zoom_xy"][1]
+            )
         return P_rect
 
     @staticmethod
@@ -316,8 +327,9 @@ class tum_seq_loader(KittiOdoLoader):
 
         def get_point_cloud_from_images(color_file, depth_file):
             """
+            will cause crashes!!!
             """
-            import open3d as o3d
+            import open3d as o3d # import open3d before torch to avoid crashes
             depth_raw = o3d.io.read_image(depth_file)
             color_raw = o3d.io.read_image(color_file)
             rgbd_image = o3d.geometry.RGBDImage.create_from_tum_format(
@@ -336,7 +348,8 @@ class tum_seq_loader(KittiOdoLoader):
             logging.warning(f"color file {color_file} or depth file {depth_file} not found!")
             return None
         
-        xyz_points = get_point_cloud_from_images(color_file, depth_file)
+        # xyz_points = get_point_cloud_from_images(color_file, depth_file)
+        xyz_points = np.ones((10,3)) ######!!!
         # print(f"xyz: {xyz_points[0]}")
         
         return xyz_points
