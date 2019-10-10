@@ -268,7 +268,8 @@ class KittiOdoLoader(object):
 
         # get 3d points
         if self.get_X:
-            velo = self.load_velo(scene_data, idx)
+            # feed in intrinsics for TUM to extract depth
+            velo = self.load_velo(scene_data, idx, scene_data["calibs"].get("P_rect_noScale", None))
             print(f"velo: {velo.shape}")
             if velo is None:
                 logging.error("0 velo in %s. Skipped." % scene_data["dir"])
@@ -547,7 +548,7 @@ class KittiOdoLoader(object):
         return calibs_rects
 
     @staticmethod
-    def load_velo(scene_data, tgt_idx):
+    def load_velo(scene_data, tgt_idx, calib_K=None):
         velo_file = (
             scene_data["dir"] / "velodyne" / f'{scene_data["frame_ids"][tgt_idx]}.bin'
         )

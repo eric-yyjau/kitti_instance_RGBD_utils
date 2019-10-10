@@ -237,8 +237,8 @@ class tum_seq_loader(KittiOdoLoader):
             # calib_file = os.path.join("tum/TUM1.yaml")
             calib_file = os.path.join("/data/tum/calib/TUM1.yaml")
             # calib_file = f"{scene_data['img_files'][0].str()}/../../sensor.yaml"
-            P_rect_ori = self.get_P_rect(calib_file, scene_data["calibs"])
-            P_rect_ori_dict = {c: P_rect_ori}
+            P_rect_noScale, P_rect_scale = self.get_P_rect(calib_file, scene_data["calibs"])
+            P_rect_ori_dict = {c: P_rect_scale}
             intrinsics = P_rect_ori_dict[c][:, :3]
             print(f"intrinsics: {intrinsics}")
             # calibs_rects = self.get_rect_cams(intrinsics, P_rect_ori_dict[c])
@@ -262,6 +262,7 @@ class tum_seq_loader(KittiOdoLoader):
                 {
                     "K": intrinsics,
                     "P_rect_ori_dict": P_rect_ori_dict,
+                    "P_rect_noScale": P_rect_noScale,  # add for read and process 3d points
                     "cam_2rect": cam_2rect_mat,
                     "velo2cam": velo2cam_mat,
                     "cam2body_mat": cam2body_mat,
@@ -307,16 +308,20 @@ class tum_seq_loader(KittiOdoLoader):
         )
         K = np.array([[fu, 0, cu], [0, fv, cv], [0, 0, 1]])
 
-        P_rect = np.concatenate((K, [[0], [0], [0]]), axis=1)
+        P_rect_ori = np.concatenate((K, [[0], [0], [0]]), axis=1)
         # rescale the camera matrix
+
         if calibs["rescale"]:
-            P_rect = scale_P(
-                P_rect, calibs["zoom_xy"][0], calibs["zoom_xy"][1]
+            P_rect_scale = scale_P(
+                P_rect_ori, calibs["zoom_xy"][0], calibs["zoom_xy"][1]
             )
-        return P_rect
+        else:
+            P_rect_scale = P_rect_ori
+
+        return P_rect_ori, P_rect_scale
 
     @staticmethod
-    def load_velo(scene_data, tgt_idx):
+    def load_velo(scene_data, tgt_idx, calib_K=None):
         """
         create point clouds from depth image, return array of points 
         return:
@@ -325,32 +330,65 @@ class tum_seq_loader(KittiOdoLoader):
         depth_file = scene_data["depth_files"][tgt_idx]
         color_file = scene_data["img_files"][tgt_idx]
 
-        def get_point_cloud_from_images(color_file, depth_file):
-            """
-            will cause crashes!!!
-            """
-            import open3d as o3d # import open3d before torch to avoid crashes
-            depth_raw = o3d.io.read_image(depth_file)
-            color_raw = o3d.io.read_image(color_file)
-            rgbd_image = o3d.geometry.RGBDImage.create_from_tum_format(
-                color_raw, depth_raw)
-            pcd = o3d.geometry.PointCloud.create_from_rgbd_image(
-                rgbd_image,
-                o3d.camera.PinholeCameraIntrinsic(
-                    o3d.camera.PinholeCameraIntrinsicParameters.PrimeSenseDefault))
-            # Flip it, otherwise the pointcloud will be upside down
-            pcd.transform([[1, 0, 0, 0], [0, -1, 0, 0], [0, 0, -1, 0], [0, 0, 0, 1]])            
-            xyz_points = np.asarray(pcd.points)
-            return xyz_points
+        # def get_point_cloud_from_images(color_file, depth_file):
+        #     """
+        #     will cause crashes!!!
+        #     """
+        #     import open3d as o3d # import open3d before torch to avoid crashes
+        #     depth_raw = o3d.io.read_image(depth_file)
+        #     color_raw = o3d.io.read_image(color_file)
+        #     rgbd_image = o3d.geometry.RGBDImage.create_from_tum_format(
+        #         color_raw, depth_raw)
+        #     pcd = o3d.geometry.PointCloud.create_from_rgbd_image(
+        #         rgbd_image,
+        #         o3d.camera.PinholeCameraIntrinsic(
+        #             o3d.camera.PinholeCameraIntrinsicParameters.PrimeSenseDefault))
+        #     # Flip it, otherwise the pointcloud will be upside down
+        #     pcd.transform([[1, 0, 0, 0], [0, -1, 0, 0], [0, 0, -1, 0], [0, 0, 0, 1]])            
+        #     xyz_points = np.asarray(pcd.points)
+        #     return xyz_points
+
+        def get_point_cloud_from_images(color_file, depth_file, calib_K=None):
+            from PIL import Image
+            depth = Image.open(depth_file)
+            rgb = Image.open(color_file)
+            points = []
+
+            ## parameters
+            if calib_K is None:
+                focalLength = 525.0
+                centerX = 319.5
+                centerY = 239.5
+            else:
+                focalLength = (calib_K[0,0] + calib_K[1,1])/2
+                centerX = calib_K[0,2]
+                centerY = calib_K[1,2]
+                print(f"get calibration matrix for retrieving points: focalLength = {focalLength}, centerX = {centerX}, centerY = {centerY}")
+
+            scalingFactor = 5000.0
+
+            for v in range(rgb.size[1]):
+                for u in range(rgb.size[0]):
+                    color = rgb.getpixel((u,v))
+                    Z = depth.getpixel((u,v)) / scalingFactor
+                    if Z==0: continue
+                    X = (u - centerX) * Z / focalLength
+                    Y = (v - centerY) * Z / focalLength
+        #             points.append("%f %f %f %d %d %d 0\n"%(X,Y,Z,color[0],color[1],color[2]))
+                    points.append([X,Y,Z])
+
+            print(f"points: {points[:3]}")
+            return np.array(points)
+            pass
 
         ### 
         if Path(color_file).is_file() is False or Path(depth_file).is_file() is False:
             logging.warning(f"color file {color_file} or depth file {depth_file} not found!")
             return None
         
-        # xyz_points = get_point_cloud_from_images(color_file, depth_file)
-        xyz_points = np.ones((10,3)) ######!!!
-        # print(f"xyz: {xyz_points[0]}")
+        xyz_points = get_point_cloud_from_images(color_file, depth_file, calib_K=calib_K)
+        # xyz_points = np.ones((10,3)) ######!!!
+        print(f"xyz: {xyz_points[0]}, {xyz_points.shape}")
         
         return xyz_points
 
