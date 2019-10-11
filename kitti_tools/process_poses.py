@@ -23,6 +23,9 @@ if __name__ == "__main__":
     if_cp_tum = True # copy tum camera models to the folder
 
     folders = glob.glob(f"{args.dataset_dir}/**/")
+    target = ['rgbd_dataset_freiburg2_xyz']
+    folders = [Path(args.dataset_dir) / t for t in target]
+
     for folder in folders:
         # subprocess.run(f"tar -zxf {f}", shell=True, check=True)
         print(folder)

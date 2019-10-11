@@ -90,8 +90,11 @@ class tum_seq_loader(KittiOdoLoader):
         # assert self.cam_ids == ['02'], 'Support left camera only!'
         self.cid_to_num = {"00": 0, "01": 1, "02": 2, "03": 3}
 
-        debug = True
-        if debug:
+        self.debug = True
+        if self.debug:
+            coloredlogs.install(level="DEBUG", logger=logger) # original info
+
+        if self.debug:
             ## small dataset for debuggin
             self.train_seqs = ["rgbd_dataset_freiburg1_xyz"]
             self.test_seqs = ["rgbd_dataset_freiburg1_xyz"]
@@ -260,7 +263,7 @@ class tum_seq_loader(KittiOdoLoader):
             )
             P_rect_ori_dict = {c: P_rect_scale}
             intrinsics = P_rect_ori_dict[c][:, :3]
-            print(f"intrinsics: {intrinsics}")
+            logging.debug(f"intrinsics: {intrinsics}")
             # calibs_rects = self.get_rect_cams(intrinsics, P_rect_ori_dict[c])
             calibs_rects = {"Rtl_gt": np.eye(4)}  # only one camera, no extrinsics
             cam_2rect_mat = np.eye(4)  # extrinsics for cam2
@@ -322,7 +325,7 @@ class tum_seq_loader(KittiOdoLoader):
 
             # extrinsic matrix for cameraN to this camera
             scene_data["Rt_cam2_gt"] = scene_data["calibs"]["Rtl_gt"]
-            print(f'scene_data["Rt_cam2_gt"]: {scene_data["Rt_cam2_gt"]}')
+            logging.debug(f'scene_data["Rt_cam2_gt"]: {scene_data["Rt_cam2_gt"]}')
 
             train_scenes.append(scene_data)
         return train_scenes
@@ -397,7 +400,7 @@ class tum_seq_loader(KittiOdoLoader):
                 focalLength = (calib_K[0, 0] + calib_K[1, 1]) / 2
                 centerX = calib_K[0, 2]
                 centerY = calib_K[1, 2]
-                print(
+                logging.debug(
                     f"get calibration matrix for retrieving points: focalLength = {focalLength}, centerX = {centerX}, centerY = {centerY}"
                 )
 
@@ -414,7 +417,7 @@ class tum_seq_loader(KittiOdoLoader):
                     #             points.append("%f %f %f %d %d %d 0\n"%(X,Y,Z,color[0],color[1],color[2]))
                     points.append([X, Y, Z])
 
-            print(f"points: {points[:3]}")
+            logging.debug(f"points: {points[:3]}")
             return np.array(points)
             pass
 
@@ -429,7 +432,7 @@ class tum_seq_loader(KittiOdoLoader):
             color_file, depth_file, calib_K=calib_K
         )
         # xyz_points = np.ones((10,3)) ######!!!
-        print(f"xyz: {xyz_points[0]}, {xyz_points.shape}")
+        logging.debug(f"xyz: {xyz_points[0]}, {xyz_points.shape}")
 
         return xyz_points
 

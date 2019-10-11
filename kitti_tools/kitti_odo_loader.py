@@ -270,18 +270,18 @@ class KittiOdoLoader(object):
         if self.get_X:
             # feed in intrinsics for TUM to extract depth
             velo = self.load_velo(scene_data, idx, scene_data["calibs"].get("P_rect_noScale", None))
-            print(f"velo: {velo.shape}")
+            # print(f"velo: {velo.shape}")
             if velo is None:
                 logging.error("0 velo in %s. Skipped." % scene_data["dir"])
             # change to homography
             velo_homo = utils_misc.homo_np(velo)
-            print(f"velo_homo: {velo_homo.shape}")
+            logging.debug(f"velo_homo: {velo_homo.shape}")
             val_idxes, X_rect, X_cam0 = rectify(
                 velo_homo, scene_data["calibs"]
             )  # list, [N, 3]
-            print(f"X_rect: {X_rect.shape}")
-            print(f"X_cam0: {X_cam0.shape}")
-            print(f"val_idxes: {len(val_idxes)}")
+            logging.debug(f"X_rect: {X_rect.shape}")
+            logging.debug(f"X_cam0: {X_cam0.shape}")
+            logging.debug(f"val_idxes: {len(val_idxes)}")
 
             sample["X_cam2_vis"] = X_rect[val_idxes].astype(np.float32)
             sample["X_cam0_vis"] = X_cam0[val_idxes].astype(np.float32)
@@ -332,7 +332,8 @@ class KittiOdoLoader(object):
             scene_data = train_scenes[0]
 
         # create dump folders
-        dump_dir = Path(args.dump_root) / scene_data["rel_path"][-5:]
+        # dump_dir = Path(args.dump_root) / scene_data["rel_path"][-5:]
+        dump_dir = Path(args.dump_root) / scene_data["rel_path"]
         print(f"dump_dir: {dump_dir}")
         if dump_dir.is_dir():
             logging.warning(f'dump_root exists: {dump_dir}')
@@ -403,8 +404,9 @@ class KittiOdoLoader(object):
                 else:
                     pass
 
-            sample_name_list.append("%s %s" % (str(dump_dir)[-5:], frame_nb))
-            print(f"sample_name_list: {sample_name_list[-1]}")
+            # sample_name_list.append("%s %s" % (str(dump_dir)[-5:], frame_nb))
+            sample_name_list.append("%s %s" % (str(dump_dir), frame_nb))
+            logging.debug(f"sample_name_list: {sample_name_list[-1]}")
         # Get all poses
         if "pose" in sample.keys():
             if len(poses) != 0:

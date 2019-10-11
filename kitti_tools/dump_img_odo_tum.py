@@ -169,7 +169,13 @@ for split in ["train", "test"]:
     if args.num_threads == 1:
         for drive_path in tqdm(data_loader.scenes[split]):
             print("Dumping ", drive_path)
-            sample_name_list = dump_scenes_from_drive(args, split, drive_path)
+            try:
+                sample_name_list = dump_scenes_from_drive(args, split, drive_path)
+            except:
+                logging.warning(f"problem occurs when dumping {drive_path}, skip this sequence")
+                raise
+                pass
+
             if split == "train":
                 sample_name_lists.append(sample_name_list)
             # time.sleep(10)
