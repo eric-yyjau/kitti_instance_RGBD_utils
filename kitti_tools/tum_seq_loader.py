@@ -89,38 +89,25 @@ class tum_seq_loader(KittiOdoLoader):
         self.cam_ids = ["00"]  # no use in TUM
         # assert self.cam_ids == ['02'], 'Support left camera only!'
         self.cid_to_num = {"00": 0, "01": 1, "02": 2, "03": 3}
-        # self.train_seqs = [
-        #     "rgbd_dataset_freiburg1_desk",
-        #     "rgbd_dataset_freiburg1_room",
-        #     "rgbd_dataset_freiburg2_desk",
-        #     "rgbd_dataset_freiburg3_long_office_household",
-        # ]
-        # self.test_seqs = [
-        #     "rgbd_dataset_freiburg1_desk2",
-        #     "rgbd_dataset_freiburg2_xyz",
-        #     "rgbd_dataset_freiburg3_nostructure_texture_far",
-        # ]
 
-        self.train_seqs = ["test_small"]
-        self.test_seqs = ["test_small"]
-
-        # self.train_seqs = [4]
-        # self.test_seqs = []
-        # self.train_seqs = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-        # self.test_seqs = []
-        # self.map_to_raw = {
-        #     "00": "2011_10_03_drive_0027",
-        #     "01": "2011_10_03_drive_0042",
-        #     "02": "2011_10_03_drive_0034",
-        #     "03": "2011_09_26_drive_0067",
-        #     "04": "2011_09_30_drive_0016",
-        #     "05": "2011_09_30_drive_0018",
-        #     "06": "2011_09_30_drive_0020",
-        #     "07": "2011_09_30_drive_0027",
-        #     "08": "2011_09_30_drive_0028",
-        #     "09": "2011_09_30_drive_0033",
-        #     "10": "2011_09_30_drive_0034",
-        # }
+        debug = True
+        if debug:
+            ## small dataset for debuggin
+            self.train_seqs = ["rgbd_dataset_freiburg1_xyz"]
+            self.test_seqs = ["rgbd_dataset_freiburg1_xyz"]
+        else:
+            ## dataset names
+            self.train_seqs = [
+                "rgbd_dataset_freiburg1_desk",
+                "rgbd_dataset_freiburg1_room",
+                "rgbd_dataset_freiburg2_desk",
+                "rgbd_dataset_freiburg3_long_office_household",
+            ]
+            self.test_seqs = [
+                "rgbd_dataset_freiburg1_desk2",
+                "rgbd_dataset_freiburg2_xyz",
+                "rgbd_dataset_freiburg3_nostructure_texture_far",
+            ]
 
         self.get_X = get_X
         self.get_pose = get_pose
@@ -153,8 +140,15 @@ class tum_seq_loader(KittiOdoLoader):
 
     def read_images_files_from_folder(self, drive_path, scene_data, folder="rgb"):
         print(f"drive_path: {drive_path}")
-        img_dir = os.path.join(drive_path, "")
-        img_files = sorted(glob(img_dir + f"/{folder}/*.png"))
+        ## given that we have matched time stamps
+        arr = np.genfromtxt(f'{drive_path}/{folder}_filter.txt',dtype='str') # [N, 2(time, path)]
+        img_files = np.char.add(str(drive_path)+'/',arr[:,1])
+        img_files = [Path(f) for f in img_files]
+        img_files = sorted(img_files)
+
+        ## no time stamps
+        # img_dir = os.path.join(drive_path, "")
+        # img_files = sorted(glob(img_dir + f"/{folder}/*.png"))
         print(f"img_files: {img_files[0]}")
         return img_files
 
@@ -202,7 +196,7 @@ class tum_seq_loader(KittiOdoLoader):
         for i in range(1, 4):
             if f"{cam_name}{i}" in str(foldername):
                 cid = i
-        calib_file = f"/data/tum/calib/TUM{cid}.yaml"
+        calib_file = f"{self.dataset_dir}/tum/TUM{cid}.yaml"
         return calib_file
 
     def collect_scene_from_drive(self, drive_path):

@@ -161,11 +161,12 @@ if __name__ == "__main__":
     print(f"matches: {matches.shape}, {matches[0]}, {matches[:2, 1]}")
     # print(f"extract from dict: {second_list[matches[:2, 1]]}")
     new_file = [[m] + second_list[m] for m in matches[:, 1]]
-    new_file = np.array(new_file).astype(float)
+    # new_file = np.array(new_file).astype(float)
+    new_file = np.array(new_file) # .astype(float)
     print(f"new_file size: {new_file.shape}, {new_file[0]}")
 
     if args.save_file is not None:
-        np.savetxt(args.save_file, new_file, delimiter=" ")
+        np.savetxt(args.save_file, new_file, fmt="%s", delimiter=" ")
         print(f"output '{args.second_file}' to '{args.save_file}'")
 
     if args.print_all:
