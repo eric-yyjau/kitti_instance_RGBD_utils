@@ -71,7 +71,7 @@ class tum_seq_loader(KittiOdoLoader):
         dataset_dir,
         img_height=375,
         img_width=1242,
-        cam_ids=["02"],
+        cam_ids=["00"],  # no usage in TUM
         get_X=False,
         get_pose=False,
         get_sift=False,
@@ -86,28 +86,44 @@ class tum_seq_loader(KittiOdoLoader):
         self.dataset_dir = Path(dataset_dir)
         self.img_height = img_height
         self.img_width = img_width
-        self.cam_ids = cam_ids  # ['cam0/data']
+        self.cam_ids = ["00"]  # no use in TUM
         # assert self.cam_ids == ['02'], 'Support left camera only!'
         self.cid_to_num = {"00": 0, "01": 1, "02": 2, "03": 3}
-        self.train_seqs = ["rgbd_dataset_freiburg1_xyz_small"]
-        self.test_seqs = ["rgbd_dataset_freiburg1_xyz_small"]
+        # self.train_seqs = [
+        #     "rgbd_dataset_freiburg1_desk",
+        #     "rgbd_dataset_freiburg1_room",
+        #     "rgbd_dataset_freiburg2_desk",
+        #     "rgbd_dataset_freiburg3_long_office_household",
+        # ]
+        # self.test_seqs = [
+        #     "rgbd_dataset_freiburg1_desk2",
+        #     "rgbd_dataset_freiburg2_xyz",
+        #     "rgbd_dataset_freiburg3_nostructure_texture_far",
+        # ]
+
+        self.train_seqs = [
+            "test_small",
+        ]
+        self.test_seqs = ["test_small"]
+
+
         # self.train_seqs = [4]
         # self.test_seqs = []
         # self.train_seqs = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
         # self.test_seqs = []
-        self.map_to_raw = {
-            "00": "2011_10_03_drive_0027",
-            "01": "2011_10_03_drive_0042",
-            "02": "2011_10_03_drive_0034",
-            "03": "2011_09_26_drive_0067",
-            "04": "2011_09_30_drive_0016",
-            "05": "2011_09_30_drive_0018",
-            "06": "2011_09_30_drive_0020",
-            "07": "2011_09_30_drive_0027",
-            "08": "2011_09_30_drive_0028",
-            "09": "2011_09_30_drive_0033",
-            "10": "2011_09_30_drive_0034",
-        }
+        # self.map_to_raw = {
+        #     "00": "2011_10_03_drive_0027",
+        #     "01": "2011_10_03_drive_0042",
+        #     "02": "2011_10_03_drive_0034",
+        #     "03": "2011_09_26_drive_0067",
+        #     "04": "2011_09_30_drive_0016",
+        #     "05": "2011_09_30_drive_0018",
+        #     "06": "2011_09_30_drive_0020",
+        #     "07": "2011_09_30_drive_0027",
+        #     "08": "2011_09_30_drive_0028",
+        #     "09": "2011_09_30_drive_0033",
+        #     "10": "2011_09_30_drive_0034",
+        # }
 
         self.get_X = get_X
         self.get_pose = get_pose
@@ -138,7 +154,7 @@ class tum_seq_loader(KittiOdoLoader):
         self.collect_train_folders()
         self.collect_test_folders()
 
-    def read_images_files_from_folder(self, drive_path, scene_data, folder='rgb'):
+    def read_images_files_from_folder(self, drive_path, scene_data, folder="rgb"):
         print(f"cid_num: {scene_data['cid_num']}")
         img_dir = os.path.join(drive_path, "")
         img_files = sorted(glob(img_dir + f"/{folder}/*.png"))
@@ -183,24 +199,33 @@ class tum_seq_loader(KittiOdoLoader):
             img = scipy.misc.imresize(img_ori, (self.img_height, self.img_width))
             return img, (zoom_x, zoom_y), img_ori
 
+    def get_calib_file_from_folder(self, foldername):
+        cid = 1
+        cam_name = "freiburg"
+        for i in range(1, 4):
+            if f"{cam_name}{i}" in str(foldername):
+                cid = i
+        calib_file = f"/data/tum/calib/TUM{cid}.yaml"
+        return calib_file
+
     def collect_scene_from_drive(self, drive_path):
         # adapt for Euroc dataset
         train_scenes = []
         logging.info("Gathering info for %s..." % drive_path)
         for c in self.cam_ids:
             scene_data = {
-                "cid": c,
-                "cid_num": self.cid_to_num[c],
+                "cid": "00",
+                "cid_num": 0,
                 "dir": Path(drive_path),
-                "rel_path": Path(drive_path).name + "_" + c,
+                "rel_path": Path(drive_path).name + "_" + "00",
             }
             # img_dir = os.path.join(drive_path, 'image_%d'%scene_data['cid_num'])
             # scene_data['img_files'] = sorted(glob(img_dir + '/*.png'))
             scene_data["img_files"] = self.read_images_files_from_folder(
-                drive_path, scene_data, folder='rgb'
+                drive_path, scene_data, folder="rgb"
             )
             scene_data["depth_files"] = self.read_images_files_from_folder(
-                drive_path, scene_data, folder='depth'
+                drive_path, scene_data, folder="depth"
             )
             scene_data["N_frames"] = len(scene_data["img_files"])
             assert scene_data["N_frames"] != 0, "No file found for %s!" % drive_path
@@ -235,14 +260,18 @@ class tum_seq_loader(KittiOdoLoader):
 
             # Get geo params from the RAW dataset calibs
             # calib_file = os.path.join("tum/TUM1.yaml")
-            calib_file = os.path.join("/data/tum/calib/TUM1.yaml")
+            # calib_file = os.path.join("/data/tum/calib/TUM1.yaml")
+            calib_file = os.path.join(self.get_calib_file_from_folder(drive_path))
+            logging.info(f"calibration file: {calib_file}")
             # calib_file = f"{scene_data['img_files'][0].str()}/../../sensor.yaml"
-            P_rect_noScale, P_rect_scale = self.get_P_rect(calib_file, scene_data["calibs"])
+            P_rect_noScale, P_rect_scale = self.get_P_rect(
+                calib_file, scene_data["calibs"]
+            )
             P_rect_ori_dict = {c: P_rect_scale}
             intrinsics = P_rect_ori_dict[c][:, :3]
             print(f"intrinsics: {intrinsics}")
             # calibs_rects = self.get_rect_cams(intrinsics, P_rect_ori_dict[c])
-            calibs_rects = {"Rtl_gt": np.eye(4)} # only one camera, no extrinsics
+            calibs_rects = {"Rtl_gt": np.eye(4)}  # only one camera, no extrinsics
             cam_2rect_mat = np.eye(4)  # extrinsics for cam2
 
             # drive_in_raw = self.map_to_raw[drive_path[-2:]]
@@ -271,11 +300,24 @@ class tum_seq_loader(KittiOdoLoader):
             scene_data["calibs"].update(calibs_rects)
 
             # Get pose
+            gt_kitti_file = "groundtruth_filter.kitti"
+            if not (Path(drive_path) / gt_kitti_file).exists():
+                import subprocess
+                gt_file = "groundtruth_filter.txt"
+                assert (Path(drive_path) / gt_file).exists()
+                # process files
+                logging.info(f"generate kitti format gt pose: {drive_path}")
+                subprocess.run(f"evo_traj tum {str(Path(drive_path)/gt_file)} --save_as_kitti", shell=True, check=True) # https://github.com/MichaelGrupp/evo
+                
+            assert (
+                (Path(drive_path) / gt_kitti_file).exists()
+            ), "kitti style of gt pose file not found"
             poses = (
-                np.genfromtxt(Path(drive_path) / "groundtruth_filter.kitti")
+                np.genfromtxt(Path(drive_path) / gt_kitti_file)
                 .astype(np.float32)
                 .reshape(-1, 3, 4)
             )
+
             # print(f"poses before: {poses[:10]}")
             # ## invert camera poses of world coord to poses of camera coord
             # poses = np.array([np.linalg.inv(utils_misc.Rt_pad(pose))[:3] for pose in poses])
@@ -344,12 +386,13 @@ class tum_seq_loader(KittiOdoLoader):
         #         o3d.camera.PinholeCameraIntrinsic(
         #             o3d.camera.PinholeCameraIntrinsicParameters.PrimeSenseDefault))
         #     # Flip it, otherwise the pointcloud will be upside down
-        #     pcd.transform([[1, 0, 0, 0], [0, -1, 0, 0], [0, 0, -1, 0], [0, 0, 0, 1]])            
+        #     pcd.transform([[1, 0, 0, 0], [0, -1, 0, 0], [0, 0, -1, 0], [0, 0, 0, 1]])
         #     xyz_points = np.asarray(pcd.points)
         #     return xyz_points
 
         def get_point_cloud_from_images(color_file, depth_file, calib_K=None):
             from PIL import Image
+
             depth = Image.open(depth_file)
             rgb = Image.open(color_file)
             points = []
@@ -360,37 +403,45 @@ class tum_seq_loader(KittiOdoLoader):
                 centerX = 319.5
                 centerY = 239.5
             else:
-                focalLength = (calib_K[0,0] + calib_K[1,1])/2
-                centerX = calib_K[0,2]
-                centerY = calib_K[1,2]
-                print(f"get calibration matrix for retrieving points: focalLength = {focalLength}, centerX = {centerX}, centerY = {centerY}")
+                focalLength = (calib_K[0, 0] + calib_K[1, 1]) / 2
+                centerX = calib_K[0, 2]
+                centerY = calib_K[1, 2]
+                print(
+                    f"get calibration matrix for retrieving points: focalLength = {focalLength}, centerX = {centerX}, centerY = {centerY}"
+                )
 
             scalingFactor = 5000.0
 
             for v in range(rgb.size[1]):
                 for u in range(rgb.size[0]):
-                    color = rgb.getpixel((u,v))
-                    Z = depth.getpixel((u,v)) / scalingFactor
-                    if Z==0: continue
+                    color = rgb.getpixel((u, v))
+                    Z = depth.getpixel((u, v)) / scalingFactor
+                    if Z == 0:
+                        continue
                     X = (u - centerX) * Z / focalLength
                     Y = (v - centerY) * Z / focalLength
-        #             points.append("%f %f %f %d %d %d 0\n"%(X,Y,Z,color[0],color[1],color[2]))
-                    points.append([X,Y,Z])
+                    #             points.append("%f %f %f %d %d %d 0\n"%(X,Y,Z,color[0],color[1],color[2]))
+                    points.append([X, Y, Z])
 
             print(f"points: {points[:3]}")
             return np.array(points)
             pass
 
-        ### 
+        ###
         if Path(color_file).is_file() is False or Path(depth_file).is_file() is False:
-            logging.warning(f"color file {color_file} or depth file {depth_file} not found!")
+            logging.warning(
+                f"color file {color_file} or depth file {depth_file} not found!"
+            )
             return None
-        
-        xyz_points = get_point_cloud_from_images(color_file, depth_file, calib_K=calib_K)
+
+        xyz_points = get_point_cloud_from_images(
+            color_file, depth_file, calib_K=calib_K
+        )
         # xyz_points = np.ones((10,3)) ######!!!
         print(f"xyz: {xyz_points[0]}, {xyz_points.shape}")
-        
+
         return xyz_points
+
 
 def loadConfig(filename):
     import yaml
