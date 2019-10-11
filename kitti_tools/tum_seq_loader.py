@@ -101,11 +101,8 @@ class tum_seq_loader(KittiOdoLoader):
         #     "rgbd_dataset_freiburg3_nostructure_texture_far",
         # ]
 
-        self.train_seqs = [
-            "test_small",
-        ]
+        self.train_seqs = ["test_small"]
         self.test_seqs = ["test_small"]
-
 
         # self.train_seqs = [4]
         # self.test_seqs = []
@@ -155,7 +152,7 @@ class tum_seq_loader(KittiOdoLoader):
         self.collect_test_folders()
 
     def read_images_files_from_folder(self, drive_path, scene_data, folder="rgb"):
-        print(f"cid_num: {scene_data['cid_num']}")
+        print(f"drive_path: {drive_path}")
         img_dir = os.path.join(drive_path, "")
         img_files = sorted(glob(img_dir + f"/{folder}/*.png"))
         print(f"img_files: {img_files[0]}")
@@ -301,17 +298,17 @@ class tum_seq_loader(KittiOdoLoader):
 
             # Get pose
             gt_kitti_file = "groundtruth_filter.kitti"
-            if not (Path(drive_path) / gt_kitti_file).exists():
-                import subprocess
-                gt_file = "groundtruth_filter.txt"
-                assert (Path(drive_path) / gt_file).exists()
-                # process files
-                logging.info(f"generate kitti format gt pose: {drive_path}")
-                subprocess.run(f"evo_traj tum {str(Path(drive_path)/gt_file)} --save_as_kitti", shell=True, check=True) # https://github.com/MichaelGrupp/evo
-                
+            # if not (Path(drive_path) / gt_kitti_file).exists():
+            #     import subprocess
+            #     gt_file = "groundtruth_filter.txt"
+            #     assert (Path(drive_path) / gt_file).exists()
+            #     # process files
+            #     logging.info(f"generate kitti format gt pose: {drive_path}")
+            #     subprocess.run(f"evo_traj tum {str(Path(drive_path)/gt_file)} --save_as_kitti", shell=True, check=True) # https://github.com/MichaelGrupp/evo
+
             assert (
-                (Path(drive_path) / gt_kitti_file).exists()
-            ), "kitti style of gt pose file not found"
+                Path(drive_path) / gt_kitti_file
+            ).exists(), "kitti style of gt pose file not found, please run 'python process_poses.py --dataset_dir DATASET_DIR"
             poses = (
                 np.genfromtxt(Path(drive_path) / gt_kitti_file)
                 .astype(np.float32)

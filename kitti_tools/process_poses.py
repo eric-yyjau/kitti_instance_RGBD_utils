@@ -38,7 +38,9 @@ if __name__ == "__main__":
         #
 
         if if_cvt_kitti:
-            assert (Path(folder) / gt_file).exists()
+            assert (
+                Path(folder) / gt_file
+            ).exists(), f"{(Path(folder) / gt_file)} not exists"
             # process files
             logging.info(f"generate kitti format gt pose: {folder}")
             subprocess.run(
@@ -46,10 +48,8 @@ if __name__ == "__main__":
                 shell=True,
                 check=True,
             )  # https://github.com/MichaelGrupp/evo
-            filename = gt_file[:-3]+'kitti'
+            filename = gt_file[:-3] + "kitti"
             print(f"cp {filename} {Path(folder)/filename}")
             subprocess.run(
-                f"cp {filename} {Path(folder)/filename}",
-                shell=True,
-                check=True,
+                f"cp {filename} {Path(folder)/filename}", shell=True, check=True
             )

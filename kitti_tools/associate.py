@@ -31,7 +31,7 @@
 # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 #
-# Requirements: 
+# Requirements:
 # sudo apt-get install python-argparse
 
 """
@@ -63,12 +63,17 @@ def read_file_list(filename):
     """
     file = open(filename)
     data = file.read()
-    lines = data.replace(","," ").replace("\t"," ").split("\n") 
-    list = [[v.strip() for v in line.split(" ") if v.strip()!=""] for line in lines if len(line)>0 and line[0]!="#"]
-    list = [(float(l[0]),l[1:]) for l in list if len(l)>1]
+    lines = data.replace(",", " ").replace("\t", " ").split("\n")
+    list = [
+        [v.strip() for v in line.split(" ") if v.strip() != ""]
+        for line in lines
+        if len(line) > 0 and line[0] != "#"
+    ]
+    list = [(float(l[0]), l[1:]) for l in list if len(l) > 1]
     return dict(list)
 
-def associate(first_list, second_list,offset,max_difference):
+
+def associate(first_list, second_list, offset, max_difference):
     """
     Associate two dictionaries of (stamp,data). As the time stamps never match exactly, we aim 
     to find the closest match for every input tuple.
@@ -83,16 +88,18 @@ def associate(first_list, second_list,offset,max_difference):
     matches -- list of matched tuples ((stamp1,data1),(stamp2,data2))
     
     """
-#     first_keys = first_list.keys()
-#     second_keys = second_list.keys()
-    
+    #     first_keys = first_list.keys()
+    #     second_keys = second_list.keys()
+
     first_keys = list(first_list)
     second_keys = list(second_list)
-    
-    potential_matches = [(abs(a - (b + offset)), a, b) 
-                         for a in first_keys 
-                         for b in second_keys 
-                         if abs(a - (b + offset)) < max_difference]
+
+    potential_matches = [
+        (abs(a - (b + offset)), a, b)
+        for a in first_keys
+        for b in second_keys
+        if abs(a - (b + offset)) < max_difference
+    ]
     potential_matches.sort()
     matches = []
     for diff, a, b in potential_matches:
@@ -100,48 +107,79 @@ def associate(first_list, second_list,offset,max_difference):
             first_keys.remove(a)
             second_keys.remove(b)
             # matches.append((a, b))
-            matches.append([a, b]) # change tuple to list
-    
+            matches.append([a, b])  # change tuple to list
+
     matches.sort()
     return matches
 
-if __name__ == '__main__':
-    
+
+if __name__ == "__main__":
+
     # parse command line
-    parser = argparse.ArgumentParser(description='''
+    parser = argparse.ArgumentParser(
+        description="""
     This script takes two data files with timestamps and associates them   
-    ''')
-    parser.add_argument('first_file', help='first text file (format: timestamp data)')
-    parser.add_argument('second_file', help='second text file (format: timestamp data)')
-    parser.add_argument('--first_only', help='only output associated lines from first file', action='store_true')
-    parser.add_argument('--offset', help='time offset added to the timestamps of the second file (default: 0.0)',default=0.0)
-    parser.add_argument('--max_difference', help='maximally allowed time difference for matching entries (default: 0.02)',default=0.02)
-    parser.add_argument('--print_all', help='print out the list of matches', action='store_true')
-    parser.add_argument('--save_file', type=str, default=None, help='save the second file extracted by the time stamp of the first file')
+    """
+    )
+    parser.add_argument("first_file", help="first text file (format: timestamp data)")
+    parser.add_argument("second_file", help="second text file (format: timestamp data)")
+    parser.add_argument(
+        "--first_only",
+        help="only output associated lines from first file",
+        action="store_true",
+    )
+    parser.add_argument(
+        "--offset",
+        help="time offset added to the timestamps of the second file (default: 0.0)",
+        default=0.0,
+    )
+    parser.add_argument(
+        "--max_difference",
+        help="maximally allowed time difference for matching entries (default: 0.02)",
+        default=0.02,
+    )
+    parser.add_argument(
+        "--print_all", help="print out the list of matches", action="store_true"
+    )
+    parser.add_argument(
+        "--save_file",
+        type=str,
+        default=None,
+        help="save the second file extracted by the time stamp of the first file",
+    )
     args = parser.parse_args()
 
     first_list = read_file_list(args.first_file)
     second_list = read_file_list(args.second_file)
 
-    matches = associate(first_list, second_list,float(args.offset),float(args.max_difference))    
+    matches = associate(
+        first_list, second_list, float(args.offset), float(args.max_difference)
+    )
     import numpy as np
+
     matches = np.array(matches)
     print(f"matches: {matches.shape}, {matches[0]}, {matches[:2, 1]}")
     # print(f"extract from dict: {second_list[matches[:2, 1]]}")
-    new_file = [[m] + second_list[m] for m in matches[:,1]]
+    new_file = [[m] + second_list[m] for m in matches[:, 1]]
     new_file = np.array(new_file).astype(float)
     print(f"new_file size: {new_file.shape}, {new_file[0]}")
 
     if args.save_file is not None:
-        np.savetxt(args.save_file, new_file, delimiter=' ')
+        np.savetxt(args.save_file, new_file, delimiter=" ")
         print(f"output '{args.second_file}' to '{args.save_file}'")
 
     if args.print_all:
         if args.first_only:
-            for a,b in matches:
-                print("%f %s"%(a," ".join(first_list[a])))
+            for a, b in matches:
+                print("%f %s" % (a, " ".join(first_list[a])))
         else:
-            for a,b in matches:
-                print("%f %s %f %s"%(a," ".join(first_list[a]),b-float(args.offset)," ".join(second_list[b])))
-            
-        
+            for a, b in matches:
+                print(
+                    "%f %s %f %s"
+                    % (
+                        a,
+                        " ".join(first_list[a]),
+                        b - float(args.offset),
+                        " ".join(second_list[b]),
+                    )
+                )
