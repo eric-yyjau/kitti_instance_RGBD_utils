@@ -90,7 +90,7 @@ class tum_seq_loader(KittiOdoLoader):
         # assert self.cam_ids == ['02'], 'Support left camera only!'
         self.cid_to_num = {"00": 0, "01": 1, "02": 2, "03": 3}
 
-        self.debug = True
+        self.debug = False
         if self.debug:
             coloredlogs.install(level="DEBUG", logger=logger) # original info
 

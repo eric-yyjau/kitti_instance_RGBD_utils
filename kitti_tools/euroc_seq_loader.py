@@ -7,7 +7,7 @@ Rui Zhu, rzhu@eng.ucsd.edu, 2019
 
 from __future__ import division
 import numpy as np
-from path import Path
+from pathlib import Path
 from tqdm import tqdm
 import scipy.misc
 from collections import Counter
@@ -65,7 +65,7 @@ class euroc_seq_loader(KittiOdoLoader):
         dataset_dir,
         img_height=375,
         img_width=1242,
-        cam_ids=["02"],
+        cam_ids=["00"],
         get_X=False,
         get_pose=False,
         get_sift=False,
@@ -75,33 +75,39 @@ class euroc_seq_loader(KittiOdoLoader):
         save_npy=True,
     ):
         # depth_size_ratio=1):
-        dir_path = Path(__file__).realpath().dirname()
+        # dir_path = Path(__file__).realpath().dirname()
 
         self.dataset_dir = Path(dataset_dir)
         self.img_height = img_height
         self.img_width = img_width
         self.cam_ids = cam_ids  # ['cam0/data']
+        logging.info(f"cam id: {cam_ids}")
         # assert self.cam_ids == ['02'], 'Support left camera only!'
-        self.cid_to_num = {"00": 0, "01": 1, "02": 2, "03": 3}
-        self.train_seqs = ["mav0"]
-        self.test_seqs = ["mav0"]
+        self.cid_to_num = {"00": 0, "01": 1}
+
+        self.debug = True
+        if self.debug:
+            self.train_seqs = ["mav0_edit"]
+            self.test_seqs = ["mav0_edit"]
+        else:
+            pass
         # self.train_seqs = [4]
         # self.test_seqs = []
         # self.train_seqs = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
         # self.test_seqs = []
-        self.map_to_raw = {
-            "00": "2011_10_03_drive_0027",
-            "01": "2011_10_03_drive_0042",
-            "02": "2011_10_03_drive_0034",
-            "03": "2011_09_26_drive_0067",
-            "04": "2011_09_30_drive_0016",
-            "05": "2011_09_30_drive_0018",
-            "06": "2011_09_30_drive_0020",
-            "07": "2011_09_30_drive_0027",
-            "08": "2011_09_30_drive_0028",
-            "09": "2011_09_30_drive_0033",
-            "10": "2011_09_30_drive_0034",
-        }
+        # self.map_to_raw = {
+        #     "00": "2011_10_03_drive_0027",
+        #     "01": "2011_10_03_drive_0042",
+        #     "02": "2011_10_03_drive_0034",
+        #     "03": "2011_09_26_drive_0067",
+        #     "04": "2011_09_30_drive_0016",
+        #     "05": "2011_09_30_drive_0018",
+        #     "06": "2011_09_30_drive_0020",
+        #     "07": "2011_09_30_drive_0027",
+        #     "08": "2011_09_30_drive_0028",
+        #     "09": "2011_09_30_drive_0033",
+        #     "10": "2011_09_30_drive_0034",
+        # }
 
         self.get_X = get_X
         self.get_pose = get_pose
@@ -132,10 +138,19 @@ class euroc_seq_loader(KittiOdoLoader):
         self.collect_train_folders()
         self.collect_test_folders()
 
-    def read_images_files_from_folder(self, drive_path, scene_data):
-        print(f"cid_num: {scene_data['cid_num']}")
-        img_dir = os.path.join(drive_path, "cam%d" % scene_data["cid_num"])
-        img_files = sorted(glob(img_dir + "/data/*.png"))
+    def read_images_files_from_folder(self, drive_path, scene_data, folder="rgb"):
+        # print(f"cid_num: {scene_data['cid_num']}")
+        # img_dir = os.path.join(drive_path, "cam%d" % scene_data["cid_num"])
+        # img_files = sorted(glob(img_dir + "/data/*.png"))
+        print(f"drive_path: {drive_path}")
+        ## given that we have matched time stamps
+        arr = np.genfromtxt(
+            f"{drive_path}/{folder}/data_f.txt", dtype="str"
+        )  # [N, 2(time, path)]
+        img_files = np.char.add(str(drive_path) + f"/{folder}/data/", arr[:, 1])
+        img_files = [Path(f) for f in img_files]
+        img_files = sorted(img_files)
+
         print(f"img_files: {img_files[0]}")
         return img_files
 
@@ -152,7 +167,7 @@ class euroc_seq_loader(KittiOdoLoader):
     def load_image(self, scene_data, tgt_idx, show_zoom_info=True):
         # use different image filename
         img_file = Path(scene_data["img_files"][tgt_idx])
-        if not img_file.isfile():
+        if not img_file.is_file():
             logging.warning("Image %s not found!" % img_file)
             return None, None, None
         img_ori = scipy.misc.imread(img_file)
@@ -191,7 +206,7 @@ class euroc_seq_loader(KittiOdoLoader):
             # img_dir = os.path.join(drive_path, 'image_%d'%scene_data['cid_num'])
             # scene_data['img_files'] = sorted(glob(img_dir + '/*.png'))
             scene_data["img_files"] = self.read_images_files_from_folder(
-                drive_path, scene_data
+                drive_path, scene_data, folder="cam0"
             )
             scene_data["N_frames"] = len(scene_data["img_files"])
             assert scene_data["N_frames"] != 0, "No file found for %s!" % drive_path
@@ -232,8 +247,9 @@ class euroc_seq_loader(KittiOdoLoader):
             P_rect_ori, cam2body_mat = self.get_P_rect(calib_file, scene_data["calibs"])
             P_rect_ori_dict = {c: P_rect_ori}
             intrinsics = P_rect_ori_dict[c][:, :3]
-            # calibs_rects = self.get_rect_cams(intrinsics, P_rect_ori_dict[c])
-            calibs_rects = {"Rtl_gt": intrinsics}
+            logging.debug(f"intrinsics: {intrinsics}")
+            calibs_rects = self.get_rect_cams(intrinsics, cam2body_mat)  ##### need validation
+            # calibs_rects = {"Rtl_gt": cam2body_mat}
             cam_2rect_mat = intrinsics
 
             # drive_in_raw = self.map_to_raw[drive_path[-2:]]
@@ -261,11 +277,7 @@ class euroc_seq_loader(KittiOdoLoader):
 
             # Get pose
             poses = (
-                np.genfromtxt(
-                    Path(drive_path)
-                    / "state_groundtruth_estimate0"
-                    / "data.kitti".format(drive_path[-2:])
-                )
+                np.genfromtxt(Path(drive_path) / "data_f.kitti".format(drive_path[-2:]))
                 .astype(np.float32)
                 .reshape(-1, 3, 4)
             )
@@ -291,6 +303,16 @@ class euroc_seq_loader(KittiOdoLoader):
         if calibs["rescale"]:
             P_rect = scale_P(P_rect, calibs["zoom_xy"][0], calibs["zoom_xy"][1])
         return P_rect, transformation_base_camera
+
+    @staticmethod
+    def load_velo(scene_data, tgt_idx, calib_K=None):
+        """
+        create point clouds from depth image, return array of points 
+        return:
+            np [N, 3] (3d points)
+        """
+        logging.error(f"Not implemented error!! Turn off --with_X")
+        return None
 
 
 def load_intrinsics(calib_data):

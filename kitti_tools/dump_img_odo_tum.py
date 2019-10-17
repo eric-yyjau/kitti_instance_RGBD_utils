@@ -103,7 +103,8 @@ print(args)
 # %autoreload 2
 
 
-from tum_seq_loader import tum_seq_loader as seq_loader
+# from tum_seq_loader import tum_seq_loader as seq_loader
+from euroc_seq_loader import euroc_seq_loader as seq_loader
 
 assert args.cam_id in [
     "00",
