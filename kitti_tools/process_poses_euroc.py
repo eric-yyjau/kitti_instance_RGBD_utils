@@ -42,6 +42,7 @@ if __name__ == "__main__":
     filter_ext = '_f.txt'
 
     for folder in folders:
+        folder = folder+'mav0'
         # subprocess.run(f"tar -zxf {f}", shell=True, check=True)
         print(folder)
         ##### 

@@ -58,6 +58,8 @@ from models.model_wrap import SuperPointFrontend_torch
 from kitti_odo_loader import KittiOdoLoader
 from kitti_odo_loader import *
 
+coloredlogs.install(level="INFO", logger=logger)
+# coloredlogs.install(level="DEBUG", logger=logger)
 
 class euroc_seq_loader(KittiOdoLoader):
     def __init__(
@@ -85,12 +87,32 @@ class euroc_seq_loader(KittiOdoLoader):
         # assert self.cam_ids == ['02'], 'Support left camera only!'
         self.cid_to_num = {"00": 0, "01": 1}
 
-        self.debug = True
+        self.debug = True # True
         if self.debug:
-            self.train_seqs = ["mav0_edit"]
-            self.test_seqs = ["mav0_edit"]
+            self.train_seqs = ["MH_01_easy"]
+            self.test_seqs = ["MH_01_easy"]
         else:
-            pass
+            self.train_seqs = [
+                    "MH_01_easy",
+                    "MH_02_easy",
+                    "MH_04_difficult",
+                    "V1_01_easy",
+                    "V1_02_medium",
+                    "V1_03_difficult",
+
+                    ]
+            self.test_seqs = [
+                    "MH_02_easy",
+                    "MH_05_difficult",
+                    "V2_01_easy",
+                    "V2_02_medium",
+                    "V2_03_difficult",
+                    ]
+
+            # to_2darr = lambda x: np.array(x)
+        self.test_seqs = np.char.add(self.test_seqs, "/mav0")
+        self.train_seqs = np.char.add(self.train_seqs, "/mav0")
+
         # self.train_seqs = [4]
         # self.test_seqs = []
         # self.train_seqs = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
@@ -201,7 +223,7 @@ class euroc_seq_loader(KittiOdoLoader):
                 "cid": c,
                 "cid_num": self.cid_to_num[c],
                 "dir": Path(drive_path),
-                "rel_path": Path(drive_path).name + "_" + c,
+                "rel_path": str(Path(drive_path).parent.name) + "_" + c,
             }
             # img_dir = os.path.join(drive_path, 'image_%d'%scene_data['cid_num'])
             # scene_data['img_files'] = sorted(glob(img_dir + '/*.png'))
@@ -247,8 +269,8 @@ class euroc_seq_loader(KittiOdoLoader):
             P_rect_ori, cam2body_mat = self.get_P_rect(calib_file, scene_data["calibs"])
             P_rect_ori_dict = {c: P_rect_ori}
             intrinsics = P_rect_ori_dict[c][:, :3]
-            logging.debug(f"intrinsics: {intrinsics}")
-            calibs_rects = self.get_rect_cams(intrinsics, cam2body_mat)  ##### need validation
+            logging.debug(f"intrinsics: {intrinsics}, cam2body_mat: {cam2body_mat}")
+            calibs_rects = self.get_rect_cams(intrinsics, cam2body_mat[:3])  ##### need validation
             # calibs_rects = {"Rtl_gt": cam2body_mat}
             cam_2rect_mat = intrinsics
 
