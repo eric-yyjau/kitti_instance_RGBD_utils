@@ -42,6 +42,9 @@ parser.add_argument(
     "--dataset_dir", type=str, default="/data/KITTI/raw_meta/", help="path to dataset"
 )
 parser.add_argument(
+    "--dataloader_name", type=str, default="tum_seq_loader", help="number of thread to load data"
+)
+parser.add_argument(
     "--num_threads",
     type=int,
     default=default_number_of_process,
@@ -102,9 +105,15 @@ print(args)
 # %reload_ext autoreload
 # %autoreload 2
 
-
+def get_model(name, func):
+    mod = __import__(name, fromlist=[func])
+    return getattr(mod, name)
 # from tum_seq_loader import tum_seq_loader as seq_loader
-from euroc_seq_loader import euroc_seq_loader as seq_loader
+# from euroc_seq_loader import euroc_seq_loader as seq_loader
+# seq_loader_model = "euroc_seq_loader"
+seq_loader_model = args.dataloader_name
+seq_loader = get_model(seq_loader_model, seq_loader_model)
+logging.info(f"{seq_loader_model} is loaded!")
 
 assert args.cam_id in [
     "00",
@@ -179,6 +188,14 @@ for split in ["train", "test"]:
 
             if split == "train":
                 sample_name_lists.append(sample_name_list)
+            elif split == "test":
+                ## write to test.txt
+                with open(args_dump_root / "test.txt", "w") as vf:
+                    sample_name_flat_list = [item for sublist in sample_name_list]
+                    for pr in tqdm(sample_name_flat_list):
+                        vf.write("{}\n".format(pr))
+
+
             # time.sleep(10)
     # else:
     #     with ProcessPool(max_workers=args.num_threads) as pool:
@@ -211,3 +228,4 @@ with open(args_dump_root / "train.txt", "w") as tf:
                 vf.write("{}\n".format(pr))
             else:
                 tf.write("{}\n".format(pr))
+
