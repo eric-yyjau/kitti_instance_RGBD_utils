@@ -214,7 +214,8 @@ class euroc_seq_loader(KittiOdoLoader):
             img = scipy.misc.imresize(img_ori, (self.img_height, self.img_width))
             return img, (zoom_x, zoom_y), img_ori
 
-    def collect_scene_from_drive(self, drive_path):
+    # def collect_scene_from_drive(self, drive_path):
+    def collect_scene_from_drive(self, drive_path, split="train"):
         # adapt for Euroc dataset
         train_scenes = []
         logging.info("Gathering info for %s..." % drive_path)

@@ -202,7 +202,8 @@ class tum_seq_loader(KittiOdoLoader):
         calib_file = f"{self.dataset_dir}/tum/TUM{cid}.yaml"
         return calib_file
 
-    def collect_scene_from_drive(self, drive_path):
+    # def collect_scene_from_drive(self, drive_path):
+    def collect_scene_from_drive(self, drive_path, split="train"):
         # adapt for Euroc dataset
         train_scenes = []
         logging.info("Gathering info for %s..." % drive_path)

@@ -163,7 +163,8 @@ class KittiOdoLoader(object):
         img_files = sorted(glob(img_dir + "/*.png"))
         return img_files
 
-    def collect_scene_from_drive(self, drive_path):
+    # def collect_scene_from_drive(self, drive_path):
+    def collect_scene_from_drive(self, drive_path, split="train"):
         train_scenes = []
         logging.info("Gathering info for %s..." % drive_path)
         for c in self.cam_ids:
@@ -322,7 +323,7 @@ class KittiOdoLoader(object):
         assert split in ["train", "test"]
         # get scene data
         if scene_data is None:
-            train_scenes = self.collect_scene_from_drive(drive_path)
+            train_scenes = self.collect_scene_from_drive(drive_path, split=split)
             if not train_scenes:
                 logging.warning("Empty scene data for %s. Skipped." % drive_path)
                 return
