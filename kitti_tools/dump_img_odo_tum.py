@@ -191,7 +191,7 @@ for split in ["train", "test"]:
             elif split == "test":
                 ## write to test.txt
                 with open(args_dump_root / "test.txt", "w") as vf:
-                    sample_name_flat_list = [item for sublist in sample_name_list]
+                    sample_name_flat_list = [sublist for sublist in sample_name_list]
                     for pr in tqdm(sample_name_flat_list):
                         vf.write("{}\n".format(pr))
 

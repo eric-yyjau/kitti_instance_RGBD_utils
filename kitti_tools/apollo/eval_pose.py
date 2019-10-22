@@ -8,10 +8,11 @@ import os
 import numpy as np
 import argparse
 from collections import OrderedDict
-import utils as uts
+# from utils import *
+# import utils as uts
 
 
-class PoseEval(object):
+class eval_pose(object):
     """Evaluation of pose
     """
 
@@ -160,5 +161,5 @@ if __name__ == '__main__':
                         help='the dir of ground truth')
 
     args = parser.parse_args()
-    pose_metric = PoseEval(args)
+    pose_metric = eval_pose(args)
     pose_metric.eval()
