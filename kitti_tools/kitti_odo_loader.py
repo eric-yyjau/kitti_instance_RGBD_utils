@@ -406,7 +406,7 @@ class KittiOdoLoader(object):
                     pass
 
             # sample_name_list.append("%s %s" % (str(dump_dir)[-5:], frame_nb))
-            sample_name_list.append("%s %s" % (str(dump_dir), frame_nb))
+            sample_name_list.append(f"{str(scene_data['rel_path'])} {frame_nb}")
             logging.debug(f"sample_name_list: {sample_name_list[-1]}")
         # Get all poses
         if "pose" in sample.keys():

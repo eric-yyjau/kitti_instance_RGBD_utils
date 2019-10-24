@@ -115,10 +115,12 @@ seq_loader_model = args.dataloader_name
 seq_loader = get_model(seq_loader_model, seq_loader_model)
 logging.info(f"{seq_loader_model} is loaded!")
 
-assert args.cam_id in [
-    "00",
-    "02",
-], "Only supported left greyscale/color cameras (cam 00 or 02)!"
+# assert args.cam_id in [
+#     "00",
+#     "02",
+#     "5",
+#     "6"
+# ], "Only supported left greyscale/color cameras (cam 00 or 02)!"
 data_loader = seq_loader(
     args.dataset_dir,
     img_height=args.img_height,

@@ -74,7 +74,7 @@ class apollo_seq_loader(KittiOdoLoader):
         dataset_dir,
         img_height=2056,
         img_width=2452,
-        cam_ids=["00"],  # no usage in TUM
+        cam_ids=["1"],  # no usage in TUM
         get_X=False,
         get_pose=False,
         get_sift=False,
@@ -90,11 +90,12 @@ class apollo_seq_loader(KittiOdoLoader):
         self.dataset_dir = Path(dataset_dir)
         self.img_height = img_height
         self.img_width = img_width
-        self.cam_ids = ["1"]  # no use in TUM
-        assert self.cam_ids == ["1"], 'Support left camera only!'
-        self.cid_to_num = {"1": 1, "2": 2}
+        self.cam_ids = cam_ids[0] # ["1"]  # no use in TUM
+        logging.info(f"cam_id: {cam_ids}")
+        assert self.cam_ids in ["1", "5"], 'Support left camera only!'
+        self.cid_to_num = {"1": 1, "2": 2, "5": 5, "6": 6}
 
-        self.debug = True
+        self.debug = False
         if self.debug:
             coloredlogs.install(level="DEBUG", logger=logger) # original info
 
@@ -105,15 +106,10 @@ class apollo_seq_loader(KittiOdoLoader):
         else:
             ## dataset names
             self.train_seqs = [
-                "rgbd_dataset_freiburg1_desk",
-                "rgbd_dataset_freiburg1_room",
-                "rgbd_dataset_freiburg2_desk",
-                "rgbd_dataset_freiburg3_long_office_household",
+                'Road11'
             ]
             self.test_seqs = [
-                "rgbd_dataset_freiburg1_desk2",
-                "rgbd_dataset_freiburg2_xyz",
-                "rgbd_dataset_freiburg3_nostructure_texture_far",
+                'Road11'
             ]
 
         self.get_X = get_X
@@ -205,7 +201,10 @@ class apollo_seq_loader(KittiOdoLoader):
 
     def get_calib_file_from_folder(self, foldername):
         for i in self.cam_ids:
-            calib_file = f"{foldername}/camera_params/Camera_{i}.cam"
+            if i == 1 or i == 2:
+                calib_file = f"{foldername}/camera_params/Camera_{i}.cam"
+            else:
+                calib_file = f"{foldername}/camera_params/Camera\ {i}.cam"
         return calib_file
 
 
@@ -223,7 +222,10 @@ class apollo_seq_loader(KittiOdoLoader):
     @staticmethod
     def get_pose_to_dict(pose_path, cam_id=1):
         eval_agent = eval_pose({})
-        pose_files = glob(f"{pose_path}/**/Camera_{cam_id}.txt")
+        if cam_id == 1 or cam_id == 2:
+            pose_files = glob(f"{pose_path}/**/Camera_{cam_id}.txt")
+        else:
+            pose_files = glob(f"{pose_path}/**/Camera\ {cam_id}.txt")
         logging.debug(f"pose: {pose_files[0]}")
     #     calib_data = []
         pose_dict = {}
@@ -270,8 +272,9 @@ class apollo_seq_loader(KittiOdoLoader):
             }
             # img_dir = os.path.join(drive_path, 'image_%d'%scene_data['cid_num'])
             # scene_data['img_files'] = sorted(glob(img_dir + '/*.png'))
+            split_folder = 'trainval_split' if self.debug else 'split'
             scene_data["img_files"] = self.read_images_files_from_folder(
-                drive_path, scene_data, file=f"trainval_split/{split_mapping[split]}.txt", cam_id=1
+                drive_path, scene_data, file=f"{split_folder}/{split_mapping[split]}.txt", cam_id=1
             )
             # scene_data["depth_files"] = self.read_images_files_from_folder(
             #     drive_path, scene_data, folder="depth"
@@ -310,11 +313,20 @@ class apollo_seq_loader(KittiOdoLoader):
             # Get geo params from the RAW dataset calibs
             # calib_file = os.path.join("tum/TUM1.yaml")
             # calib_file = os.path.join("/data/tum/calib/TUM1.yaml")
-            calib_file = os.path.join(self.get_calib_file_from_folder(drive_path))
-            logging.info(f"calibration file: {calib_file}")
-            # calib_file = f"{scene_data['img_files'][0].str()}/../../sensor.yaml"
+            if c == "1" or c == "2":
+                calib_file = os.path.join(self.get_calib_file_from_folder(drive_path))
+                logging.info(f"calibration file: {calib_file}")
+                # calib_file = f"{scene_data['img_files'][0].str()}/../../sensor.yaml"
+                P_rect_noScale = self.get_cam_cali(calib_file)
+            elif c == '5' or c == '6':
+                from apollo.data import ApolloScape
+                apo_data = ApolloScape()
+                P_rect_noScale = apo_data.get_intrinsic(image_name=False, camera_name=f'Camera_{c}')
+            
+            logging.info(f"P_rect_noScale: {P_rect_noScale}")
+                
             P_rect_noScale, P_rect_scale = self.get_P_rect(
-                calib_file, scene_data["calibs"]
+                P_rect_noScale, scene_data["calibs"]
             )
             P_rect_ori_dict = {c: P_rect_scale}
             intrinsics = P_rect_ori_dict[c][:, :3]
@@ -375,12 +387,8 @@ class apollo_seq_loader(KittiOdoLoader):
             train_scenes.append(scene_data)
         return train_scenes
 
-    def get_P_rect(self, calib_file, calibs):
-        # width, height = calib_data['resolution']
-        # cam_info.distortion_model = 'plumb_bob'
-        # D = np.array(calib_data['distortion_coefficients'])
-        # cam_info.R = [1, 0, 0, 0, 1, 0, 0, 0, 1]
-        # calib_data = loadConfig(calib_file)
+
+    def get_cam_cali(self, calib_file):
         calib_data = np.genfromtxt(calib_file, delimiter='=', comments='[', dtype=str)
         fu, fv, cu, cv = (
             float(calib_data[3,1]),
@@ -391,6 +399,15 @@ class apollo_seq_loader(KittiOdoLoader):
         K = np.array([[fu, 0, cu], [0, fv, cv], [0, 0, 1]])
 
         P_rect_ori = np.concatenate((K, [[0], [0], [0]]), axis=1)
+        return P_rect_ori
+
+    def get_P_rect(self, P_rect_ori, calibs):
+        # width, height = calib_data['resolution']
+        # cam_info.distortion_model = 'plumb_bob'
+        # D = np.array(calib_data['distortion_coefficients'])
+        # cam_info.R = [1, 0, 0, 0, 1, 0, 0, 0, 1]
+        # calib_data = loadConfig(calib_file)
+
         # rescale the camera matrix
 
         if calibs["rescale"]:
