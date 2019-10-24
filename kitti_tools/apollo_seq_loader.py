@@ -95,7 +95,7 @@ class apollo_seq_loader(KittiOdoLoader):
         assert self.cam_ids in ["1", "5"], 'Support left camera only!'
         self.cid_to_num = {"1": 1, "2": 2, "5": 5, "6": 6}
 
-        self.debug = False
+        self.debug = True
         if self.debug:
             coloredlogs.install(level="DEBUG", logger=logger) # original info
 
