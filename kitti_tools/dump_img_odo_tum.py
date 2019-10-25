@@ -13,7 +13,7 @@ import cv2
 from glob import glob
 import time
 
-from path import Path
+from pathlib import Path
 from tqdm import tqdm
 import logging
 
@@ -164,7 +164,7 @@ print('Found %d potential train scenes, and %d test scenes.'%(n_scenes['train'],
 """
 
 args_dump_root = Path(args.dump_root)
-args_dump_root.mkdir_p()
+args_dump_root.mkdir(parents=True, exist_ok=True)
 
 sample_name_lists = []
 for split in ["test", "train"]:
@@ -217,9 +217,9 @@ print("> Generating train val lists from %d samples..." % len(sample_name_flat_l
 np.random.seed(8964)
 val_ratio = 0.2
 # to avoid data snooping, we will make two cameras of the same scene to fall in the same set, train or val
-subdirs = (
-    args_dump_root.dirs()
-)  # e.g. Path('./data/kitti_dump/2011_09_30_drive_0034_sync_02')
+# subdirs = (
+#     args_dump_root.dirs()
+# )  # e.g. Path('./data/kitti_dump/2011_09_30_drive_0034_sync_02')
 # canonic_prefixes = set([subdir.basename()[:-2] for subdir in subdirs]) # e.g. '2011_09_28_drive_0039_sync_'
 with open(args_dump_root / "train.txt", "w") as tf:
     with open(args_dump_root / "val.txt", "w") as vf:
