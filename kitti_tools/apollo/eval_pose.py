@@ -69,10 +69,10 @@ class eval_pose(object):
         self._offset = []
         self._theta = []
 
-    def load_pose_file(self, pose_file):
+    def load_pose_file(self, pose_file, sep=' '):
         """ load one result file
         """
-        lines = [line.strip().split(' ') for line in open(pose_file)]
+        lines = [line.strip().split(sep) for line in open(pose_file)]
         poses = OrderedDict({})
         for line in lines:
             poses[line[0]] = np.array(

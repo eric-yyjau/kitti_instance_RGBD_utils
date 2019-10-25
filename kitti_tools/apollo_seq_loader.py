@@ -290,7 +290,7 @@ class apollo_seq_loader(KittiOdoLoader):
             show_zoom_info = True
             # read images
             for idx in tqdm(range(scene_data["N_frames"])):
-                img, zoom_xy, _ = self.load_image(scene_data, idx, show_zoom_info)
+                img, zoom_xy, img_ori = self.load_image(scene_data, idx, show_zoom_info)
                 # print(f"zoom_xy: {zoom_xy}")
                 show_zoom_info = False
                 if img is None and idx == 0:

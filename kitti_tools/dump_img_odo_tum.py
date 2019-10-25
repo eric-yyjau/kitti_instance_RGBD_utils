@@ -167,7 +167,7 @@ args_dump_root = Path(args.dump_root)
 args_dump_root.mkdir_p()
 
 sample_name_lists = []
-for split in ["train", "test"]:
+for split in ["test", "train"]:
     print("> Retrieving frames for %s..." % split)
     seconds = time.time()
 
