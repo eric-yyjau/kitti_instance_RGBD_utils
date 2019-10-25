@@ -52,8 +52,6 @@ import yaml
 DEEPSFM_PATH = "/home/ruizhu/Documents/Projects/kitti_instance_RGBD_utils/deepSfm"
 sys.path.append(DEEPSFM_PATH)
 import torch
-from models.model_wrap import PointTracker
-from models.model_wrap import SuperPointFrontend_torch
 
 from kitti_odo_loader import KittiOdoLoader
 from kitti_odo_loader import (
