@@ -36,6 +36,7 @@ default_number_of_process = (
     1
 )  # to prevent congestion; SIFT and matrix operations in recfity points already takes advantage of multi-cores
 import time
+import yaml
 
 parser = argparse.ArgumentParser(description="Foo")
 parser.add_argument(
@@ -101,6 +102,10 @@ parser.add_argument(
 #     --dump_root /home/ruizhu/Documents/Datasets/kitti/corr_dump'.split())
 args = parser.parse_args()
 print(args)
+
+with open(os.path.join(args.dump_root, "config.yml"), "w") as f:
+    yaml.dump(args, f, default_flow_style=False)
+logging.info(f"dump args to: {args.dump_root}/config.yml")
 
 # %reload_ext autoreload
 # %autoreload 2
