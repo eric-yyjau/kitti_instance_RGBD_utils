@@ -6,7 +6,9 @@
 
 import cv2
 import numpy as np
-import utils as uts
+# import utils as uts
+from . import utils as uts
+
 
 
 class ApolloScape(object):
@@ -187,4 +189,7 @@ class ApolloScape(object):
                     return self._data_config['intrinsic'][name]
         raise ValueError('%s has no provided intrinsic' % image_name)
 
-
+if __name__ == "__main__":
+    print("load modules")
+    
+    pass
