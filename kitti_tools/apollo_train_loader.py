@@ -96,7 +96,7 @@ class apollo_train_loader(apollo_seq_loader):
 
         self.split_mapping = {"train": "train", "test": "val"}
 
-        self.debug = True
+        self.debug = False
         if self.debug:
             coloredlogs.install(level="DEBUG", logger=logger)  # original info
 
@@ -215,7 +215,8 @@ class apollo_train_loader(apollo_seq_loader):
         if not img_file.is_file():
             logging.warning("Image %s not found!" % img_file)
             return None, None, None
-        img_ori = scipy.misc.imread(img_file)
+        img_ori = cv2.imread(str(img_file))
+        img_ori = cv2.cvtColor(img_ori, cv2.COLOR_BGR2RGB)
         if [self.img_height, self.img_width] == [img_ori.shape[0], img_ori.shape[1]]:
             return img_ori, (1.0, 1.0), img_ori
         else:
@@ -234,7 +235,8 @@ class apollo_train_loader(apollo_seq_loader):
                         self.img_width,
                     )
                 )
-            img = scipy.misc.imresize(img_ori, (self.img_height, self.img_width))
+            # img = scipy.misc.imresize(img_ori, (self.img_height, self.img_width))
+            img = cv2.resize(img_ori, (self.img_width, self.img_height))
             return img, (zoom_x, zoom_y), img_ori
 
     def get_calib_file_from_folder(self, foldername):
