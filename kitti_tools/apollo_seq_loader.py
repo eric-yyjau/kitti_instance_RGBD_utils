@@ -199,12 +199,8 @@ class apollo_seq_loader(KittiOdoLoader):
             img = scipy.misc.imresize(img_ori, (self.img_height, self.img_width))
             return img, (zoom_x, zoom_y), img_ori
 
-    def get_calib_file_from_folder(self, foldername):
-        for i in self.cam_ids:
-            if i == 1 or i == 2:
-                calib_file = f"{foldername}/camera_params/Camera_{i}.cam"
-            else:
-                calib_file = f"{foldername}/camera_params/Camera\ {i}.cam"
+    def get_calib_file_from_folder(self, foldername, c):
+        calib_file = f"{foldername}/camera_params/Camera_{c}.cam"
         return calib_file
 
 
@@ -314,7 +310,7 @@ class apollo_seq_loader(KittiOdoLoader):
             # calib_file = os.path.join("tum/TUM1.yaml")
             # calib_file = os.path.join("/data/tum/calib/TUM1.yaml")
             if c == "1" or c == "2":
-                calib_file = os.path.join(self.get_calib_file_from_folder(drive_path))
+                calib_file = os.path.join(self.get_calib_file_from_folder(drive_path, c))
                 logging.info(f"calibration file: {calib_file}")
                 # calib_file = f"{scene_data['img_files'][0].str()}/../../sensor.yaml"
                 P_rect_noScale = self.get_cam_cali(calib_file)

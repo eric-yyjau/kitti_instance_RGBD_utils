@@ -121,6 +121,11 @@ parser.add_argument(
 args = parser.parse_args()
 print(args)
 
+## create dump folders
+args_dump_root = Path(args.dump_root)
+args_dump_root.mkdir(parents=True, exist_ok=True)
+
+## output configs
 with open(os.path.join(args.dump_root, "config.yml"), "w") as f:
     yaml.dump(args, f, default_flow_style=False)
 logging.info(f"dump args to: {args.dump_root}/config.yml")
@@ -186,8 +191,6 @@ n_scenes = {'train': len(data_loader.scenes['train']), 'test': len(data_loader.s
 print('Found %d potential train scenes, and %d test scenes.'%(n_scenes['train'], n_scenes['test']))
 """
 
-args_dump_root = Path(args.dump_root)
-args_dump_root.mkdir(parents=True, exist_ok=True)
 
 sample_name_lists = []
 splits = ['train', 'test']
