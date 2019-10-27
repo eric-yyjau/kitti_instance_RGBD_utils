@@ -402,22 +402,22 @@ class apollo_seq_loader(KittiOdoLoader):
         return P_rect_ori
 
     def get_P_rect(self, P_rect_ori, calibs):
-        # width, height = calib_data['resolution']
-        # cam_info.distortion_model = 'plumb_bob'
-        # D = np.array(calib_data['distortion_coefficients'])
-        # cam_info.R = [1, 0, 0, 0, 1, 0, 0, 0, 1]
-        # calib_data = loadConfig(calib_file)
-
+        """
         # rescale the camera matrix
+        input: 
+            P_rect_ori: calibration matrix: np [3,4]
+            calibs: calibs["zoom_xy"]: (ratio_x, ratio_y)
+        return:
 
+        """
         if calibs["rescale"]:
             P_rect_scale = scale_P(
                 P_rect_ori, calibs["zoom_xy"][0], calibs["zoom_xy"][1]
             )
         else:
             P_rect_scale = P_rect_ori
-
         return P_rect_ori, P_rect_scale
+
 
     @staticmethod
     def load_velo(scene_data, tgt_idx, calib_K=None):

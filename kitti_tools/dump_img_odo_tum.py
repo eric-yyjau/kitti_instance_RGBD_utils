@@ -95,6 +95,24 @@ parser.add_argument(
     "--dump_root", type=str, default="dump", help="Where to dump the data"
 )
 
+# parser.add_argument(
+#     "--dump_test",
+#     action="store_true",
+#     default=False,
+#     help="export for testing data",
+# )
+
+# parser.add_argument(
+#     "--dump_train",
+#     action="store_true",
+#     default=False,
+#     help="export for training data",
+# )
+
+parser.add_argument(
+    "--d", type=list, default=["test", "train"], help="dump train or test"
+)
+
 # args = parser.parse_args('--dump --with_X --with_pose --with_sift \
 #     --static_frames_file /home/ruizhu/Documents/Projects/SfmLearner-Pytorch/data/static_frames.txt \
 #     --test_scene_file /home/ruizhu/Documents/Projects/SfmLearner-Pytorch/data/test_scenes.txt \
@@ -172,7 +190,9 @@ args_dump_root = Path(args.dump_root)
 args_dump_root.mkdir(parents=True, exist_ok=True)
 
 sample_name_lists = []
-for split in ["test", "train"]:
+splits = ['train', 'test']
+splits = ['test']
+for split in splits:
     print("> Retrieving frames for %s..." % split)
     seconds = time.time()
 
