@@ -1,4 +1,7 @@
-""" For use in dumping single frame ground truths of KITTI Odometry Dataset
+""" 
+###### deprecated... replaced by 'kitti_seq_loader' ######
+
+For use in dumping single frame ground truths of KITTI Odometry Dataset
 Adapted from https://github.com/ClementPinard/SfmLearner-Pytorch/blob/0caec9ed0f83cb65ba20678a805e501439d2bc25/data/kitti_raw_loader.py
 
 Rui Zhu, rzhu@eng.ucsd.edu, 2019

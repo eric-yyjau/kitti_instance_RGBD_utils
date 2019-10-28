@@ -96,22 +96,8 @@ parser.add_argument(
 )
 
 # parser.add_argument(
-#     "--dump_test",
-#     action="store_true",
-#     default=False,
-#     help="export for testing data",
+#     "--d", type=list, default=["test", "train"], help="dump train or test"
 # )
-
-# parser.add_argument(
-#     "--dump_train",
-#     action="store_true",
-#     default=False,
-#     help="export for training data",
-# )
-
-parser.add_argument(
-    "--d", type=list, default=["test", "train"], help="dump train or test"
-)
 
 # args = parser.parse_args('--dump --with_X --with_pose --with_sift \
 #     --static_frames_file /home/ruizhu/Documents/Projects/SfmLearner-Pytorch/data/static_frames.txt \
@@ -194,7 +180,7 @@ print('Found %d potential train scenes, and %d test scenes.'%(n_scenes['train'],
 
 sample_name_lists = []
 splits = ['train', 'test']
-splits = ['test']
+# splits = ['train']
 for split in splits:
     print("> Retrieving frames for %s..." % split)
     seconds = time.time()
