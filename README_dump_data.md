@@ -13,10 +13,11 @@ In *kitti_tools*:
 
 ## apollo 
 ** branch: https://github.com/eric-yyjau/kitti_instance_RGBD_utils/tree/dump_data/kitti_tools**
-*Website: http://apolloscape.auto/*
+
 
 - Download dataset:
-sequence: self Localization/ training data/ Road11.tar.gz (mainly used)
+  - sequence: self Localization/ training data/ Road11.tar.gz (mainly used)
+  - *Website: http://apolloscape.auto/*
 
 - Process data - Match time stamps of rgb images, depth images and poses
 No need to process data. Already matched.
@@ -33,7 +34,7 @@ In *kitti_tools*:
 ## tum
 ** branch: https://github.com/eric-yyjau/kitti_instance_RGBD_utils/tree/dump_data/kitti_tools**
 
-Download dataset: (run the script in the folder to download)
+- Download dataset: (run the script in the folder to download)
 > python kitti_tools/tum/download.py 
 
 - Match time stamps of rgb images, depth images and poses
@@ -49,7 +50,7 @@ In *kitti_tools*:
 ## Euroc 
 ** branch: https://github.com/eric-yyjau/kitti_instance_RGBD_utils/tree/dump_data/kitti_tools**
 
-Download dataset: (run the script in the folder to download)
+- Download dataset: (run the script in the folder to download)
 > python kitti_tools/euroc/download.py 
 
 - Process data - Match time stamps of rgb images, depth images and poses
