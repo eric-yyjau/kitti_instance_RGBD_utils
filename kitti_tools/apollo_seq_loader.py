@@ -1,4 +1,5 @@
-""" For use in dumping single frame ground truths of EuRoc Dataset
+""" For use in dumping single frame ground truths of Apollo sample Dataset
+** Please also refer to apollo_train_loader.py for exporting training data
 Adapted from https://github.com/ClementPinard/SfmLearner-Pytorch/blob/0caec9ed0f83cb65ba20678a805e501439d2bc25/data/kitti_raw_loader.py
 
 You-Yi Jau, yjau@eng.ucsd.edu, 2019

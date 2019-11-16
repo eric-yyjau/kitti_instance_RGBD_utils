@@ -19,7 +19,8 @@ In *kitti_tools*:
   - sequence: self Localization/ training data/ Road11.tar.gz (mainly used)
   - *Website: http://apolloscape.auto/*
 
-- Process data - Match time stamps of rgb images, depth images and poses
+- Process data 
+
 No need to process data. Already matched.
 
 - Dump data: (make sure to specify dimensions)

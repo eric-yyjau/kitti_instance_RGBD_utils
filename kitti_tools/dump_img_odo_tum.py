@@ -180,7 +180,7 @@ print('Found %d potential train scenes, and %d test scenes.'%(n_scenes['train'],
 
 sample_name_lists = []
 splits = ['train', 'test']
-# splits = ['train']
+# splits = ['test']
 for split in splits:
     print("> Retrieving frames for %s..." % split)
     seconds = time.time()
@@ -206,7 +206,7 @@ for split in splits:
                 sample_name_lists.append(sample_name_list)
             elif split == "test":
                 ## write to test.txt
-                with open(args_dump_root / "test.txt", "w") as vf:
+                with open(args_dump_root / "test.txt", "a") as vf:
                     sample_name_flat_list = [sublist for sublist in sample_name_list]
                     for pr in tqdm(sample_name_flat_list):
                         vf.write("{}\n".format(pr))
