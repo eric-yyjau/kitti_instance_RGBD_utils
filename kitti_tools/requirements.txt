@@ -1,4 +1,4 @@
-scipy
+# scipy
 path.py
 tqdm
 torch
@@ -10,3 +10,6 @@ imageio
 pykitti
 opencv-python==3.4.2.16
 opencv-contrib-python==3.4.2.16
+pebble
+Pillow==5.0.0
+scipy==1.0.1
