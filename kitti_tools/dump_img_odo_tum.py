@@ -179,8 +179,8 @@ print('Found %d potential train scenes, and %d test scenes.'%(n_scenes['train'],
 
 
 sample_name_lists = []
-splits = ['train', 'test']
-# splits = ['test']
+# splits = ['train', 'test']
+splits = ['train']
 for split in splits:
     print("> Retrieving frames for %s..." % split)
     seconds = time.time()
@@ -188,7 +188,7 @@ for split in splits:
     def dump_scenes_from_drive(args, split, drive_path):
         # scene = data_loader.collect_scene_from_drive(drive_path)
         sample_name_list = data_loader.dump_drive(
-            args, drive_path, split=split, scene_data=None
+            args, drive_path, split=split, scene_data=None, skip_dumping=True
         )
         return sample_name_list
 

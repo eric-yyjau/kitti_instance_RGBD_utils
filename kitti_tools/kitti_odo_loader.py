@@ -167,7 +167,7 @@ class KittiOdoLoader(object):
         return img_files
 
     # def collect_scene_from_drive(self, drive_path):
-    def collect_scene_from_drive(self, drive_path, split="train"):
+    def collect_scene_from_drive(self, drive_path, split="train", skip_dumping=False):
         train_scenes = []
         logging.info("Gathering info for %s..." % drive_path)
         for c in self.cam_ids:
@@ -178,6 +178,7 @@ class KittiOdoLoader(object):
                 "rel_path": Path(drive_path).name + "_" + c,
                 # "rel_path": str(Path(drive_path).name + "_" + c)[-5:],
             }
+
             # print(f"scene_data: {scene_data}")
             # img_dir = os.path.join(drive_path, 'image_%d'%scene_data['cid_num'])
             # scene_data['img_files'] = sorted(glob(img_dir + '/*.png'))
@@ -193,19 +194,23 @@ class KittiOdoLoader(object):
             img_shape = None
             zoom_xy = None
             show_zoom_info = True
-            for idx in tqdm(range(scene_data["N_frames"])):
-                img, zoom_xy, _ = self.load_image(scene_data, idx, show_zoom_info)
-                show_zoom_info = False
-                if img is None and idx == 0:
-                    logging.warning("0 images in %s. Skipped." % drive_path)
-                    return []
-                else:
-                    if img_shape is not None:
-                        assert img_shape == img.shape, (
-                            "Inconsistent image shape in seq %s!" % drive_path
-                        )
+            if not skip_dumping:
+                # dumpimages
+                for idx in tqdm(range(scene_data["N_frames"])):
+                    img, zoom_xy, _ = self.load_image(scene_data, idx, show_zoom_info)
+                    show_zoom_info = False
+                    if img is None and idx == 0:
+                        logging.warning("0 images in %s. Skipped." % drive_path)
+                        return []
                     else:
-                        img_shape = img.shape
+                        if img_shape is not None:
+                            assert img_shape == img.shape, (
+                                "Inconsistent image shape in seq %s!" % drive_path
+                            )
+                        else:
+                            img_shape = img.shape
+            else:
+                logging.warning(f"skip dumping images!!")
             # print(img_shape)
             scene_data["calibs"] = {
                 "im_shape": [img_shape[0], img_shape[1]],
@@ -322,11 +327,15 @@ class KittiOdoLoader(object):
             sample["SP_des"] = desc
         return sample
 
-    def dump_drive(self, args, drive_path, split, scene_data=None):
+    def dump_drive(self, args, drive_path, split, scene_data=None, skip_dumping=False):
         assert split in ["train", "test"]
         # get scene data
+        self.delta_ijs = [1] # [1, 2, 3, 5, 8, 10]
+        assert 1 in self.delta_ijs
+        logging.info(f"delta_ijs: {self.delta_ijs}")
+
         if scene_data is None:
-            train_scenes = self.collect_scene_from_drive(drive_path, split=split)
+            train_scenes = self.collect_scene_from_drive(drive_path, split=split, skip_dumping=skip_dumping)
             if not train_scenes:
                 logging.warning("Empty scene data for %s. Skipped." % drive_path)
                 return
@@ -360,6 +369,17 @@ class KittiOdoLoader(object):
         # dump features, images frame by frame
         for idx in tqdm(range(scene_data["N_frames"])):
             frame_id = scene_data["frame_ids"][idx]
+
+            ## add to sample_name_list
+            # sample_name_list.append(f"{str(scene_data['rel_path'])} {frame_nb}")
+            sample_name_list.append(f"{str(scene_data['rel_path'])} {frame_id}") # frame_id == sample["id"]
+            logging.debug(f"sample_name_list: {sample_name_list[-1]}")
+
+            ## skip!
+            if skip_dumping:
+                logging.warning(f"skipp dumping poses and files!")
+                continue
+
             assert int(frame_id) == idx
             sample = self.construct_sample(
                 scene_data, idx, frame_id, show_zoom_info=False
@@ -367,6 +387,9 @@ class KittiOdoLoader(object):
 
             img, frame_nb = sample["img"], sample["id"]
             dump_img_file = dump_dir / "{}.jpg".format(frame_nb)
+
+
+
             scipy.misc.imsave(dump_img_file, img)
             if "pose" in sample.keys():
                 poses.append(sample["pose"].astype(np.float32))
@@ -409,9 +432,11 @@ class KittiOdoLoader(object):
                     pass
 
             # sample_name_list.append("%s %s" % (str(dump_dir)[-5:], frame_nb))
-            sample_name_list.append(f"{str(scene_data['rel_path'])} {frame_nb}")
-            logging.debug(f"sample_name_list: {sample_name_list[-1]}")
-        # Get all poses
+
+        if skip_dumping:
+            return sample_name_list
+
+        # Get all posessample
         if "pose" in sample.keys():
             if len(poses) != 0:
                 # np.savetxt(poses_file, np.array(poses).reshape(-1, 16), fmt='%.20e')a
@@ -424,7 +449,8 @@ class KittiOdoLoader(object):
 
         # Get SIFT matches
         if self.get_sift:
-            delta_ijs = [1, 2, 3, 5, 8, 10]
+            delta_ijs = self.delta_ijs
+            # delta_ijs = [1, 2, 3, 5, 8, 10]
             # delta_ijs = [1]
             num_tasks = len(delta_ijs)
             num_workers = min(len(delta_ijs), default_number_of_process)
@@ -452,7 +478,7 @@ class KittiOdoLoader(object):
 
         # Get SP matches
         if self.get_SP:
-            delta_ijs = [1, 2, 3, 5, 8, 10]
+            delta_ijs = self.delta_ijs #  [1, 2, 3, 5, 8, 10]
             nn_threshes = [0.7, 1.0]
             # delta_ijs = [1]
             num_tasks = len(delta_ijs)

@@ -110,8 +110,8 @@ class apollo_train_loader(apollo_seq_loader):
         else:
             split_folder = "split"
             ## dataset names
-            self.train_seqs = ["Road17"]  # the folders after the dataset_dir
-            self.test_seqs = ["Road17"]
+            self.train_seqs = ["Road16"]  # the folders after the dataset_dir
+            self.test_seqs = ["Road16"]
 
         ## prepare training seqs
         self.train_rel_records = [
@@ -298,7 +298,7 @@ class apollo_train_loader(apollo_seq_loader):
             # print(f"pose_mat: {pose_mat.shape}")
         return np.array(poses)
 
-    def collect_scene_from_drive(self, drive_path, split="train"):
+    def collect_scene_from_drive(self, drive_path, split="train", skip_dumping=False):
         # adapt for Euroc dataset
         train_scenes = []
         split_mapping = self.split_mapping
@@ -346,24 +346,31 @@ class apollo_train_loader(apollo_seq_loader):
             img_shape = None
             zoom_xy = None
             show_zoom_info = True
-            for idx in tqdm(range(scene_data["N_frames"])):
-                img, zoom_xy, img_ori = self.load_image(scene_data, idx, show_zoom_info)
-                # print(f"zoom_xy: {zoom_xy}")
-                if idx % 100 == 0:
-                    logging.info(
-                        f"img: {img.shape}, img_ori: {img_ori.shape}, zoom_xy: {zoom_xy}"
-                    )
-                show_zoom_info = False
-                if img is None and idx == 0:
-                    logging.warning("0 images in %s. Skipped." % drive_path)
-                    return []
-                else:
-                    if img_shape is not None:
-                        assert img_shape == img.shape, (
-                            "Inconsistent image shape in seq %s!" % drive_path
+            if not skip_dumping:
+                for idx in tqdm(range(scene_data["N_frames"])):
+                    img, zoom_xy, img_ori = self.load_image(scene_data, idx, show_zoom_info)
+                    # print(f"zoom_xy: {zoom_xy}")
+                    if idx % 100 == 0:
+                        logging.info(
+                            f"img: {img.shape}, img_ori: {img_ori.shape}, zoom_xy: {zoom_xy}"
                         )
+                    show_zoom_info = False
+                    if img is None and idx == 0:
+                        logging.warning("0 images in %s. Skipped." % drive_path)
+                        return []
                     else:
-                        img_shape = img.shape
+                        if img_shape is not None:
+                            assert img_shape == img.shape, (
+                                "Inconsistent image shape in seq %s!" % drive_path
+                            )
+                        else:
+                            img_shape = img.shape
+            else:
+                logging.warning(f"skip dumping images!!")
+                img_shape = [1,1,3]
+                img_ori = np.zeros((1,1,3))  ## dummy image
+                zoom_xy = [1,1]
+                
             logging.debug(f"img_shape: {img_shape}")
             scene_data["calibs"] = {
                 "im_shape": [img_shape[0], img_shape[1]],

@@ -1,5 +1,9 @@
 # NAME: loader.py
+
+"""
 # DESCRIPTION: data loader for raw kitti data
+For other datasets (apollo, euroc, tum), please refer to dump_img_odo_tum.py
+"""
 
 import os
 import sys
