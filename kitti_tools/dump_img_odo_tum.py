@@ -135,6 +135,9 @@ logging.info(f"{seq_loader_model} is loaded!")
 #     "5",
 #     "6"
 # ], "Only supported left greyscale/color cameras (cam 00 or 02)!"
+delta_ijs = [1] # [1, 2, 3, 5, 8, 10]
+if args.with_sift:
+    print(f"delta_ijs for sift: {delta_ijs}")
 data_loader = seq_loader(
     args.dataset_dir,
     img_height=args.img_height,
@@ -144,6 +147,7 @@ data_loader = seq_loader(
     get_pose=args.with_pose,
     get_sift=args.with_sift,
     get_SP=args.with_SP,
+    delta_ijs = delta_ijs # [1, 2, 3, 5, 8, 10]
 )
 
 print(f"data_loader: {data_loader}")
@@ -188,7 +192,8 @@ for split in splits:
     def dump_scenes_from_drive(args, split, drive_path):
         # scene = data_loader.collect_scene_from_drive(drive_path)
         sample_name_list = data_loader.dump_drive(
-            args, drive_path, split=split, scene_data=None, skip_dumping=True
+            # args, drive_path, split=split, scene_data=None, skip_dumping=True
+            args, drive_path, split=split, scene_data=None,
         )
         return sample_name_list
 

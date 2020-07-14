@@ -70,6 +70,7 @@ class kitti_seq_loader(object):
         sift_num=2000,
         if_BF_matcher=False,
         save_npy=True,
+        delta_ijs=[1]
     ):
         # depth_size_ratio=1):
         # dir_path = Path(__file__).realpath().dirname()
@@ -105,6 +106,7 @@ class kitti_seq_loader(object):
         self.get_sift = get_sift
         self.get_SP = get_SP
         self.save_npy = save_npy
+        self.delta_ijs = delta_ijs
         if self.save_npy:
             logging.info("+++ Dumping as npy")
         else:
@@ -422,7 +424,7 @@ class kitti_seq_loader(object):
 
         # Get SIFT matches
         if self.get_sift:
-            delta_ijs = [1, 2, 3, 5, 8, 10]
+            # delta_ijs = [1, 2, 3, 5, 8, 10]
             # delta_ijs = [1]
             num_tasks = len(delta_ijs)
             num_workers = min(len(delta_ijs), default_number_of_process)

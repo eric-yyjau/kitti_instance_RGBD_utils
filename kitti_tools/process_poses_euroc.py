@@ -36,7 +36,7 @@ if __name__ == "__main__":
     dataset = args.dataset
     
     gt_file = "state_groundtruth_estimate0/data.csv"
-    max_difference = 10
+    max_difference = 30
     rgb_file = 'cam0/data.csv'
 
     filter_ext = '_f.txt'
