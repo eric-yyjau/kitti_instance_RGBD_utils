@@ -704,7 +704,6 @@ def get_SP_match_idx_pair(matcher, kps1, kps2, des1, des2):
 
 
 
-
 def read_odo_calib_file(filepath, cid=2):
     # From https://github.com/tinghuiz/SfMLearner/blob/master/data/kitti/kitti_odom_loader.py#L133
     """Read in a calibration file and parse into a dictionary."""

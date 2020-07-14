@@ -2,6 +2,9 @@
 
 ## KITTI dataset
 ### Raw data structure
+- Download raw data from [here](http://www.cvlibs.net/datasets/kitti/raw_data.php).
+- Download odometry data (color) from [here](http://www.cvlibs.net/datasets/kitti/eval_odometry.php).
+- Copy the ground truth poses from `deepFEPE/datasets/kitti_gt_poses`.
 ```
 `-- KITTI (raw data, odometry sequences, GT poses)
 |   |-- raw
@@ -43,8 +46,12 @@ python dump_img_odo_tum.py --dump --dataset_dir /media/yoyee/Big_re/kitti/data_o
 ```
 
 ## ApolloScape dataset
-
 ### Raw data structure
+- Download raw data from [here](http://apolloscape.auto/self_localization.html).
+```
+python apollo/download.py -h
+python apollo/download.py --dataset_dir /media/yoyee/Big_re/apollo/ --if_download --if_untar
+```
 
 ### Processing command
 
