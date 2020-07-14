@@ -423,6 +423,7 @@ class kitti_seq_loader(object):
                     )
 
         # Get SIFT matches
+        delta_ijs = self.delta_ijs
         if self.get_sift:
             # delta_ijs = [1, 2, 3, 5, 8, 10]
             # delta_ijs = [1]

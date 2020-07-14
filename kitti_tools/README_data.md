@@ -39,7 +39,7 @@
 python dump_img_odo_tum.py --dump --dataset_dir /media/yoyee/Big_re/kitti/data_odometry_color/dataset/ \
 --with_pose --with_sift \
 --dump_root /media/yoyee/Big_re/kitti/kitti_dump/odo_corr_dump_siftIdx_npy_delta1235810_test_0713 \
---num_threads=1  --img_height 376 --img_width 1241 --dataloader_name kitti_seq_loader --cam_id '02'
+--num_threads=8  --img_height 376 --img_width 1241 --dataloader_name kitti_seq_loader --cam_id '02'
 ```
 
 ## ApolloScape dataset
