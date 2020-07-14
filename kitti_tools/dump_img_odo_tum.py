@@ -183,8 +183,8 @@ print('Found %d potential train scenes, and %d test scenes.'%(n_scenes['train'],
 
 
 sample_name_lists = []
-# splits = ['train', 'test']
-splits = ['train']
+splits = ['train', 'test']
+# splits = ['train']
 for split in splits:
     print("> Retrieving frames for %s..." % split)
     seconds = time.time()
