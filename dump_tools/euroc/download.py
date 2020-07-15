@@ -2,6 +2,7 @@
 
 import subprocess
 import glob
+import argparse
 
 
 if __name__ == "__main__":
@@ -37,15 +38,30 @@ if __name__ == "__main__":
     # base_path = "https://vision.in.tum.de/rgbd/dataset/"
     base_path = "http://robotics.ethz.ch/~asl-datasets/ijrr_euroc_mav_dataset/"
 
-    if_download = True
-    if_untar = True
+    parser = argparse.ArgumentParser(description="Foo")
+    parser.add_argument(
+        "--dataset_dir", type=str, default="./", help="path to download dataset, need large storage"
+    )
+    parser.add_argument(
+        "--if_download", action="store_true", default=False, help="download the dataset"
+    )
+    parser.add_argument(
+        "--if_untar", action="store_true", default=False, help="untar the downloaded file"
+    )
+    args = parser.parse_args()
+    print(args)
+
+    if_download = args.if_download # True
+    if_untar = args.if_untar # True
 
     if if_download:
         for seq in sequences:
-            subprocess.run(f"wget {base_path + seq}", shell=True, check=True)
+            subprocess.run(f"wget {base_path + seq} -P {args.dataset_dir}", shell=True, check=True)
 
     if if_untar:
         # unzip
-        tar_files = glob.glob("*.zip")
+        tar_files = glob.glob(f"{args.dataset_dir}/*.zip")
         for f in tar_files:
-            subprocess.run(f"unzip {f}", shell=True, check=True)
+            command = f"unzip {f} -d {str(f)[:-4]}"
+            print(f"run: {command}")
+            subprocess.run(command, shell=True, check=True)

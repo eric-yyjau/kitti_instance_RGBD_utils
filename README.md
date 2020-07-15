@@ -52,8 +52,8 @@ python dump_tools/dump_data.py --dump --dataset_dir /media/yoyee/Big_re/kitti/da
 ### Raw data structure
 - Download raw data (Training data, Road11.tar.gz) from [here](http://apolloscape.auto/self_localization.html) or use the following script.
 ```
-python apollo/download.py -h
-python apollo/download.py --dataset_dir /media/yoyee/Big_re/apollo/train_seq_1 --if_download
+python dump_tools/apollo/download.py -h
+python dump_tools/apollo/download.py --dataset_dir /media/yoyee/Big_re/apollo/train_seq_1 --if_download
 # change the name to Road11.tar.gz
 tar zxf Road11.tar.gz
 ```
@@ -67,7 +67,8 @@ python dump_tools/dump_data.py  --dump --dataset_dir /media/yoyee/Big_re/apollo/
 ## EuRoC dataset (not tested)
 ### Raw data
 ```
-python dump_tools/euroc/download.py 
+<!-- python dump_tools/euroc/download.py  -->
+python dump_tools/euroc/download.py --dataset_dir /media/yoyee/Big_re/euroc/train_seq_1 --if_download --if_untar
 ```
 ### Process data 
 - Match time stamps of rgb images, depth images and poses
