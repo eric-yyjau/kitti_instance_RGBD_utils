@@ -1,8 +1,11 @@
 """ For use in dumping single frame ground truths of Apollo training Dataset
 Adapted from https://github.com/ClementPinard/SfmLearner-Pytorch/blob/0caec9ed0f83cb65ba20678a805e501439d2bc25/data/kitti_raw_loader.py
 
-You-Yi Jau, yjau@eng.ucsd.edu, 2019
-Rui Zhu, rzhu@eng.ucsd.edu, 2019
+Authors:
+    You-Yi Jau, yjau@eng.ucsd.edu, 2020
+    Rui Zhu, rzhu@eng.ucsd.edu, 2019
+Date: 
+    2020/07/15
 """
 
 from __future__ import division
@@ -53,21 +56,22 @@ DEEPSFM_PATH = "/home/ruizhu/Documents/Projects/kitti_instance_RGBD_utils/deepSf
 sys.path.append(DEEPSFM_PATH)
 import torch
 
-from kitti_odo_loader import KittiOdoLoader
-from kitti_odo_loader import (
-    dump_sift_match_idx,
-    get_sift_match_idx_pair,
-    dump_SP_match_idx,
-    get_SP_match_idx_pair,
-    read_odo_calib_file,
-)
+# from kitti_odo_loader import KittiOdoLoader
+from kitti_seq_loader import kitti_seq_loader
+# from kitti_odo_loader import (
+#     dump_sift_match_idx,
+#     get_sift_match_idx_pair,
+#     dump_SP_match_idx,
+#     get_SP_match_idx_pair,
+#     read_odo_calib_file,
+# )
 
 ## apollo specific
 from apollo.eval_pose import eval_pose
-from apollo_seq_loader import apollo_seq_loader
+# from apollo_seq_loader import apollo_seq_loader
 
 
-class apollo_train_loader(apollo_seq_loader):
+class apollo_train_loader(kitti_seq_loader):
     def __init__(
         self,
         dataset_dir,
@@ -97,15 +101,14 @@ class apollo_train_loader(apollo_seq_loader):
 
         self.split_mapping = {"train": "train", "test": "val"}
 
-        self.debug = False
+        self.debug = True
         if self.debug:
             coloredlogs.install(level="DEBUG", logger=logger)  # original info
 
         flat_list = lambda x: [item for sublist in x for item in sublist]
         if self.debug: # you can edit the split txt
             ## small dataset for debuggin
-            # split_folder = "split_small"
-            split_folder = "split"
+            split_folder = "split_small"
             self.train_seqs = ["Road11"]  # the folders after the dataset_dir
             self.test_seqs = ["Road11"]
 

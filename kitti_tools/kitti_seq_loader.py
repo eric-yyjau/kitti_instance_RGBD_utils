@@ -1,8 +1,11 @@
 """ For use in dumping single frame ground truths of KITTI Odometry Dataset
 Adapted from https://github.com/ClementPinard/SfmLearner-Pytorch/blob/0caec9ed0f83cb65ba20678a805e501439d2bc25/data/kitti_raw_loader.py
 
-Rui Zhu, rzhu@eng.ucsd.edu, 2019
-## testing (using the same class name and file name)
+Authors:
+    You-Yi Jau, yjau@eng.ucsd.edu, 2020
+    Rui Zhu, rzhu@eng.ucsd.edu, 2019
+Date: 
+    2020/07/15
 """
 
 from __future__ import division
@@ -41,20 +44,16 @@ from kitti_tools.utils_kitti import (
     scale_intrinsics,
     scale_P,
 )
-import dsac_tools.utils_misc as utils_misc
-
-# from utils_good import *
-from glob import glob
-from dsac_tools.utils_misc import crop_or_pad_choice
 from utils_kitti import load_as_float, load_as_array, load_sift, load_SP
 
+import dsac_tools.utils_misc as utils_misc
+from dsac_tools.utils_misc import crop_or_pad_choice
+
+from glob import glob
 import yaml
 
 DEEPSFM_PATH = "/home/ruizhu/Documents/Projects/kitti_instance_RGBD_utils/deepSfm"
 sys.path.append(DEEPSFM_PATH)
-# import torch
-# from models.model_wrap import PointTracker
-# from models.model_wrap import SuperPointFrontend_torch
 
 
 class kitti_seq_loader(object):
@@ -88,7 +87,7 @@ class kitti_seq_loader(object):
         # self.test_seqs = []
         # self.train_seqs = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
         # self.test_seqs = []
-        self.map_to_raw = {
+        self.map_to_raw = { # for calibration files
             "00": "2011_10_03_drive_0027",
             "01": "2011_10_03_drive_0042",
             "02": "2011_10_03_drive_0034",
@@ -132,6 +131,7 @@ class kitti_seq_loader(object):
         self.collect_test_folders()
         self.train_scenes = {}
 
+    # deprecated
     def prapare_SP(self):
         logging.info("Preparing SP inference.")
         with open(DEEPSFM_PATH + "/configs/superpoint_coco_train.yaml", "r") as f:
@@ -167,7 +167,6 @@ class kitti_seq_loader(object):
         img_files = sorted(glob(img_dir + "/*.png"))
         return img_files
 
-    # def collect_scene_from_drive(self, drive_path):
     def collect_scene_from_drive(self, drive_path, split="train"):
         train_scenes = []
         logging.info("Gathering info for %s..." % drive_path)
@@ -324,6 +323,9 @@ class kitti_seq_loader(object):
         return sample
 
     def dump_drive(self, args, drive_path, split, scene_data=None):
+        """ main entry point, dump dataset from drive_path
+
+        """
         assert split in ["train", "test"]
         # get scene data
         if scene_data is None:
