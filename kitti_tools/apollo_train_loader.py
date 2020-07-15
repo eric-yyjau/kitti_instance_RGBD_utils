@@ -36,24 +36,19 @@ coloredlogs.install(level="INFO", logger=logger)
 import cv2
 
 from kitti_tools.utils_kitti import (
-    load_velo_scan,
-    rectify,
-    read_calib_file,
-    transform_from_rot_trans,
-    scale_intrinsics,
     scale_P,
 )
-import dsac_tools.utils_misc as utils_misc
+# import dsac_tools.utils_misc as utils_misc
+# from dsac_tools.utils_misc import crop_or_pad_choice
 
 # from utils_good import *
 from glob import glob
-from dsac_tools.utils_misc import crop_or_pad_choice
-from utils_kitti import load_as_float, load_as_array, load_sift, load_SP
+# from utils_kitti import load_as_float, load_as_array, load_sift, load_SP
 
 import yaml
 
-DEEPSFM_PATH = "/home/ruizhu/Documents/Projects/kitti_instance_RGBD_utils/deepSfm"
-sys.path.append(DEEPSFM_PATH)
+# DEEPSFM_PATH = "/home/ruizhu/Documents/Projects/kitti_instance_RGBD_utils/deepSfm"
+# sys.path.append(DEEPSFM_PATH)
 import torch
 
 # from kitti_odo_loader import KittiOdoLoader
@@ -87,10 +82,7 @@ class apollo_train_loader(kitti_seq_loader):
         save_npy=True,
         delta_ijs=[1]
     ):
-        # original size: (H2056, W2452)
-        # depth_size_ratio=1):
-        # dir_path = Path(__file__).realpath().dirname()
-
+        # original size: (H2710, W3384)
         self.dataset_dir = Path(dataset_dir)
         self.img_height = img_height
         self.img_width = img_width
@@ -99,6 +91,7 @@ class apollo_train_loader(kitti_seq_loader):
         assert self.cam_ids in ["5"], "Support left camera only!"
         self.cid_to_num = {"1": 1, "2": 2, "5": 5, "6": 6}
 
+        ## testing set maps to val.txt
         self.split_mapping = {"train": "train", "test": "val"}
 
         self.debug = True
@@ -157,12 +150,6 @@ class apollo_train_loader(kitti_seq_loader):
             self.sift = cv2.xfeatures2d.SIFT_create(
                 nfeatures=self.sift_num, contrastThreshold=1e-5
             )
-            # self.bf = cv2.BFMatcher(normType=cv2.NORM_L2)
-            # FLANN_INDEX_KDTREE = 0
-            # index_params = dict(algorithm = FLANN_INDEX_KDTREE, trees = 5)
-            # search_params = dict(checks = 50)
-            # self.flann = cv2.FlannBasedMatcher(index_params, search_params)
-            # self.sift_matcher = self.bf if BF_matcher else self.flann
 
         self.scenes = {
             "train": [],
@@ -196,14 +183,9 @@ class apollo_train_loader(kitti_seq_loader):
         logging.info(f"img_folders: {img_folders}")
         img_files = [glob(f"{folder}/*.jpg") for folder in img_folders]
         img_files = flat_list(img_files)
-        # img_files = self.filter_list(img_files, select_word=f'Camera_{cam_id}')
-        # img_files = [Path(f+'.jpg') for f in img_files]
         img_files = sorted(img_files)
-        # print(f"{drive_path}/{file}, arr: {arr[0]}, {arr.shape}")
 
         ## no time stamps
-        # img_dir = os.path.join(drive_path, "")
-        # img_files = sorted(glob(img_dir + f"/{folder}/*.png"))
         print(f"img_files: {img_files[0]}")
         return img_files
 
@@ -248,6 +230,8 @@ class apollo_train_loader(kitti_seq_loader):
             return img, (zoom_x, zoom_y), img_ori
 
     def get_calib_file_from_folder(self, foldername):
+        """ get camera intrinsics file
+        """
         for i in self.cam_ids:
             if i == 1 or i == 2:
                 calib_file = f"{foldername}/camera_params/Camera_{i}.cam"
@@ -255,19 +239,10 @@ class apollo_train_loader(kitti_seq_loader):
                 calib_file = f"{foldername}/camera_params/Camera\ {i}.cam"
         return calib_file
 
-    # def read_gt_pose(self, pose_file, **params):
-    #     assert (
-    #         Path(drive_path) / gt_kitti_file
-    #     ).exists(), "kitti style of gt pose file not found, please run 'python process_poses.py --dataset_dir DATASET_DIR"
-    #     poses = (
-    #         np.genfromtxt(Path(drive_path) / gt_kitti_file)
-    #         .astype(np.float32)
-    #         .reshape(-1, 3, 4)
-    #     )
-    #     pass
-
     @staticmethod
     def get_pose_to_dict(pose_path, cam_id=1):
+        """ get ground truth camera poses
+        """
         print(f"pose_path: {pose_path}")
         eval_agent = eval_pose({})
         if cam_id == 1 or cam_id == 2:
@@ -284,12 +259,10 @@ class apollo_train_loader(kitti_seq_loader):
             pose_dict.update(data)
         return pose_dict
 
-    # def get_pose_from_pose_dict(pose_dict, img_files):
-    # return [pose_dict[Path(f).name] for f in img_files]
+
     @staticmethod
     def get_pose_from_pose_dict(pose_dict, img_files):
         from apollo.utils import euler_angles_to_rotation_matrix
-
         """
         input:
             pose: list of poses(np) [[[roll,pitch,yaw,x,y,z]], ...]
@@ -303,7 +276,6 @@ class apollo_train_loader(kitti_seq_loader):
             trans = pose[3:6]
             pose_mat = np.concatenate((rot, trans.reshape(-1, 1)), axis=1)
             poses.append(pose_mat.flatten())
-            # print(f"pose_mat: {pose_mat.shape}")
         return np.array(poses)
 
     def collect_scene_from_drive(self, drive_path, split="train", skip_dumping=False):
@@ -387,14 +359,11 @@ class apollo_train_loader(kitti_seq_loader):
             }
 
             # Get geo params from the RAW dataset calibs
-            # calib_file = os.path.join("tum/TUM1.yaml")
-            # calib_file = os.path.join("/data/tum/calib/TUM1.yaml")
-            if c == "1" or c == "2":
+            if c == "1" or c == "2": # for kitti
                 calib_file = os.path.join(self.get_calib_file_from_folder(drive_path))
                 logging.info(f"calibration file: {calib_file}")
-                # calib_file = f"{scene_data['img_files'][0].str()}/../../sensor.yaml"
                 P_rect_noScale = self.get_cam_cali(calib_file)
-            elif c == "5" or c == "6":
+            elif c == "5" or c == "6": # for apollo
                 from apollo.data import ApolloScape
                 from apollo.utils import intrinsic_vec_to_mat
 
@@ -415,18 +384,8 @@ class apollo_train_loader(kitti_seq_loader):
             logging.debug(f"intrinsics: {intrinsics}")
             # calibs_rects = self.get_rect_cams(intrinsics, P_rect_ori_dict[c])
             calibs_rects = {"Rtl_gt": np.eye(4)}  # only one camera, no extrinsics
+            ## dummy matrices
             cam_2rect_mat = np.eye(4)  # extrinsics for cam2
-
-            # drive_in_raw = self.map_to_raw[drive_path[-2:]]
-            # date = drive_in_raw[:10]
-            # seq = drive_in_raw[-4:]
-            # calib_path_in_raw = Path(self.dataset_dir)/'raw'/date
-            # imu2velo_dict = read_calib_file(calib_path_in_raw/'calib_imu_to_velo.txt')
-            # velo2cam_dict = read_calib_file(calib_path_in_raw/'calib_velo_to_cam.txt')
-            # cam2cam_dict = read_calib_file(calib_path_in_raw/'calib_cam_to_cam.txt')
-            # velo2cam_mat = transform_from_rot_trans(velo2cam_dict['R'], velo2cam_dict['T'])
-            # imu2velo_mat = transform_from_rot_trans(imu2velo_dict['R'], imu2velo_dict['T'])
-            # cam_2rect_mat = transform_from_rot_trans(cam2cam_dict['R_rect_00'], np.zeros(3))
             velo2cam_mat = np.eye(4)
             cam2body_mat = np.eye(3)
 
@@ -442,11 +401,6 @@ class apollo_train_loader(kitti_seq_loader):
             )
             scene_data["calibs"].update(calibs_rects)
 
-            # print(f"poses before: {poses[:10]}")
-            # ## invert camera poses of world coord to poses of camera coord
-            # poses = np.array([np.linalg.inv(utils_misc.Rt_pad(pose))[:3] for pose in poses])
-            # print(f"poses after: {poses[:10]}")
-
             # extrinsic matrix for cameraN to this camera
             scene_data["Rt_cam2_gt"] = scene_data["calibs"]["Rtl_gt"]
             logging.debug(f'scene_data["Rt_cam2_gt"]: {scene_data["Rt_cam2_gt"]}')
@@ -455,6 +409,8 @@ class apollo_train_loader(kitti_seq_loader):
         return train_scenes
 
     def get_cam_cali(self, calib_file):
+        """ get calibration matrix
+        """
         calib_data = np.genfromtxt(calib_file, delimiter="=", comments="[", dtype=str)
         fu, fv, cu, cv = (
             float(calib_data[3, 1]),
@@ -468,12 +424,8 @@ class apollo_train_loader(kitti_seq_loader):
         return P_rect_ori
 
     def get_P_rect(self, P_rect_ori, calibs):
-        # width, height = calib_data['resolution']
-        # cam_info.distortion_model = 'plumb_bob'
-        # D = np.array(calib_data['distortion_coefficients'])
-        # cam_info.R = [1, 0, 0, 0, 1, 0, 0, 0, 1]
-        # calib_data = loadConfig(calib_file)
-
+        """ rescale the camera calibration matrix
+        """
         # rescale the camera matrix
 
         if calibs["rescale"]:
@@ -494,24 +446,6 @@ class apollo_train_loader(kitti_seq_loader):
         """
         depth_file = scene_data["depth_files"][tgt_idx]
         color_file = scene_data["img_files"][tgt_idx]
-
-        # def get_point_cloud_from_images(color_file, depth_file):
-        #     """
-        #     will cause crashes!!!
-        #     """
-        #     import open3d as o3d # import open3d before torch to avoid crashes
-        #     depth_raw = o3d.io.read_image(depth_file)
-        #     color_raw = o3d.io.read_image(color_file)
-        #     rgbd_image = o3d.geometry.RGBDImage.create_from_tum_format(
-        #         color_raw, depth_raw)
-        #     pcd = o3d.geometry.PointCloud.create_from_rgbd_image(
-        #         rgbd_image,
-        #         o3d.camera.PinholeCameraIntrinsic(
-        #             o3d.camera.PinholeCameraIntrinsicParameters.PrimeSenseDefault))
-        #     # Flip it, otherwise the pointcloud will be upside down
-        #     pcd.transform([[1, 0, 0, 0], [0, -1, 0, 0], [0, 0, -1, 0], [0, 0, 0, 1]])
-        #     xyz_points = np.asarray(pcd.points)
-        #     return xyz_points
 
         def get_point_cloud_from_images(color_file, depth_file, calib_K=None):
             from PIL import Image
@@ -573,14 +507,6 @@ def loadConfig(filename):
         config = yaml.load(f)
     return config
 
-
-# calib_file = '/data/euroc/mav0/cam0/sensor.yaml'
-# calib_data = loadConfig(calib_file)
-
-# intrinsics = load_intrinsics(calib_data)
-# transformation_base_camera = load_extrinsics(calib_data)
-# print(f"height, width, K, D = {intrinsics}")
-# print(f"transformation_base_camera: {transformation_base_camera}")
 
 
 if __name__ == "__main__":
