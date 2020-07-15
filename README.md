@@ -59,6 +59,7 @@ tar zxf Road11.tar.gz
 ```
 
 ### Run command
+- Specify your `dataset_dir` and `dump_root`
 ```
 python dump_tools/dump_data.py  --dump --dataset_dir /media/yoyee/Big_re/apollo/train_seq_1/  --dataloader_name  apollo_train_loader  --with_pose    --with_sift --dump_root /media/yoyee/Big_re/apollo/apollo_dump/train_seq_1/  --cam_id 5  --img_height 2710 --img_width  3384 
 ```

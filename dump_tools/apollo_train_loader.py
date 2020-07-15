@@ -94,7 +94,7 @@ class apollo_train_loader(kitti_seq_loader):
         ## testing set maps to val.txt
         self.split_mapping = {"train": "train", "test": "val"}
 
-        self.debug = True
+        self.debug = False
         if self.debug:
             coloredlogs.install(level="DEBUG", logger=logger)  # original info
 
