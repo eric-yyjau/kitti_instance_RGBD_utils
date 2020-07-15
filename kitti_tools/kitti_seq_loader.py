@@ -9,7 +9,8 @@ from __future__ import division
 import numpy as np
 from pathlib import Path
 from tqdm import tqdm
-import scipy.misc
+# import scipy.misc
+import cv2
 from collections import Counter
 from pebble import ProcessPool
 import multiprocessing as mp
@@ -367,7 +368,10 @@ class kitti_seq_loader(object):
 
             img, frame_nb = sample["img"], sample["id"]
             dump_img_file = dump_dir / "{}.jpg".format(frame_nb)
-            scipy.misc.imsave(dump_img_file, img)
+            # scipy.misc.imsave(dump_img_file, img)
+            img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
+            cv2.imwrite(img, dump_img_file)
+            
             if "pose" in sample.keys():
                 poses.append(sample["pose"].astype(np.float32))
             if "X_cam0_vis" in sample.keys():
@@ -499,7 +503,10 @@ class kitti_seq_loader(object):
         if not img_file.is_file():
             logging.warning("Image %s not found!" % img_file)
             return None, None, None
-        img_ori = scipy.misc.imread(img_file)
+        # img_ori = scipy.misc.imread(img_file)
+        # print(f"img_file: {img_file}")
+        img_ori = cv2.imread(str(img_file))
+        img_ori = cv2.cvtColor(img_ori, cv2.COLOR_BGR2RGB)
         if [self.img_height, self.img_width] == [img_ori.shape[0], img_ori.shape[1]]:
             return img_ori, (1.0, 1.0), img_ori
         else:
@@ -518,7 +525,8 @@ class kitti_seq_loader(object):
                         self.img_width,
                     )
                 )
-            img = scipy.misc.imresize(img_ori, (self.img_height, self.img_width))
+            # img = scipy.misc.imresize(img_ori, (self.img_height, self.img_width))
+            img = cv2.resize(img_ori, (self.img_height, self.img_width))
             return img, (zoom_x, zoom_y), img_ori
 
     def get_P_rect(self, scene_data, calibs, get_2cam_dict=True):

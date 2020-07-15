@@ -49,7 +49,7 @@ python dump_img_odo_tum.py --dump --dataset_dir /media/yoyee/Big_re/kitti/data_o
 
 ## ApolloScape dataset
 ### Raw data structure
-- Download raw data from [here](http://apolloscape.auto/self_localization.html).
+- Download raw data (Training data, Road11.tar.gz) from [here](http://apolloscape.auto/self_localization.html) or use the following script.
 ```
 python apollo/download.py -h
 python apollo/download.py --dataset_dir /media/yoyee/Big_re/apollo/ --if_download --if_untar
