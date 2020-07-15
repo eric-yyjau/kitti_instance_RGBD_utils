@@ -1,12 +1,15 @@
-coloredlogs
-PyYAML
+# scipy
 path.py
-argparse
-scipy
-opencv-python==3.4.2.16
-opencv-contrib-python==3.4.2.16
+tqdm
+torch
+h5py
+coloredlogs
+pebble
 matplotlib
 imageio
-tqdm
 pykitti
-sklearn
+opencv-python==3.4.2.16
+opencv-contrib-python==3.4.2.16
+pebble
+Pillow==5.0.0
+scipy==1.0.1
