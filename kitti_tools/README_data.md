@@ -52,12 +52,14 @@ python dump_img_odo_tum.py --dump --dataset_dir /media/yoyee/Big_re/kitti/data_o
 - Download raw data (Training data, Road11.tar.gz) from [here](http://apolloscape.auto/self_localization.html) or use the following script.
 ```
 python apollo/download.py -h
-python apollo/download.py --dataset_dir /media/yoyee/Big_re/apollo/ --if_download --if_untar
+python apollo/download.py --dataset_dir /media/yoyee/Big_re/apollo/train_seq_1 --if_download
+# change the name to Road11.tar.gz
+tar zxf Road11.tar.gz
 ```
 
 ### Processing command
 ```
-python dump_img_odo_tum.py  --dump --dataset_dir /newfoundland/yyjau/apollo/train_seq_1/  --dataloader_name  apollo_train_loader  --with_pose    --with_sift --dump_root /newfoundland/yyjau/apollo/apollo_dump/test/   --num_threads=1  --cam_id 5  --img_height 2710 --img_width  3384 
+python dump_img_odo_tum.py  --dump --dataset_dir /media/yoyee/Big_re/apollo/train_seq_1/  --dataloader_name  apollo_train_loader  --with_pose    --with_sift --dump_root /media/yoyee/Big_re/apollo/apollo_dump/train_seq_1/   --num_threads=1  --cam_id 5  --img_height 2710 --img_width  3384 
 ```
 
 ## EuRoC dataset

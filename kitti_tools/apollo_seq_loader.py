@@ -83,6 +83,7 @@ class apollo_seq_loader(KittiOdoLoader):
         sift_num=2000,
         if_BF_matcher=False,
         save_npy=True,
+        delta_ijs=[1],
     ):
         # original size: (H2056, W2452)
         # depth_size_ratio=1):
@@ -118,6 +119,7 @@ class apollo_seq_loader(KittiOdoLoader):
         self.get_sift = get_sift
         self.get_SP = get_SP
         self.save_npy = save_npy
+        self.delta_ijs = delta_ijs
         if self.save_npy:
             logging.info("+++ Dumping as npy")
         else:
@@ -178,7 +180,10 @@ class apollo_seq_loader(KittiOdoLoader):
         if not img_file.is_file():
             logging.warning("Image %s not found!" % img_file)
             return None, None, None
-        img_ori = scipy.misc.imread(img_file)
+        # img_ori = scipy.misc.imread(img_file)
+        img_ori = cv2.imread(str(img_file))
+        img_ori = cv2.cvtColor(img_ori, cv2.COLOR_BGR2RGB)
+
         if [self.img_height, self.img_width] == [img_ori.shape[0], img_ori.shape[1]]:
             return img_ori, (1.0, 1.0), img_ori
         else:
@@ -197,7 +202,8 @@ class apollo_seq_loader(KittiOdoLoader):
                         self.img_width,
                     )
                 )
-            img = scipy.misc.imresize(img_ori, (self.img_height, self.img_width))
+            # img = scipy.misc.imresize(img_ori, (self.img_height, self.img_width))
+            img = cv2.resize(img_ori, (self.img_height, self.img_width))
             return img, (zoom_x, zoom_y), img_ori
 
     def get_calib_file_from_folder(self, foldername, c):

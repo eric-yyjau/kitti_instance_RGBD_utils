@@ -9,7 +9,7 @@ from __future__ import division
 import numpy as np
 from pathlib import Path
 from tqdm import tqdm
-import scipy.misc
+# import scipy.misc
 from collections import Counter
 from pebble import ProcessPool
 import multiprocessing as mp
@@ -81,6 +81,7 @@ class apollo_train_loader(apollo_seq_loader):
         sift_num=2000,
         if_BF_matcher=False,
         save_npy=True,
+        delta_ijs=[1]
     ):
         # original size: (H2056, W2452)
         # depth_size_ratio=1):
@@ -101,17 +102,20 @@ class apollo_train_loader(apollo_seq_loader):
             coloredlogs.install(level="DEBUG", logger=logger)  # original info
 
         flat_list = lambda x: [item for sublist in x for item in sublist]
-        if self.debug:
+        if self.debug: # you can edit the split txt
             ## small dataset for debuggin
-            split_folder = "split_small"
+            # split_folder = "split_small"
+            split_folder = "split"
             self.train_seqs = ["Road11"]  # the folders after the dataset_dir
             self.test_seqs = ["Road11"]
 
         else:
             split_folder = "split"
             ## dataset names
-            self.train_seqs = ["Road16"]  # the folders after the dataset_dir
-            self.test_seqs = ["Road16"]
+            # self.train_seqs = ["Road16"]  # the folders after the dataset_dir
+            # self.test_seqs = ["Road16"]
+            self.train_seqs = ["Road11"]  # the folders after the dataset_dir
+            self.test_seqs = ["Road11"]
 
         ## prepare training seqs
         self.train_rel_records = [
@@ -139,6 +143,7 @@ class apollo_train_loader(apollo_seq_loader):
         self.get_sift = get_sift
         self.get_SP = get_SP
         self.save_npy = save_npy
+        self.delta_ijs = delta_ijs
         if self.save_npy:
             logging.info("+++ Dumping as npy")
         else:

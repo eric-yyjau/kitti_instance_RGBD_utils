@@ -370,7 +370,7 @@ class kitti_seq_loader(object):
             dump_img_file = dump_dir / "{}.jpg".format(frame_nb)
             # scipy.misc.imsave(dump_img_file, img)
             img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
-            cv2.imwrite(img, dump_img_file)
+            cv2.imwrite(str(dump_img_file), img)
             
             if "pose" in sample.keys():
                 poses.append(sample["pose"].astype(np.float32))

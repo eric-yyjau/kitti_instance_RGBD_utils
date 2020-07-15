@@ -27,7 +27,7 @@ if __name__ == "__main__":
     print(args)
 
     if_download = args.if_download # True
-    if_untar = args.if_untar # True
+    # if_untar = args.if_untar # True
 
     if if_download:
         for seq in sequences:
@@ -35,10 +35,10 @@ if __name__ == "__main__":
             print(f"run: {command}")
             subprocess.run(command, shell=True, check=True)
 
-    if if_untar:
-        # unzip
-        tar_files = glob.glob("*.zip")
-        for f in tar_files:
-            command = f"unzip {f} -d {str(f)[:-4]}"
-            print(f"run: {command}")
-            subprocess.run(command, shell=True, check=True)
+    # if if_untar:
+    #     # unzip
+    #     tar_files = glob.glob(f"{args.dataset_dir}/*.zip")
+    #     for f in tar_files:
+    #         command = f"unzip {f} -d {str(f)[:-4]}"
+    #         print(f"run: {command}")
+    #         subprocess.run(command, shell=True, check=True)
