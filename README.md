@@ -40,11 +40,16 @@
 ### Run command
 **``WE ARE NOT FILTERING STATIC FRAMES FOR THE ODO DATASET!``**
 Set ``--with_pose`` ``--with_X`` ``--with_sift`` to decide whether to dump pose files, rectified lidar points, and SIFT kps/des and corres.
+- Specify your `dataset_dir` and `dump_root`
 ```
-python dump_tools/dump_data.py --dump --dataset_dir /media/yoyee/Big_re/kitti/data_odometry_color/dataset/ \
+python dump_tools/dump_data.py --dump --dataset_dir [...] \
+--dump_root [...] \
 --with_pose --with_sift \
+--img_height 376 --img_width 1241 --dataloader_name kitti_seq_loader --cam_id '02'
+<!-- python dump_tools/dump_data.py --dump --dataset_dir /media/yoyee/Big_re/kitti/data_odometry_color/dataset/ \
 --dump_root /media/yoyee/Big_re/kitti/kitti_dump/odo_corr_dump_siftIdx_npy_delta1_test_0714 \
---num_threads=1  --img_height 376 --img_width 1241 --dataloader_name kitti_seq_loader --cam_id '02'
+--with_pose --with_sift \
+--img_height 376 --img_width 1241 --dataloader_name kitti_seq_loader --cam_id '02' -->
 ```
 
 ## ApolloScape dataset
@@ -59,7 +64,7 @@ tar zxf Road11.tar.gz
 
 ### Run command
 ```
-python dump_tools/dump_data.py  --dump --dataset_dir /media/yoyee/Big_re/apollo/train_seq_1/  --dataloader_name  apollo_train_loader  --with_pose    --with_sift --dump_root /media/yoyee/Big_re/apollo/apollo_dump/train_seq_1/   --num_threads=1  --cam_id 5  --img_height 2710 --img_width  3384 
+python dump_tools/dump_data.py  --dump --dataset_dir /media/yoyee/Big_re/apollo/train_seq_1/  --dataloader_name  apollo_train_loader  --with_pose    --with_sift --dump_root /media/yoyee/Big_re/apollo/apollo_dump/train_seq_1/  --cam_id 5  --img_height 2710 --img_width  3384 
 ```
 
 ## EuRoC dataset (not tested)
@@ -74,7 +79,7 @@ python dump_tools/euroc/process_poses_euroc.py --dataset_dir /data/euroc/test2/ 
 ```
 ### Run command
 ```
-python dump_tools/dump_data.py  --dump --dataset_dir  /data/euroc/raw_sequence --with_pose     --with_sift --dump_root /data/euroc/euroc_dump/slam_seq_v1  --num_threads=1  --cam_id 00 --img_height 480 --img_width 752 --dataloader_name euroc_seq_loader
+python dump_tools/dump_data.py  --dump --dataset_dir  /data/euroc/raw_sequence --with_pose     --with_sift --dump_root /data/euroc/euroc_dump/slam_seq_v1   --cam_id 00 --img_height 480 --img_width 752 --dataloader_name euroc_seq_loader
 ```
 
 ## TUM dataset (not tested)
@@ -84,7 +89,7 @@ python dump_tools/tum/download.py
 ```
 ### Run command
 ```
-python dump_tools/dump_data.py  --dump --dataset_dir /data/tum/raw_sequences  --with_pose     --with_sift --dump_root /data/tum/tum_dump/slam_seq_v1 --with_X  --num_threads=1  --cam_id 00  --img_height 480 --img_width 640  --dataloader_name tum_seq_loader
+python dump_tools/dump_data.py  --dump --dataset_dir /data/tum/raw_sequences  --with_pose     --with_sift --dump_root /data/tum/tum_dump/slam_seq_v1 --with_X   --cam_id 00  --img_height 480 --img_width 640  --dataloader_name tum_seq_loader
 ```
 
 ## Visualize dataset
