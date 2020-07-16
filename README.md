@@ -1,4 +1,5 @@
 # Data processor
+Data processor for pose estimation or visual odometry tasks.
 
 ## KITTI dataset
 ### Raw data structure
@@ -35,7 +36,7 @@
 |   |   |-- 00.txt
 |   |   |-- ...
 |   |   |-- 10.txt
-
+`   `   `
 ```
 ### Run command
 **``WE ARE NOT FILTERING STATIC FRAMES FOR THE ODO DATASET!``**
@@ -67,7 +68,6 @@ python dump_tools/dump_data.py  --dump --dataset_dir /media/yoyee/Big_re/apollo/
 ## EuRoC dataset (not tested)
 ### Raw data
 ```
-<!-- python dump_tools/euroc/download.py  -->
 python dump_tools/euroc/download.py --dataset_dir /media/yoyee/Big_re/euroc/train_seq_1 --if_download --if_untar
 ```
 ### Process data 
